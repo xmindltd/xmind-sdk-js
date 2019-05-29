@@ -82,6 +82,3 @@ typings/
 .idea/modules.xml
 .idea/workspace.xml
 .idea/xmind-sdk.iml
-src/abstraction/
-src/models/
-src/utils/
