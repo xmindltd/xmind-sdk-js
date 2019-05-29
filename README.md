@@ -68,13 +68,13 @@ The `Workbook` extends `class Sheet` and has a zip kit.
 ### Options
 
 | Name | Type | Default | System | Description | 
-| ---- | ---- | ------- | ------ | ----------- |
+| ---- | ---- | ------- | ------ |:----------- |
 | options.path | String | `linux/darwin` | /tmp/default.xmind |  An absolute directory where the `.xmind` file is going to store |
 | options.path | String | `Win32` | null | |
 
 ### Methods
 
-##### .createSheet(sheetTitle, rootTopicTitle) => `Sheet`
+#### .createSheet(sheetTitle, rootTopicTitle) => `Sheet`
 
 That will create a instance of Sheet and returns
 
@@ -84,7 +84,7 @@ That will create a instance of Sheet and returns
 | rootTopicTitle | String | 'Central Topic' | The unique title string of central topic |
 
 
-##### `async` .zipper.save(path) => `Promise<boolean>`
+#### `async` .zipper.save(path) => `Promise<boolean>`
   - `path` - 
  
 | Name | Type | Default | Description | 
@@ -100,30 +100,30 @@ That will create a instance of Sheet and returns
 
 ### Methods
 
-##### .on(title?: `string`) => Topic
+#### .on(title?: `string`) => Topic
 
 Set the direction of the internal topic of the instance. default: ['Central Topic']
 
-##### .add(options: {title: `string`, index?: `number`}) => Topic
+#### .add(options: {title: `string`, index?: `number`}) => Topic
 
 Add a topic on the topic
 
-##### .note(text: `string`) => Topic
+#### .note(text: `string`) => Topic
 
 Add a note text on the direction of internal topic
 
-##### .marker(options:<Marker>{groupId: `string`, markerId: `string`}) => Topic
+#### .marker(options:<Marker>{groupId: `string`, markerId: `string`}) => Topic
 
 Add a marker flag on the topic
 
-##### .summary(options: {title: 'summary title', include?: 'a subtopic title'}) => Topic
+#### .summary(options: {title: 'summary title', include?: 'a subtopic title'}) => Topic
  
  Add a summary range for topics
  
 * title - The summary title
 * include - A topic title that must be below in the direction of internal topic
 
-##### .destroy() => Topic
+#### .destroy() => Topic
 
 ## Marker flags
 
