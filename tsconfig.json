@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "stripInternal": true,
+    "pretty": true,
+    "declaration": true,
+    "outDir": "dist/",
+    "rootDir": "src/",
+    "lib": ["es2017", "dom"],
+    "sourceMap": true,
+    "allowJs": false
+  },
+  "exclude": [
+    "dist",
+    "node_modules",
+    "test",
+    "scripts",
+    "docs",
+    "example"
+  ]
+}
