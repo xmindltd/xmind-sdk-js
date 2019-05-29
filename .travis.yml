@@ -7,8 +7,7 @@ node_js:
 
 install:
   - npm i
-  - npm i -g typescript
-  - npm i -g ts-node
+  - npm i ts-node # --require ts-node/register
 
 before_script:
   - npm run lint
