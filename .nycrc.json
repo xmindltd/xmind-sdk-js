@@ -13,5 +13,6 @@
     "**/*.d.ts",
     "docs"
   ],
-  "extension": [".ts"]
+  "extension": [".ts"],
+  "reporter": ["html", "text", "lcov"]
 }

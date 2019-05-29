@@ -10,7 +10,9 @@
     "lint": "node_modules/.bin/tslint --config tslint.json --project .",
     "fix": "node_modules/.bin/tslint --config tslint.json --project . --fix",
     "build-doc": "BUILD_DOCS=true node scripts/icons.js",
-    "browserify": "node_modules/.bin/browserify ./dist/index.js -o ./dist/bundle.js"
+    "browserify": "node_modules/.bin/browserify ./dist/index.js -o ./dist/bundle.js",
+    "cov": "cat ./coverage/lcov.info | codacy-coverage --language typescript",
+    "clean": "rm -rf ./coverage ./.nyc_output"
   },
   "repository": {
     "type": "git",
@@ -42,8 +44,11 @@
     "@typescript-eslint/parser": "^1.7.0",
     "browserify": "^16.2.3",
     "chai": "^4.2.0",
+    "codacy-coverage": "^3.4.0",
+    "istanbul": "^0.4.5",
     "jquery": "^3.4.1",
     "mocha": "^6.1.4",
+    "mocha-lcov-reporter": "^1.3.0",
     "nyc": "^14.1.1",
     "sinon": "^7.3.2",
     "source-map-support": "^0.5.12",
