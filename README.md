@@ -10,8 +10,9 @@
 
 The `xmind-sdk-js` is an official library that implemented a lot of functions to the same as the UI client. if you use UI client, you already know how to use this library.
 
-In order to use, there is a very important concept you should know that is everything is component and each component should have a unique title.
+In order to use, there is a very important concept you should know that is everything is component and each of component should have a unique title.
 
+All of the components will be connected like a Map-Tree.
 
 ## Getting started
 
@@ -87,9 +88,9 @@ That will create a instance of Sheet and returns
 #### `async` .zipper.save(path) => `Promise<boolean>`
   - `path` - 
  
-| Name | Type | Default | Description | 
-|:----:|:----:|:-------:|:------------|
-| path | String | null | The path has priority over `Workbook's options.path` |
+| Name | Type | Default | Required | Description | 
+|:----:|:----:|:-------:|:--------:|:------------|
+| path | String | null | false | The path has priority over `Workbook's options.path` |
  
 
 ## Topic(options)
@@ -100,30 +101,52 @@ That will create a instance of Sheet and returns
 
 ### Methods
 
-#### .on(title?: `string`) => Topic
+#### .on(title) => Topic
 
-Set the direction of the internal topic of the instance. default: ['Central Topic']
+Set the direction of the internal topic of the instance
 
-#### .add(options: {title: `string`, index?: `number`}) => Topic
+| Name | Type | Default | Required | Description |
+|:----:|:----:|:-------:|:--------:|:------------|
+| title | String | `Central Topic` | false | The title you added by call `.add()` |
 
-Add a topic on the topic
+#### .add(options = {title: `string`}) => Topic
 
-#### .note(text: `string`) => Topic
+Adding a topic component on the internal topic that specified by call `.on()`
 
-Add a note text on the direction of internal topic
+| Name | Type | Default | Required | Description |
+|:----:|:----:|:-------:|:--------:|:------------|
+| options.title | String | null | true | A title of topic |
+
+#### .note(text) => Topic
+
+Adding a note text on the internal topic
+
+| Name | Type | Default | Required | Description |
+|:----:|:----:|:-------:|:--------:|:------------|
+| text | String | null | true | A note text message |
 
 #### .marker(options:<Marker>{groupId: `string`, markerId: `string`}) => Topic
 
-Add a marker flag on the topic
+Adding a marker flag on the internal topic
+
+[Use `Marker Object` to generate the options](#marker-flags)
 
 #### .summary(options: {title: 'summary title', include?: 'a subtopic title'}) => Topic
  
- Add a summary range for topics
+Adding a summary for topics with an optional range
  
-* title - The summary title
-* include - A topic title that must be below in the direction of internal topic
+| Name | Type | Default | Required | Description |
+|:----:|:----:|:-------:|:--------:|:------------|
+| title | String | null | true | A summary title |
+| include | String | null | false | A topic title that must be below in the direction of internal topic |
 
-#### .destroy() => Topic
+#### .destroy(title) => Topic
+
+Destroy a topic component from the Map-Tree
+
+| Name | Type | Default | Required | Description |
+|:----:|:----:|:-------:|:--------:|:------------|
+| title | String | null | true | The title you added by call `.add()` |
 
 ## Marker flags
 
@@ -155,6 +178,11 @@ We provides a instance of `Marker` that includes all the markers. such as below:
 
 **The `name` of marker available [!here](docs/icons.md)**
 
+## Contributing
+
+If you run into any problems please feel free to reach out to us 🙂.
+
+Also you can PRs immediately.
 
 ## LICENSE
 
