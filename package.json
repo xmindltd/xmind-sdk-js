@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "browser": "",
   "scripts": {
-    "test": "nyc mocha --opts test/mocha.opts",
+    "test": "nyc mocha",
     "build": "rm -rf ./dist && node_modules/.bin/tsc && npm run browserify",
     "lint": "node_modules/.bin/tslint --config tslint.json --project .",
     "fix": "node_modules/.bin/tslint --config tslint.json --project . --fix",
