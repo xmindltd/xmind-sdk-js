@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "The SDK of XMind Ltd.",
   "main": "dist/index.js",
+  "browser": "",
   "scripts": {
     "test": "nyc mocha --opts test/mocha.opts",
     "build": "rm -rf ./dist && node_modules/.bin/tsc && npm run browserify",

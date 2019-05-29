@@ -22,7 +22,7 @@ export class Marker extends AbstractMarker {
           return null;
         }
         return icons[property][normalized];
-      }
+      };
     }
   }
 }

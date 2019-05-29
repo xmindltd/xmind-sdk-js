@@ -5,7 +5,7 @@ import Core = require('xmind-model');
 
 export interface TopicOptions {
   sheet: Core.Sheet;
-};
+}
 
 export interface MarkerOptions {
   groupId: string;
