@@ -4,21 +4,26 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/36420399770547e4825f0657eb29118b)](https://www.codacy.com/app/danielsss/xmind-sdk-js?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=xmindltd/xmind-sdk-js&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/36420399770547e4825f0657eb29118b)](https://www.codacy.com/app/danielsss/xmind-sdk-js?utm_source=github.com&utm_medium=referral&utm_content=xmindltd/xmind-sdk-js&utm_campaign=Badge_Coverage)
 
-# XMind-sdk
+# XMind-sdk-js
 
 [The most popular mind mapping software.](https://www.xmind.net)
 
-The [official](https://www.xmind.net/) package.
+The `xmind-sdk-js` is an official `Non-UI` library that implemented a lot of functions to the same as the UI client. if you use UI client, you already know how to use this library. 
 
-A core concept must be understood that is `all of the operations` based on `components` and the `title` is a unique string.
-Everything is component. such as: `topic` and `note` etc.
+In order to use, there is a very important concept you should know that is `Everything is component and each component should have a unique title`.
 
-## Install
+
+## Getting started
 
 ##### Node.js
+
 ```shell
 $ npm i --save xmind-sdk
 ```
+
+##### Browser
+
+To be continued
 
 ## Usage
 ```js
@@ -52,8 +57,9 @@ wb.zipper.save().then(status => {
 });
 
 ```
+## More Examples
 
-[See more js examples](example/examples.js)
+[Click here](example/examples.js)
 
 ## Workbook(options)
 
@@ -61,18 +67,30 @@ The `Workbook` extends `class Sheet` and has a zip kit.
 
 ### Options
 
-* `options.path` - An absolute directory where the `.xmind` file is going to store.
-  - default: `Linux | Darwin`: '/tmp' | `Win32`: null
+| Name | Type | Default | System | Description | 
+| ---- | ---- | ------- | ------ | ----------- |
+| options.path | String | `linux/darwin` | /tmp/default.xmind |  An absolute directory where the `.xmind` file is going to store |
+| options.path | String | `Win32` | null | |
 
 ### Methods
 
-* .createSheet(sheetTitle?: `string` = 'sheet-1', centralTopicTitle?: `string` = 'Central Topic') => `Sheet`
-  - `sheetTitle` - An unique title string of sheet. default: ['sheet-1']
-  - `centralTopicTitle` - An unique title string of central topic. default: ['Central Topic']
+##### .createSheet(sheetTitle, rootTopicTitle) => `Sheet`
 
-* `async` .zipper.save(path?: `string`) => `Promise<boolean>`
-  - `path` - The path has priority over `Workbook's options.path`
-  
+That will create a instance of Sheet and returns
+
+| Name | Type | Default | Description | 
+|:----:|:----:|:-------:|:------------|
+| sheetTitle | String | 'sheet-1' | The unique title string of sheet |
+| rootTopicTitle | String | 'Central Topic' | The unique title string of central topic |
+
+
+##### `async` .zipper.save(path) => `Promise<boolean>`
+  - `path` - 
+ 
+| Name | Type | Default | Description | 
+|:----:|:----:|:-------:|:------------|
+| path | String | null | The path has priority over `Workbook's options.path` |
+ 
 
 ## Topic(options)
 
@@ -94,7 +112,7 @@ Add a topic on the topic
 
 Add a note text on the direction of internal topic
 
-#####  .marker(options:<Marker>{groupId: `string`, markerId: `string`}) => Topic
+##### .marker(options:<Marker>{groupId: `string`, markerId: `string`}) => Topic
 
 Add a marker flag on the topic
 
