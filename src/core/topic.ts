@@ -151,6 +151,13 @@ export class Topic extends Base implements AbstractTopic {
   }
 
   /**
+   * @description Get root topicId
+   */
+  get rootTopicId() {
+    return this.root.getId();
+  }
+
+  /**
    * @description Get current topic instance
    * @return {Topic}
    * @private
