@@ -22,11 +22,15 @@ All of the components will be connected like a Map-Tree.
 
 ```shell
 $ npm i --save xmind-sdk
+
+const {Workbook, Topic, Marker} = require('xmind-sdk');
 ```
 
 ##### Browser
 
-To be continued
+```js
+'To be continued'
+```
 
 ## Usage
 ```js
