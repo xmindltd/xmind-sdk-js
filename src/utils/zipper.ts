@@ -2,7 +2,7 @@ import { AbstractZipper } from '../abstracts/zipper';
 import { isObject } from 'lodash';
 import { join } from 'path';
 import { promisify } from 'util';
-import {Workbook} from '..';
+import { Workbook } from '..';
 import * as fs from 'fs';
 import JSZip = require('jszip');
 
@@ -29,7 +29,7 @@ interface ZipperOptions {
  * @description Zipper for .xmind file
  * @implements AbstractZipper
  */
-class Zipper implements AbstractZipper {
+export class Zipper implements AbstractZipper {
   protected zip: JSZip;
 
   public filename: string;
@@ -126,5 +126,7 @@ class Zipper implements AbstractZipper {
   }
 }
 
-export default Zipper;
+// export default Zipper;
+
+module.exports = Zipper;
 

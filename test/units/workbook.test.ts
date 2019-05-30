@@ -1,25 +1,9 @@
 import { Workbook } from '../../src';
 import { expect } from 'chai';
-import * as sinon from 'sinon';
-import * as os from 'os';
 
 describe('# Workbook Unit Test', () => {
 
-  it('should be failed if does not given a tmp path on win32 system', () => {
-    sinon.stub(os, 'platform').callsFake(() => 'win32');
-    try {
-      new Workbook();
-    } catch (e) {
-      expect(e.message).to.be.eq('You must specify a temporary folder on win32 system.');
-      sinon.restore();
-    }
-  });
-
-  it('should be workbook created on win32 system', () => {
-    sinon.stub(os, 'platform').callsFake(() => 'win32');
-    const workbook = new Workbook({path: 'C:\\\\tmp'});
-    expect(workbook instanceof Workbook).to.be.true;
-    sinon.restore();
+  it('should be workbook created', () => {
     const workbook1 = new Workbook();
     expect(workbook1 instanceof Workbook).to.be.true;
   });

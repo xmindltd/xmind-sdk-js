@@ -1,31 +1,46 @@
-import { Sheet } from '../core/sheet';
-import { platform } from 'os';
-import Zipper from '../utils/zipper';
+import { AbstractZipper as ZipperType } from '../abstracts/zipper';
+import { AbstractWorkbook } from '../abstracts/workbook.abstract';
+import { Theme } from './theme';
+import Base from './base';
+import Core = require('xmind-model');
 
-
-export interface WorkbookOptions {
-  path: string;
-  workbook?: any;
-}
 
 /**
- * @description Main class
- * @param {WorkbookOptions} - options
- * @param {String} options.path is required upon the win32 system
- * @extends {Sheet}
+ * @description The implementation of Workbook
+ * @extends {Base}
  */
-export class Workbook extends Sheet {
-  public zipper: Zipper;
+export class Workbook extends Base implements AbstractWorkbook {
+  public zipper: ZipperType;
+  public sheet: Core.Sheet;
+  private workbook: Core.Workbook;
+  private readonly resources;
 
-  constructor(options: WorkbookOptions = <WorkbookOptions>{}) {
-    super(options);
-    if (platform() === 'win32' && !options.path) {
-      throw new Error('You must specify a temporary folder on win32 system.');
-    } else {
-      options.path = '/tmp';
+
+  constructor() {
+    super();
+    this.resources = {};
+    this.zipper = null;
+    if (typeof process === 'object') {
+      const Zipper = require('../utils/zipper');
+      const zipperOptions = {path: '/tmp', workbook: this};
+      this.zipper = new Zipper(zipperOptions);
     }
-    options.workbook = this;
-    this.zipper = new Zipper(options);
+  }
+
+
+  public theme(sheetTitle:string, themeName: string) {
+    /* istanbul ignore next */
+    if (!sheetTitle || !this.resources[sheetTitle]) {
+      return false;
+    }
+    /* istanbul ignore next */
+    if (!themeName || typeof themeName !== 'string') {
+      return false;
+    }
+
+    const instance = new Theme({themeName});
+    this.sheet.changeTheme(instance.data);
+    return true;
   }
 
   /**
@@ -42,5 +57,19 @@ export class Workbook extends Sheet {
    */
   public toJSON() {
     return this.workbook.toJSON();
+  }
+
+
+  public createSheet(sheetTitle: string, centralTopicTitle = 'Central Topic') {
+    if (!sheetTitle) throw new Error('Title required');
+    if (this.resources.hasOwnProperty(sheetTitle)) throw new Error('Title duplicated');
+
+    const sheetId = this.id;
+    this.resources[sheetTitle] = sheetId;
+
+    const options = [{id: sheetId, sheetTitle, rootTopic: {id: this.id, title: centralTopicTitle}}];
+    this.workbook = new Core.Workbook(options);
+    this.sheet = this.workbook.getSheetById(sheetId);
+    return this.sheet;
   }
 }

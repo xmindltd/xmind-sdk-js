@@ -1,49 +1,27 @@
-import {Workbook, Topic, Marker} from '../src';
+import {Workbook, Topic} from '../src';
 
 
-const workbook = new Workbook();
-const sheetTitle = 'sheet-1';
-const topic = new Topic({sheet: workbook.createSheet(sheetTitle)});
-workbook.theme(sheetTitle, 'robust');
+// create workbook & sheet
+const wb = new Workbook();
+wb.createSheet('sheet-1','Root Topic');
 
-const marker = new Marker();
+// create topic
+const topic = new Topic({sheet: wb.sheet});
 
-// assign topic
-topic.on()
-  .add({title: 'main topic 1'})
-  .add({title: 'main topic 2'})
-  .add({title: 'main topic 3'})
-  .add({title: 'main topic 4'});
+topic
+  .on()
+  .add({title: 'main topic 1'});
 
-topic.on('main topic 1')
-  .note('add a note to main topic 1')
+const mainTopic1Id = topic.topicId();
+
+topic
+  .on(mainTopic1Id)
   .add({title: 'subtopic 1'})
   .add({title: 'subtopic 2'})
   .add({title: 'subtopic 3'})
   .add({title: 'subtopic 4'})
-  .marker(marker.smiley('cry'));
 
-topic
-  .on('subtopic 1')
-  .add({title: 'whatever it is'})
-  .on('whatever it is')
-  .note('this is a note text');
+console.info('===========', topic.topicIds());
 
-topic
-  .on('main topic 1')
-  .summary({title: 'test summary', include: 'main topic 4'})
-  .on('test summary')
-  .add({title: 'subtopic of summary 1'})
-  .add({title: 'subtopic of summary 2'})
-  .add({title: 'subtopic of summary 3'});
-
-try {
-  topic
-    .on('does not exists')
-    .add({title: 'test title'});
-} catch (e) {
-  console.info(e.message);// expected: Invalid title `does not exists`
-  console.info('adding test title failures');
-}
-
-workbook.zipper.save().then(status => {console.info(status)});
+console.info(wb.toString());
+wb.zipper.save().then(status => {console.info(status)});

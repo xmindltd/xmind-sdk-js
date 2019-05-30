@@ -12,7 +12,7 @@ const PATH = path.join(__dirname, '../dist/bundle.js');
 if (fs.existsSync(PATH)) fs.unlinkSync(PATH);
 
 browserify()
-  .add(path.join(__dirname, '../src/index.ts'))
+  .add(path.join(__dirname, '../src/browser.ts'))
   .plugin(tsify, { noImplicitAny: false })
   .bundle()
   .on('error', function (error) { console.error(error.toString()); })

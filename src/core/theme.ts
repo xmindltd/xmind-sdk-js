@@ -19,7 +19,7 @@ export class Theme {
     const name = options.themeName;
     if (!name || typeof name !== 'string' ||
       !ALLOWED_THEMES.includes(name.toLocaleLowerCase())) {
-      debug(ALLOWED_THEMES.join(','), 'are allowed for now.');
+      debug('W - Only ', ALLOWED_THEMES.join(', '), 'are allowed for now.');
       throw new Error(`the theme name ${name} is not allowed`);
     }
 

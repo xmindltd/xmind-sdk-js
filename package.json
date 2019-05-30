@@ -10,7 +10,7 @@
     "lint": "node_modules/.bin/tslint --config tslint.json --project .",
     "fix": "node_modules/.bin/tslint --config tslint.json --project . --fix",
     "build-doc": "BUILD_DOCS=true node scripts/icons.js",
-    "browserify": "node_modules/.bin/browserify ./dist/index.js -o ./dist/bundle.js",
+    "browserify": "node_modules/.bin/browserify ./dist/browser.js -o ./dist/bundle.js",
     "cov": "cat ./coverage/lcov.info | codacy-coverage --language typescript",
     "clean": "rm -rf ./coverage ./.nyc_output"
   },

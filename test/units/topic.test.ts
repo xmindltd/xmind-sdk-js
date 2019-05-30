@@ -24,16 +24,14 @@ describe('# Topic Unit Test', () => {
   it('should be failed to add topic with empty title', done => {
     const {topic} = getComponents();
     try {
-      topic
-        .on()
-        .add();
+      topic.on().add();
     } catch (e) {
       expect(e.message).to.be.eq('topic.title should be a valid string');
       done();
     }
   });
 
-  it('should be failed to add a topic with an invalid title', done => {
+  it('should be failed to add a topic with an invalid topicId', done => {
     const doesNotExists = 'this is a does not exists title';
     try {
       const {topic} = getComponents();
@@ -42,7 +40,7 @@ describe('# Topic Unit Test', () => {
         .add({title: 'main topic 1'})
         .on(doesNotExists);
     } catch (e) {
-      expect(e.message).to.be.eq('Invalid title:' + doesNotExists);
+      expect(e.message).to.be.eq('Invalid topic id:' + doesNotExists);
       done();
     }
   });

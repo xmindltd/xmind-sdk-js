@@ -62,7 +62,7 @@ describe('# Functional Test', () => {
       expect(children[0]).to.have.property('id');
 
       topic
-        .on('main topic 1')
+        .on(topic.topicId())
         .add({title: 'subtopic 1'})
         .add({title: 'subtopic 2'})
         .add({title: 'subtopic 3'});
@@ -84,14 +84,15 @@ describe('# Functional Test', () => {
       expect(children[0]).to.have.property('id');
 
       topic
-        .on('main topic 1')
+        .on(topic.topicId())
         .add({title: 'subtopic 1'})
-        .add({title: 'subtopic 2'})
-        .add({title: 'subtopic 3'})
-        .destroy('subtopic 2');
+        .add({title: 'subtopic 2'});
+      const subTopic2Id = topic.topicId();
 
-
-      topic.destroy('subtopic 2');
+      topic.add({title: 'subtopic 3'});
+      topic.destroy(subTopic2Id);
+      // Do nothing if you have to remove topic twice
+      topic.destroy(subTopic2Id);
 
       const subtopics = workbook.toJSON()[0].rootTopic.children.attached[0].children.attached;
       expect(subtopics.length).to.be.eq(2);
@@ -102,10 +103,10 @@ describe('# Functional Test', () => {
       done();
     });
 
-    it('should be topic found by title', done => {
+    it('should be topic found by topicId', done => {
       const {topic} = getComponents();
       topic.add({title: 'main topic 1'});
-      const mainTopic1 = topic.find('main topic 1');
+      const mainTopic1 = topic.find(topic.topicId());
       expect(mainTopic1).to.not.be.empty;
       done();
     });
@@ -116,9 +117,7 @@ describe('# Functional Test', () => {
         fs.unlinkSync(p);
       }
 
-      const workbook = new Workbook();
-      const sheet = workbook.createSheet('sheet1', 'centralTopic');
-      const topic = new Topic({sheet});
+      const {topic, workbook} = getComponents();
       topic
         .add({title: 'main topic 1'})
         .add({title: 'main topic 1111'})
@@ -126,18 +125,18 @@ describe('# Functional Test', () => {
         .add({title: 'main topic 11'});
 
       topic
-        .on('main topic 1111')
+        .on(topic.topicId('main topic 1111'))
         .add({title: 'subtopic 1111'});
 
       topic
-        .on('main topic 1')
+        .on(topic.topicId('main topic 1'))
         .add({title: 'subtopic 1'});
 
       topic
-        .on('main topic 222')
+        .on(topic.topicId('main topic 222'))
         .note('add note to main topic 222')
         .add({title: 'subtopic 222 with a note'})
-        .on('subtopic 222 with a note')
+        .on(topic.topicId('subtopic 222 with a note'))
         .note('this is the note with');
 
       workbook.zipper.save().then((status) => {
@@ -150,13 +149,12 @@ describe('# Functional Test', () => {
 
     it('should be a topic destroyed', done => {
       const {topic, workbook} = getComponents();
-      const destroyedTopic = 'main topic 2';
       topic
         .add({title: 'main topic 1'})
         .add({title: 'main topic 2'})
         .add({title: 'main topic 3'});
 
-      topic.destroy(destroyedTopic);
+      topic.destroy(topic.topicId('main topic 2'));
       workbook.zipper.save().then(async status => {
         expect(status).to.be.true;
         const p = '/tmp/default.xmind';
@@ -167,7 +165,7 @@ describe('# Functional Test', () => {
           expect(map).to.be.an('object');
           const {attached} = map.rootTopic.children;
           expect(attached.length).to.be.eq(2);
-          expect(attached.find(child => child.title === destroyedTopic)).to.be.undefined;
+          expect(attached.find(child => child.title === topic.topicId('main topic 2'))).to.be.undefined;
           fs.unlinkSync(p);
           done();
         });
@@ -185,7 +183,7 @@ describe('# Functional Test', () => {
       const title = 'main topic 1';
       topic
         .add({title})
-        .on(title)
+        .on(topic.topicId()) // topic.topicId === last add title or topic.topicId(title)
         // @ts-ignore
         .marker({})
         // @ts-ignore
@@ -199,7 +197,7 @@ describe('# Functional Test', () => {
       const title = 'main topic 1';
       topic
         .add({title})
-        .on(title)
+        .on(topic.topicId(title))
         .marker(marker.smiley('cry'));
       workbook.zipper.save().then(status => {
         expect(status).to.be.true;
@@ -225,7 +223,7 @@ describe('# Functional Test', () => {
 
       topic
         .add({title: 'main topic 1'})
-        .on('main topic 1')
+        .on(topic.topicId())
         .add({title: 'subtopic 1'})
         .add({title: 'subtopic 2'})
         .summary({title: 'Test Summary'});
@@ -260,14 +258,14 @@ describe('# Functional Test', () => {
         .add({title: 'main topic 1'})
         .add({title: 'main topic 2'})
         .add({title: 'main topic 3'})
-        .on('main topic 1')
+        .on(topic.topicId('main topic 1'))
         .add({title: 'subtopic 1'})
         .add({title: 'subtopic 2'})
-        .on('main topic 2')
+        .on(topic.topicId('main topic 2'))
         .add({title: 'subtopic 1'})
 
-        .on('main topic 1') /* position topic title */
-        .summary({title: 'Test Summary', include: 'main topic 2'});
+        .on(topic.topicId('main topic 1')) /* position topic title */
+        .summary({title: 'Test Summary', include: topic.topicId('main topic 2')});
 
       workbook.zipper.save().then(status => {
         expect(status).to.be.true;
@@ -291,14 +289,14 @@ describe('# Functional Test', () => {
         .add({title: 'main topic 1'})
         .add({title: 'main topic 2'})
         .add({title: 'main topic 3'})
-        .on('main topic 1')
+        .on(topic.topicId('main topic 1'))
         .add({title: 'subtopic 1'})
         .add({title: 'subtopic 2'})
-        .on('main topic 2')
+        .on(topic.topicId('main topic 2'))
         .add({title: 'subtopic 1'})
 
-        .on('main topic 1') /* position topic title */
-        .summary({title: 'Test Summary', include: 'main topic does not exists'});
+        .on(topic.topicId('main topic 1')) /* position topic title */
+        .summary({title: 'Test Summary', include: topic.topicId('main topic does not exists')});
 
       workbook.zipper.save().then(status => {
         expect(status).to.be.true;
@@ -321,14 +319,14 @@ describe('# Functional Test', () => {
         .add({title: 'main topic 1'})
         .add({title: 'main topic 2'})
         .add({title: 'main topic 3'})
-        .on('main topic 1')
+        .on(topic.topicId('main topic 1'))
         .add({title: 'subtopic 1'})
         .add({title: 'subtopic 2'})
-        .on('main topic 2')
+        .on(topic.topicId('main topic 2'))
         .add({title: 'subtopic 1'})
 
-        .on('main topic 3') /* position topic title */
-        .summary({title: 'Test Summary', include: 'main topic 1'});
+        .on(topic.topicId('main topic 3')) /* position topic title */
+        .summary({title: 'Test Summary', include: topic.topicId('main topic 1')});
 
       workbook.zipper.save().then(status => {
         expect(status).to.be.true;

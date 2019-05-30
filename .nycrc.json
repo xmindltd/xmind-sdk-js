@@ -6,12 +6,14 @@
     "src/abstracts",
     "src/common",
     "src/index.ts",
+    "src/browser.ts",
     "test/",
     "example/",
     "dist/",
     "scripts/",
     "**/*.d.ts",
-    "docs"
+    "docs",
+    "coverage"
   ],
   "extension": [".ts"],
   "reporter": ["html", "text", "lcov"]

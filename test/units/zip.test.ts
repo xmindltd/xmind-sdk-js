@@ -1,7 +1,8 @@
-import Zipper from '../../src/utils/zipper';
 import { expect } from 'chai';
-import * as fs from 'fs';
 import { join } from 'path';
+import * as fs from 'fs';
+
+const Zipper = require('../../src/utils/zipper');
 
 describe('# Zip Unit Test', () => {
   it('should return error if path does not specified', done => {

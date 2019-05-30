@@ -4,13 +4,15 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/36420399770547e4825f0657eb29118b)](https://www.codacy.com/app/danielsss/xmind-sdk-js?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=xmindltd/xmind-sdk-js&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/36420399770547e4825f0657eb29118b)](https://www.codacy.com/app/danielsss/xmind-sdk-js?utm_source=github.com&utm_medium=referral&utm_content=xmindltd/xmind-sdk-js&utm_campaign=Badge_Coverage)
 
+# Preparing
+
 # XMind-sdk-js
 
 [The most popular mind mapping software.](https://www.xmind.net)
 
 The [`xmind-sdk-js`](https://github.com/xmindltd/xmind-sdk-js) is an official library that implemented a lot of functions as same as the UI client. if you use UI client, you already know how to use this library.
 
-In order to use, there is a very important concept you should know that is everything is component and each of component should have a unique title.
+In order to use, there is a very important concept you should know that is everything is component and each of component has a unique **topicId**.
 
 All of the components will be connected like a Map-Tree.
 
@@ -79,10 +81,10 @@ The `Workbook` extends `class Sheet` and has a zip kit.
 
 That will create a instance of Sheet and returns
 
-| Name | Type | Default | Description | 
-|:----:|:----:|:-------:|:------------|
-| sheetTitle | String | 'sheet-1' | The unique title string of sheet |
-| rootTopicTitle | String | 'Central Topic' | The unique title string of central topic |
+| Name | Type | Default | Required | Description | 
+|:----:|:----:|:-------:|:--------:|:------------|
+| sheetTitle | String | null | true | The unique title string of sheet |
+| rootTopicTitle | String | 'Central Topic' | false | The unique title string of central topic |
 
 
 #### `async` .zipper.save(path) => `Promise<boolean>`

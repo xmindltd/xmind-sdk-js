@@ -1,4 +1,4 @@
-import { Topic } from '../core/topic';
+import { Topic } from '..';
 import { SummaryOptions } from './summary.abstract';
 import * as Model from '../common/model';
 import Core = require('xmind-model');
@@ -15,7 +15,7 @@ export interface MarkerOptions {
 export interface AbstractTopic {
 
   /**
-   * @description Append a topic to the end of list
+   * @description Adding a topic component on the internal topic that specified by call .on()
    * @param {Model.Topic} topic - The topic data model
    * @param {Object} options
    * @param {Number} options.index - The position where is the element in Map-Tree
@@ -24,25 +24,25 @@ export interface AbstractTopic {
   add(topic: Model.Topic, options?: {index: number}): Topic;
 
   /**
-   * @description Insert a topic to the list where the index specified
-   * @param {String} [title] - The topic title default: `rootTopic`
+   * @description Set the direction of the internal topic of the instance
+   * @param {String} [topicId]
    * @return {Topic} The topic that was appended will be returned
    */
-  on(title?: string): Topic;
+  on(topicId?: string): Topic;
 
   /**
-   * @description Get topic by title
-   * @param {String} title
+   * @description Get topic by topicId
+   * @param {String} topicId
    * @return {Core.Topic} - Given null if topic title does not found
    */
-  find(title?: string): Core.Topic;
+  find(topicId?: string): Core.Topic;
 
   /**
    * @description Destroy a topic from Map-Tree
-   * @param {String} title
+   * @param {String} topicId
    * @return {Topic}
    */
-  destroy(title: string): Topic;
+  destroy(topicId: string): Topic;
 
   /**
    * @description Add summary info to topic or scope of topic
@@ -57,4 +57,18 @@ export interface AbstractTopic {
    * @return {Topic}
    */
   marker(options: MarkerOptions): Topic;
+
+  /**
+   * @description Get the id of direction of current internal topic
+   * * In default, It's going to return the last topic id that was you specified
+   * @param {String} title - Use the title to find out topicId
+   * @return {String}
+   */
+  topicId(title?: string): string;
+
+  /**
+   * @description Get a collection of the topicId and title string
+   * @return {Object}
+   */
+  topicIds(): object;
 }

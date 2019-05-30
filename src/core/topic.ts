@@ -1,17 +1,11 @@
-import {
-  AbstractTopic,
-  TopicOptions,
-  MarkerOptions
-} from '../abstracts/topic.abstract';
+import { AbstractTopic, TopicOptions, MarkerOptions } from '../abstracts/topic.abstract';
 import { SummaryOptions } from '../abstracts/summary.abstract';
 import { Summary } from './summary';
 import { Note } from './note';
+import { isEmpty, isObject } from 'lodash';
 import Base from './base';
 import * as Model from '../common/model';
 import Core = require('xmind-model');
-import { isEmpty, isObject } from 'lodash';
-
-const ROOT_TOPIC_TITLE = 'rootTopic';
 
 /**
  * @description Topic common methods
@@ -21,7 +15,8 @@ export class Topic extends Base implements AbstractTopic {
   private readonly root: Core.Topic;
   private readonly resources: {[key: string]: string} = {};
 
-  private title: string = ROOT_TOPIC_TITLE;
+  private _topicId: string;
+  private _lastTopicId: string;
 
   constructor(options: TopicOptions = <TopicOptions>{}) {
     super({debug: 'xmind-sdk:topic'});
@@ -31,19 +26,21 @@ export class Topic extends Base implements AbstractTopic {
 
     this.sheet = options.sheet;
     this.root = this.sheet.getRootTopic();
+    this._topicId = this.root.getId();
+    this.resources[this._topicId] = 'Central Topic';
   }
 
-  public on(title?: string) {
-    if (!title) {
-      this.title = ROOT_TOPIC_TITLE;
+  public on(topicId?: string) {
+    if (!topicId) {
+      this._topicId = this.root.getId();
       return this;
     } else {
-      if (!this.isValidTitle(title)) {
-        throw new Error('Invalid title:' + title);
+      if (!this.isValidTopicId(topicId)) {
+        throw new Error('Invalid topic id:' + topicId);
       }
     }
 
-    this.title = title;
+    this._topicId = topicId;
     return this;
   }
 
@@ -52,8 +49,10 @@ export class Topic extends Base implements AbstractTopic {
       throw new Error('topic.title should be a valid string');
     }
     topic.id = topic.id || this.id;
-    this.resources[topic.title] = topic.id;
-    this.current().addChildTopic(topic, options);
+    this.resources[topic.id] = topic.title;
+    const cur = this.current();
+    cur.addChildTopic(topic, options);
+    this._lastTopicId = topic.id;
     return this;
   }
 
@@ -65,15 +64,15 @@ export class Topic extends Base implements AbstractTopic {
     return this;
   }
 
-  public destroy(title: string) {
-    if (!this.isValidTitle(title)) {
-      this.debug('target: "%s" does not exists', title);
+  public destroy(topicId: string) {
+    if (!this.isValidTopicId(topicId)) {
+      this.debug('E - target: "%s" does not exists', topicId);
       return this;
     }
     try {
-      const topic = this.find(title);
+      const topic = this.find(topicId);
       topic.parent().removeChildTopic(topic);
-      delete this.resources[title];
+      delete this.resources[topicId];
     } catch (e) {
       /* istanbul ignore next */
       this.debug('D - %s', e.message);
@@ -81,9 +80,8 @@ export class Topic extends Base implements AbstractTopic {
     return this;
   }
 
-  public find(title?: string) {
-    const id = this.resources[title ? title : this.title];
-    return this.sheet.findComponentById(id);
+  public find(topicId?: string) {
+    return this.sheet.findComponentById(topicId || this._topicId);
   }
 
   public summary(options: SummaryOptions = <SummaryOptions>{}) {
@@ -92,10 +90,10 @@ export class Topic extends Base implements AbstractTopic {
       return this;
     }
 
-    let include = this.resources[this.title];
+    let include = null;
     if (options.include) {
       if (this.resources[options.include]) {
-        include = this.resources[options.include];
+        include = options.include;
       } else {
         this.debug('W - Topic "%s" does not exists', options.include);
       }
@@ -105,12 +103,12 @@ export class Topic extends Base implements AbstractTopic {
     const type = this.current().getType();
     const parent = this.current().parent();
     const children = parent.getChildrenByType(type);
-    const condition = [this.resources[this.title], include];
+    const condition = [this._topicId, !include ? this._topicId : include];
     summary.range({ children, condition });
-    const topic = {title: options.title || 'Summary', id: this.id};
-    summary.topicId = topic.id;
-    parent.addSummary(summary.toJSON(), topic);
-    this.resources[topic.title] = topic.id;
+    const summaryOptions = {title: options.title || 'Summary', id: this.id};
+    summary.topicId = summaryOptions.id;
+    parent.addSummary(summary.toJSON(), summaryOptions);
+    this.resources[summaryOptions.id] = summaryOptions.title;
     return this;
   }
 
@@ -126,6 +124,23 @@ export class Topic extends Base implements AbstractTopic {
     return this;
   }
 
+
+  public topicId(title?: string) {
+    if (title && typeof title === 'string') {
+      for (const topicId in this.resources) {
+        if (this.resources[topicId] === title) {
+          return topicId;
+        }
+      }
+      return null;
+    }
+    return this._lastTopicId;
+  }
+
+  public topicIds() {
+    return this.resources;
+  }
+
   /**
    * @description Get root topic
    * @return {Topic}
@@ -137,23 +152,21 @@ export class Topic extends Base implements AbstractTopic {
 
   /**
    * @description Get current topic instance
-   * @param {String} title
    * @return {Topic}
    * @private
    */
-  private current(title?: string) {
-    return (this.title === ROOT_TOPIC_TITLE) ?
-      this.root : this.find(title);
+  private current() {
+    return (this._topicId === this.root.getId()) ? this.root : this.find(this._topicId);
   }
 
   /**
-   * @description Check title
-   * @param {String} title
+   * @description Check topic id
+   * @param {String} topicId
    * @return {Boolean}
    * @private
    */
-  private isValidTitle(title: string) {
-    if (!title || typeof title !== 'string') return false;
-    return this.resources.hasOwnProperty(title);
+  private isValidTopicId(topicId: string) {
+    if (!topicId || typeof topicId !== 'string') return false;
+    return this.resources.hasOwnProperty(topicId);
   }
 }
