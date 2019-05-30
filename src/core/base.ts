@@ -9,12 +9,12 @@ export interface BaseOptions {
 const DEFAULT_DEBUG_SCOPE = 'xmind-sdk';
 
 export default class Base {
-  private readonly d;
+  private readonly _debug;
 
   /* istanbul ignore next */
   constructor(protected options: BaseOptions = <BaseOptions>{}) {
     this.options = options;
-    this.d = Debug(this.options.debug || DEFAULT_DEBUG_SCOPE);
+    this._debug = Debug(this.options.debug || DEFAULT_DEBUG_SCOPE);
   }
 
   /**
@@ -22,7 +22,7 @@ export default class Base {
    * @param {Array} args - the rest arguments
    */
   public debug(...args) {
-    this.d(...args);
+    this._debug(...args);
   }
 
   /**
