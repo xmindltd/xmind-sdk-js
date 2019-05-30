@@ -54,9 +54,9 @@ topic
    
    // add a note text on `main topic 1`
   .note('this is a note')
-  .on(topic.topicId('subtopic 1'))
   
   // add a marker flag on `subtopic 1`
+  .on(topic.topicId('subtopic 1'))
   .marker(marker.week('fri'))
    
    // add a summary component that contains two subtopics
