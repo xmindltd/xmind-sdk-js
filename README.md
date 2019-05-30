@@ -28,11 +28,10 @@ const {Workbook, Topic, Marker} = require('xmind-sdk');
 
 ##### Browser
 
-```js
-'To be continued'
-```
+**Preparing**
 
 ## Usage
+
 ```js
 const { Workbook, Topic, Marker } = require('xmind-sdk');
 
@@ -47,17 +46,25 @@ const topic = new Topic({sheet: wb.createSheet(sheetName, centralTopicName)});
 topic.add({title: 'main topic 1'});
 
 topic
-  .on('main topic 1')
-  .add({title: 'subtopic 1'}) // add a subtopic on `main topic 1`
+  .on(topic.topicId(/*In default, the topic id is last element*/))
+  
+  // add a subtopic on `main topic 1`
+  .add({title: 'subtopic 1'})
   .add({title: 'subtopic 2'})
-  .note('this is a note') // add a note text on `main topic 1`
-  .on('subtopic 1')
-  .marker(marker.week('fri')) // add a marker flag on `subtopic 1`
-  .summary({title: 'subtopic summary', include: 'subtopic 2'}) // add a summary component that contains two subtopics
+   
+   // add a note text on `main topic 1`
+  .note('this is a note')
+  .on(topic.topicId('subtopic 1'))
+  
+  // add a marker flag on `subtopic 1`
+  .marker(marker.week('fri'))
+   
+   // add a summary component that contains two subtopics
+  .summary({title: 'subtopic summary', include: topic.topicId('subtopic 2')})
   
 wb.zipper.save().then(status => { 
   if (status === true) {
-    console.info('/tmp/default.xmind is saved and you can open it with XMind Zen, Lighten.');
+    console.info('It saved and you can open it with XMind Zen or Lighten.');
   } else {
     console.error('Saving .xmind file is failure.');
   }
