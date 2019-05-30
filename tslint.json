@@ -1,8 +1,7 @@
 {
   "linterOptions": {
     "exclude": [
-      "**/test/**/**",
-      "**/src/original/**/**"
+      "**/test/**/**"
     ]
   },
   "rules": {
