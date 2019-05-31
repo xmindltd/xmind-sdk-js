@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Example.summary - Easy usage
+ * Example.summary - Summary usage
  */
 
 const { Workbook, Topic, Zipper } = require('xmind-sdk');

@@ -2,7 +2,7 @@
 
 
 /**
- * Example.fully: Topic fully usage
+ * Example.fully - Topic fully usage
  */
 
 
