@@ -1,9 +1,9 @@
-import { AbstractZipper } from '../abstracts/zipper';
-import { isObject } from 'lodash';
 import { join } from 'path';
 import { promisify } from 'util';
 import { Workbook } from '..';
+import { isObject } from 'lodash';
 import * as fs from 'fs';
+import Base from '../core/base';
 import JSZip = require('jszip');
 
 const PACKAGE_MAP = {
@@ -27,16 +27,16 @@ interface ZipperOptions {
 
 /**
  * @description Zipper for .xmind file
- * @implements AbstractZipper
  */
-export class Zipper implements AbstractZipper {
+export class Zipper extends Base {
   protected zip: JSZip;
 
   public filename: string;
   public path: string;
   public workbook: Workbook;
 
-  constructor(protected options: ZipperOptions) {
+  constructor(options: ZipperOptions) {
+    super({debug: 'xmind-sdk:zipper'});
     if (!options.path || !fs.existsSync(options.path)) {
       throw new Error('the `path` is required or must exists');
     }
@@ -49,25 +49,26 @@ export class Zipper implements AbstractZipper {
 
   /**
    * @description Saving zip file
-   * @param {String} path - an absolute path
    * @return {Promise}
    * @public
    * @async
    */
-  public async save(path?: string) {
+  public async save() {
     if (this.workbook) {
       this.addJSONContent(this.workbook.toString());
-      this.addMetadataContents({});
+      this.addMetadataContents();
       this.addXMLContent();
       this.addManifestContents();
     }
+
     const options: JSZip.JSZipGeneratorOptions = {
       type: 'nodebuffer',
       compression: 'DEFLATE',
-      compressionOptions: {level: 9}
+      compressionOptions: {level: 9},
+      platform: 'UNIX'
     };
     const metadata = await this.zip.generateAsync(options);
-    const target = join((path ? path : this.path), this.filename);
+    const target = join(this.path, this.filename);
     return promisify(fs.writeFile)(target, metadata)
       .then(() => true)
       .catch(/* istanbul ignore next */ () => false);
@@ -75,58 +76,39 @@ export class Zipper implements AbstractZipper {
 
   /**
    * @description add contents to metadata.json file
-   * @param {String | Object} content
-   * @return {String}
-   * @public
+   *
    */
-  public addMetadataContents(content: string | object) {
-    /* istanbul ignore next */
-    if (isObject(content)) {
-      content = JSON.stringify(content);
-    }
-    this.zip.file(PACKAGE_MAP.METADATA.NAME, content);
-    return this.zip.file(PACKAGE_MAP.METADATA.NAME).name;
+  private addMetadataContents() {
+    this.zip.file(PACKAGE_MAP.METADATA.NAME, '{}');
+    return this;
   }
 
   /**
    * @description add contents to manifest.json
-   * @param {String} content
-   * @return {String}
-   * @public
    */
-  public addManifestContents(content: string = manifest) {
-    this.zip.file(PACKAGE_MAP.MANIFEST.NAME, content);
-    return this.zip.file(PACKAGE_MAP.MANIFEST.NAME).name;
+  private addManifestContents() {
+    this.zip.file(PACKAGE_MAP.MANIFEST.NAME, manifest);
+    return this;
   }
 
   /**
    * @description add contents to content.json
-   * @param {String | Object} content
-   * @return {String}
-   * @public
    */
-  public addJSONContent(content: string | object) {
-    if (isObject(content)) {
-      content = JSON.stringify(content);
+  private addJSONContent(contents: string) {
+    if (isObject(contents)) {
+      contents = JSON.stringify(contents);
     }
-    this.zip.file(PACKAGE_MAP.CONTENT_JSON.NAME, content);
-    return this.zip.file(PACKAGE_MAP.CONTENT_JSON.NAME).name;
+    this.zip.file(PACKAGE_MAP.CONTENT_JSON.NAME, contents);
+    return this;
   }
 
   /**
    * @description add contents to content.xml
-   * @param {*} [content]
-   * @return {String}
-   * @public
    */
-  public addXMLContent(content?: any) {
+  private addXMLContent() {
     const p = join(__dirname, '../common/templates/content.xml');
-    this.zip.file(PACKAGE_MAP.CONTENT_XML.NAME, fs.createReadStream(p));
-    return this.zip.file(PACKAGE_MAP.CONTENT_XML.NAME).name;
+    this.zip.file(PACKAGE_MAP.CONTENT_XML.NAME, fs.readFileSync(p));
+    return this;
   }
 }
-
-// export default Zipper;
-
-module.exports = Zipper;
 

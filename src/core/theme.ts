@@ -12,6 +12,9 @@ interface ThemeOptions {
   themeName: string;
 }
 
+/**
+ * @description Invisible external
+ */
 export class Theme {
   private readonly value: Model.Theme;
 
@@ -23,24 +26,18 @@ export class Theme {
       throw new Error(`the theme name ${name} is not allowed`);
     }
 
-    this.value = Theme.loader(name);
+    this.value = this.loader(name);
   }
 
   get data() {
     return this.value;
   }
 
-  static loader(name: string) {
-    try {
-      if (!name || typeof name !== 'string') {
-        return null;
-      }
-      const title = name.endsWith('.json') ? name.split('.')[0] : name;
-      name = name.endsWith('.json') ? name : `${name}.json`;
-      let theme = JSON.parse(readFileSync(join(THEME_PATH, name), {encoding: 'utf8'}));
-      theme.id = v4();
-      theme.title = title;
-      return theme;
-    } catch (e) { debug('E - %s', e.message); }
+  private loader(name: string) {
+    const contents = readFileSync(join(THEME_PATH, `${name}.json`), {encoding: 'utf8'});
+    const theme = JSON.parse(contents);
+    theme.id = v4();
+    theme.title = name;
+    return theme;
   }
 }

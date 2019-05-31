@@ -90,12 +90,12 @@ export class Topic extends Base implements AbstractTopic {
       return this;
     }
 
-    let include = null;
-    if (options.include) {
-      if (this.resources[options.include]) {
-        include = options.include;
+    let edge = null;
+    if (options.edge) {
+      if (this.resources[options.edge]) {
+        edge = options.edge;
       } else {
-        this.debug('W - Topic "%s" does not exists', options.include);
+        this.debug('W - Topic "%s" does not exists', options.edge);
       }
     }
 
@@ -103,7 +103,7 @@ export class Topic extends Base implements AbstractTopic {
     const type = this.current().getType();
     const parent = this.current().parent();
     const children = parent.getChildrenByType(type);
-    const condition = [this._topicId, !include ? this._topicId : include];
+    const condition = [this._topicId, !edge ? this._topicId : edge];
     summary.range({ children, condition });
     const summaryOptions = {title: options.title || 'Summary', id: this.id};
     summary.topicId = summaryOptions.id;

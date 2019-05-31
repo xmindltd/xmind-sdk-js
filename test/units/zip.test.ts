@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { join } from 'path';
 import * as fs from 'fs';
 
-const Zipper = require('../../src/utils/zipper');
+const {Zipper} = require('../../src');
 
 describe('# Zip Unit Test', () => {
   it('should return error if path does not specified', done => {

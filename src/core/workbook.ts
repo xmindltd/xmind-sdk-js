@@ -1,4 +1,3 @@
-import { AbstractZipper as ZipperType } from '../abstracts/zipper';
 import { AbstractWorkbook } from '../abstracts/workbook.abstract';
 import { Theme } from './theme';
 import Base from './base';
@@ -10,7 +9,6 @@ import Core = require('xmind-model');
  * @extends {Base}
  */
 export class Workbook extends Base implements AbstractWorkbook {
-  public zipper: ZipperType;
   public sheet: Core.Sheet;
   private workbook: Core.Workbook;
   private readonly resources;
@@ -19,12 +17,6 @@ export class Workbook extends Base implements AbstractWorkbook {
   constructor() {
     super();
     this.resources = {};
-    this.zipper = null;
-    if (typeof process === 'object') {
-      const Zipper = require('../utils/zipper');
-      const zipperOptions = {path: '/tmp', workbook: this};
-      this.zipper = new Zipper(zipperOptions);
-    }
   }
 
 
@@ -61,8 +53,13 @@ export class Workbook extends Base implements AbstractWorkbook {
 
 
   public createSheet(sheetTitle: string, centralTopicTitle = 'Central Topic') {
-    if (!sheetTitle) throw new Error('Title required');
-    if (this.resources.hasOwnProperty(sheetTitle)) throw new Error('Title duplicated');
+    if (!sheetTitle) {
+      throw new Error('The title of sheet is required');
+    }
+
+    if (this.resources.hasOwnProperty(sheetTitle)) {
+      throw new Error('The title of sheet is duplication');
+    }
 
     const sheetId = this.id;
     this.resources[sheetTitle] = sheetId;

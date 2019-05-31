@@ -3,16 +3,17 @@
   "version": "1.0.1",
   "description": "The SDK of XMind Ltd.",
   "main": "dist/index.js",
-  "browser": "",
+  "browser": "dist/bundle.js",
   "scripts": {
-    "test": "nyc mocha",
-    "build": "rm -rf ./dist && node_modules/.bin/tsc && npm run browserify",
+    "test": "npm run lint && nyc mocha",
+    "build": "npm run test && rm -rf ./dist && node_modules/.bin/tsc && npm run cp && npm run browserify",
     "lint": "node_modules/.bin/tslint --config tslint.json --project .",
     "fix": "node_modules/.bin/tslint --config tslint.json --project . --fix",
     "build-doc": "BUILD_DOCS=true node scripts/icons.js",
     "browserify": "node_modules/.bin/browserify ./dist/browser.js -o ./dist/bundle.js",
     "cov": "cat ./coverage/lcov.info | codacy-coverage --language typescript",
-    "clean": "rm -rf ./coverage ./.nyc_output"
+    "clean": "rm -rf ./coverage ./.nyc_output",
+    "cp": "cp -r ./src/common/templates ./src/common/themes ./dist/common/"
   },
   "repository": {
     "type": "git",

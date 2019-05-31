@@ -1,4 +1,4 @@
-import { Workbook, Topic, Marker } from '../../src';
+import { Workbook, Topic, Marker, Zipper } from '../../src';
 import * as chai from 'chai';
 import * as fs from 'fs';
 import * as JSZip from 'jszip';
@@ -9,7 +9,8 @@ const expect = chai.expect;
 const getComponents = function() {
   const workbook = new Workbook();
   const topic = new Topic({sheet: workbook.createSheet('sheet1', 'centralTopic')});
-  return {topic, workbook};
+  const zip = new Zipper({path: '/tmp', workbook});
+  return {topic, workbook, zip};
 }
 
 
@@ -117,7 +118,7 @@ describe('# Functional Test', () => {
         fs.unlinkSync(p);
       }
 
-      const {topic, workbook} = getComponents();
+      const {topic, zip} = getComponents();
       topic
         .add({title: 'main topic 1'})
         .add({title: 'main topic 1111'})
@@ -139,7 +140,7 @@ describe('# Functional Test', () => {
         .on(topic.topicId('subtopic 222 with a note'))
         .note('this is the note with');
 
-      workbook.zipper.save().then((status) => {
+      zip.save().then((status) => {
         expect(status).to.be.true;
         expect(fs.existsSync(p)).to.be.true;
         fs.unlinkSync(p);
@@ -148,14 +149,14 @@ describe('# Functional Test', () => {
     });
 
     it('should be a topic destroyed', done => {
-      const {topic, workbook} = getComponents();
+      const {topic, zip} = getComponents();
       topic
         .add({title: 'main topic 1'})
         .add({title: 'main topic 2'})
         .add({title: 'main topic 3'});
 
       topic.destroy(topic.topicId('main topic 2'));
-      workbook.zipper.save().then(async status => {
+      zip.save().then(async status => {
         expect(status).to.be.true;
         const p = '/tmp/default.xmind';
         const content = fs.readFileSync(p);
@@ -192,14 +193,14 @@ describe('# Functional Test', () => {
     });
 
     it('should be one of smiley marker flag added', done => {
-      const {topic, workbook} = getComponents();
+      const {topic, zip} = getComponents();
       const marker = new Marker();
       const title = 'main topic 1';
       topic
         .add({title})
         .on(topic.topicId(title))
         .marker(marker.smiley('cry'));
-      workbook.zipper.save().then(status => {
+      zip.save().then(status => {
         expect(status).to.be.true;
         const p = '/tmp/default.xmind';
         const content = fs.readFileSync(p);
@@ -218,8 +219,36 @@ describe('# Functional Test', () => {
   });
 
   describe('# Summary', () => {
+    it('should be edge ignored if topic id does not exists', done => {
+      const {topic, zip} = getComponents();
+
+      topic
+        .add({title: 'main topic 1'})
+        .on(topic.topicId())
+        .add({title: 'subtopic 1'})
+        .add({title: 'subtopic 2'})
+        .summary({title: 'Test Summary', edge: 'does not exists'});
+
+      zip.save().then(status => {
+        expect(status).to.be.true;
+        const p = '/tmp/default.xmind';
+        const content = fs.readFileSync(p);
+        JSZip.loadAsync(content).then(async zip => {
+          const text = await zip.file('content.json').async('text');
+          const map = JSON.parse(text)[0];
+          expect(map).to.be.an('object');
+          expect(map).to.have.property('rootTopic');
+          expect(map.rootTopic).to.have.property('summaries');
+          expect(map.rootTopic.summaries[0]).to.have.property('range').that.to.be.an('string');
+          expect(map.rootTopic.summaries[0].range).to.eq('(0,0)');
+          fs.unlinkSync(p);
+          done();
+        });
+      });
+    });
+
     it('should be a summary object added that contains 1 main topic and 2 subtopics', done => {
-      const {topic, workbook} = getComponents();
+      const {topic, zip} = getComponents();
 
       topic
         .add({title: 'main topic 1'})
@@ -228,7 +257,7 @@ describe('# Functional Test', () => {
         .add({title: 'subtopic 2'})
         .summary({title: 'Test Summary'});
 
-      workbook.zipper.save().then(status => {
+      zip.save().then(status => {
         expect(status).to.be.true;
         const p = '/tmp/default.xmind';
         const content = fs.readFileSync(p);
@@ -252,7 +281,7 @@ describe('# Functional Test', () => {
 
 
     it('should be a summary object added that contains 2 main topic and 3 subtopics', done => {
-      const {topic, workbook} = getComponents();
+      const {topic, zip} = getComponents();
 
       topic
         .add({title: 'main topic 1'})
@@ -265,9 +294,9 @@ describe('# Functional Test', () => {
         .add({title: 'subtopic 1'})
 
         .on(topic.topicId('main topic 1')) /* position topic title */
-        .summary({title: 'Test Summary', include: topic.topicId('main topic 2')});
+        .summary({title: 'Test Summary', edge: topic.topicId('main topic 2')});
 
-      workbook.zipper.save().then(status => {
+      zip.save().then(status => {
         expect(status).to.be.true;
         const p = '/tmp/default.xmind';
         const content = fs.readFileSync(p);
@@ -283,7 +312,7 @@ describe('# Functional Test', () => {
     });
 
     it('only contains 1 main topic if given a invalid range topic name', done => {
-      const {topic, workbook} = getComponents();
+      const {topic, zip} = getComponents();
 
       topic
         .add({title: 'main topic 1'})
@@ -296,9 +325,9 @@ describe('# Functional Test', () => {
         .add({title: 'subtopic 1'})
 
         .on(topic.topicId('main topic 1')) /* position topic title */
-        .summary({title: 'Test Summary', include: topic.topicId('main topic does not exists')});
+        .summary({title: 'Test Summary', edge: topic.topicId('main topic does not exists')});
 
-      workbook.zipper.save().then(status => {
+      zip.save().then(status => {
         expect(status).to.be.true;
         const p = '/tmp/default.xmind';
         const content = fs.readFileSync(p);
@@ -314,7 +343,7 @@ describe('# Functional Test', () => {
     });
 
     it('only contains start position if the index position (start > end)', done => {
-      const {topic, workbook} = getComponents();
+      const {topic, zip} = getComponents();
       topic
         .add({title: 'main topic 1'})
         .add({title: 'main topic 2'})
@@ -326,9 +355,9 @@ describe('# Functional Test', () => {
         .add({title: 'subtopic 1'})
 
         .on(topic.topicId('main topic 3')) /* position topic title */
-        .summary({title: 'Test Summary', include: topic.topicId('main topic 1')});
+        .summary({title: 'Test Summary', edge: topic.topicId('main topic 1')});
 
-      workbook.zipper.save().then(status => {
+      zip.save().then(status => {
         expect(status).to.be.true;
         const p = '/tmp/default.xmind';
         const content = fs.readFileSync(p);

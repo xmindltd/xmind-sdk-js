@@ -20,7 +20,7 @@ export class Summary extends Base implements AbstractSummary {
         }
       }
     } else {
-      let s, e = undefined;
+      let s, e = 0;
       for (let i = 0, len = children.length; i < len; i++) {
         if (children[i].getId() === condition[0]) {
           s = i;

@@ -3,7 +3,7 @@ import Core = require('xmind-model');
 
 export interface SummaryOptions {
   title?: string;
-  include?: string;
+  edge?: string;
 }
 
 export interface RangeOptions {

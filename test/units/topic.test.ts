@@ -1,4 +1,4 @@
-import {Topic, Workbook} from '../../src';
+import {Topic, Workbook, Zipper} from '../../src';
 import {expect} from 'chai';
 import * as fs from "fs";
 import * as JSZip from 'jszip';
@@ -7,7 +7,8 @@ import * as JSZip from 'jszip';
 const getComponents = function() {
   const workbook = new Workbook();
   const topic = new Topic({sheet: workbook.createSheet('sheet1', 'centralTopic')});
-  return {topic, workbook};
+  const zip = new Zipper({path: '/tmp', workbook});
+  return {topic, workbook, zip};
 }
 
 describe('# Topic Unit Test', () => {
@@ -46,13 +47,13 @@ describe('# Topic Unit Test', () => {
   });
 
   it('should be failed to destroy topic with invalid title', done => {
-    const {topic, workbook} = getComponents();
+    const {topic, zip} = getComponents();
     topic
       .add({title: '1'})
       .add({title: '2'})
       .destroy('22');
 
-    workbook.zipper.save().then(async status => {
+    zip.save().then(async status => {
       expect(status).to.be.true;
       const p = '/tmp/default.xmind';
       const content = fs.readFileSync(p);
@@ -78,6 +79,21 @@ describe('# Topic Unit Test', () => {
     const {topic} = getComponents();
     // @ts-ignore
     topic.note();
+    done();
+  });
+
+  it('should return topics if topicIds called', done => {
+    const {topic} = getComponents();
+
+    topic
+      .add({title: '1'})
+      .add({title: '2'});
+
+    const topics = topic.topicIds();
+    expect(topics).to.have.property(topic.topicId('1'));
+    expect(topics).to.have.property(topic.topicId('2'));
+    expect(topics).to.have.property(topic.topicId('Central Topic'));
+    expect(topics).to.have.property(topic.rootTopicId);
     done();
   });
 

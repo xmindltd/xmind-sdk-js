@@ -20,4 +20,27 @@ describe('# Workbook Unit Test', () => {
     expect(ret).to.be.true;
     done();
   });
+
+  it('should be failed if sheet title as empty', done => {
+    try {
+      const workbook = new Workbook();
+      // @ts-ignore
+      workbook.createSheet();
+    } catch (e) {
+      expect(e.message).to.be.eq('The title of sheet is required');
+      done();
+    }
+  });
+
+  it('should be failed if given a title of the sheet of duplication', done => {
+    try {
+      const workbook = new Workbook();
+      workbook.createSheet('sheet-1');
+      workbook.createSheet('sheet-1');
+    } catch (e) {
+      expect(e.message).to.be.eq('The title of sheet is duplication');
+      done();
+    }
+  });
+
 });

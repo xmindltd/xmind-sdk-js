@@ -1,4 +1,4 @@
-import { Workbook, Topic, Marker } from '../src';
+import { Workbook, Topic, Marker, Zipper } from '../src';
 
 
 // create workbook & sheet
@@ -34,4 +34,5 @@ topic
 console.info('Main topic Id:', topic.topicId('main topic 1'));
 console.info(topic.topicIds());
 
-wb.zipper.save().then(status => {console.info(status)});
+const zip = new Zipper({path: '/tmp', workbook: wb});
+zip.save().then(status => {console.info(status)});

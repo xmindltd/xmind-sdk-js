@@ -73,7 +73,7 @@ wb.zipper.save().then(status => {
 ```
 ## More Examples
 
-[Click here](example/examples.js)
+[Click here](example)
 
 ## Workbook(options)
 
