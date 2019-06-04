@@ -79,7 +79,7 @@ zipper.save().then(status => status && console.log('Saved /tmp/MyFirstMap.xmind'
 
 [!Click here](example)
 
-## Workbook() => Workbook
+## Workbook
 
 The workbook is a basic container to store the Real-Data of component.
 
@@ -112,18 +112,7 @@ Show up components info as `JSON` format.
 
 Show up components info as `STRING` format.
 
-## Zipper(ZipperOptions) => Zipper
-
-#### .save() => Promise\<boolean\>
-
-The saver method is `asynchronous`.
- 
-| Name | Type | Default | Required | Description | 
-|:----:|:----:|:-------:|:--------:|:------------|
-| path | String | null | false | The path has priority over `Workbook's options.path` |
- 
-
-## Topic(TopicOptions) => Topic
+## Topic
 
 ### TopicOptions
 
@@ -219,6 +208,36 @@ We provides an instance of `Marker` that includes all the markers. such as below
 * **.other(name: `string`)** - the other markers
 
 **The `name` of marker available [!here](docs/icons.md)**
+
+## Zipper
+
+The Zipper only works on backend.
+
+[!See `Dumper` in browser environment](#dumper)
+
+#### ZipperOptions
+
+| Name | Type | Default | Required | Description | 
+|:----:|:----:|:-------:|:--------:|:------------|
+| path | String | null | true | The path where the .xmind file to save |
+| workbook | Workbook | null | true | The instance of Workbook |
+| filename | String | 'default' | false | `default.xmind` |
+
+#### .save() => Promise\<boolean\>
+
+The saver method is `asynchronous`.
+
+## Dumper
+
+The Dumper only works on browser.
+
+#### .dumping() => Array<{filename: string, value: string}>
+
+You should consider to save the dumped data and zip it as file `*.xmind`
+
+**Important**
+
+Do not includes the top level folder, or the software won't extra file from top level folder.
 
 ## Contributing
 
