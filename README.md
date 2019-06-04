@@ -11,11 +11,11 @@
 
 ## Concept
 
-The [`xmind-sdk-js`](https://github.com/xmindltd/xmind-sdk-js) is an official library that implemented a lot of functions as same as the UI client. if you use UI client, you already know how to use this library.
+The [`xmind-sdk-js`](https://github.com/xmindltd/xmind-sdk-js) is an official library that implements a lot of functions as same as the UI client. If you use UI client, you could have already known how to use this library.
 
-In order to use, there is a very important concept you should know that is everything is component and each of component has a unique **topicId**.
+In order to use conveniently, a very important concept you should know is that everything is component and each of component has a unique `topicId`.
 
-All of the components will be connected as a Map-tree.
+All of the components will be connected as a map tree.
 
 ## Getting started
 
@@ -85,7 +85,7 @@ zipper.save().then(status => status && console.log('Saved /tmp/MyFirstMap.xmind'
 
 ## Workbook
 
-The workbook is a basic container to store the Real-data of component
+The workbook is a basic container to store the real data of component
 
 ### Methods
 
@@ -186,7 +186,7 @@ The workbook is a basic container to store the Real-data of component
 
 ###### .destroy(topicId) => Topic
 
-* Destroy a topic component from the Map-tree
+* Destroy a topic component from the map tree
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
