@@ -4,7 +4,6 @@ image:
 stack: node 8, node 10, node 12
 
 install:
-  - ps: Install-Product node $env:nodejs_version
   - npm i ts-node
 
 test_script:
