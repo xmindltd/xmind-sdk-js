@@ -9,7 +9,7 @@
   <script src="../../dist/xmind-sdk.bundle.js"></script>
   <script>
     if (window.Workbook) {
-      const {Workbook, Topic} = window;
+      const {Workbook, Topic, Dumper} = window;
       const wb = new Workbook();
       const topic = new Topic({sheet: wb.createSheet('sheet-1')});
       topic
@@ -18,6 +18,8 @@
         .add({title: 'main topic 2'});
 
       console.info(wb.toJSON());
+      const dumper = new Dumper({workbook: wb});
+      console.info(dumper.dumping());
     }
   </script>
 </body>

@@ -179,24 +179,11 @@ Adding a summary for topics with an optional range
 | title | String | null | true | The Summary title |
 | edge | String | null | false | The topicId that must parallel with your parent node |
 
-> `edge` Graphic explanation:
-> |--------------------------------------------------------------------------------------|
-> |                                                                                      |
-> |      /* set main topic 1 as the parent node.*/                                       |
-> |      /* topic.on(topic.topicId('main topic 1')) */                                   |
-> |      main topic 1 - ...                                                              |
-> |                                                                                      |
-> |      main topic 2 - ...                                                              |
-> |                     `subtopic 1` belows `main topic 1`                               |
-> |                   /                                                                  |
-> |      main topic 3 - `subtopic 2` belows `main topic 1`                               |
-> |      /* so now, you can call summary with the edge = topic.topicId('main topic 3') */|
-> |      /* Only `main topic 1` is left if you set edge = topic.topicId('subtopic 1') */ |
-> |--------------------------------------------------------------------------------------|
+[!`edge` graphic](docs/edge.graphic.txt)
 
 #### .destroy(topicId) => Topic
 
-Destroy a topic component from the Map-Tree
+Destroy a topic component from the Map-tree.
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|

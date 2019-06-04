@@ -1,4 +1,3 @@
-
 /* Basic type alias */
 type Extension = ExtensionTextNode | ExtensionChildNode;
 type ItemInformation = Array<{type: string, mode: string}>;
