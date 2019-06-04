@@ -21,8 +21,8 @@ const manifest = '{"file-entries":{"content.json":{},"metadata.json":{}}}';
 
 interface ZipperOptions {
   path: string;
+  workbook: Workbook;
   filename?: string;
-  workbook?: Workbook;
 }
 
 /**
