@@ -22,7 +22,9 @@ All of the components will be connected as a Map-tree.
 
 ```shell
 $ npm i --save xmind-sdk
+```
 
+```js
 const {Workbook, Topic, Marker} = require('xmind-sdk');
 ```
 
@@ -81,13 +83,14 @@ zipper.save().then(status => status && console.log('Saved /tmp/MyFirstMap.xmind'
 
 ## Workbook
 
-The workbook is a basic container to store the Real-Data of component.
+The workbook is a basic container to store the Real-data of component
 
 ### Methods
 
 #### .createSheet(sheetTitle, centralTopicTitle) => `Sheet`
 
 That will create a instance of Sheet and it will be returned
+
 
 | Name | Type | Default | Required | Description | 
 |:----:|:----:|:-------:|:--------:|:------------|
@@ -97,7 +100,8 @@ That will create a instance of Sheet and it will be returned
 
 #### .theme(sheetTitle, themeName) => Boolean
 
-Set map theme.
+Set map theme
+
 
 | Name | Type | Default | Required | Description | 
 |:----:|:----:|:-------:|:--------:|:------------|
@@ -106,11 +110,13 @@ Set map theme.
 
 #### .toJSON() => JSON
 
-Show up components info as `JSON` format.
+Show up components info as `JSON` format
+
 
 #### .toString() => String
 
-Show up components info as `STRING` format.
+Show up components info as `STRING` format
+
 
 ## Topic
 
@@ -118,13 +124,14 @@ Show up components info as `STRING` format.
 
 * `sheet` - The instance of Workbook.createSheet(...)
 
+
 ### Methods
 
 #### .topicId(title) => String
 
 In default, returns the `central topicId`.
 
-Also, you can get a topicId by the `title` but you should be careful about the title to be repeated, or it will find the first one and return it.
+Also, you can get a topicId by the `title` but you should be careful about the title to be repeated, or it will find the first one and return it
 
 #### .topicIds() => {$topicId: $title}
 
@@ -132,52 +139,64 @@ Gives you an object that contains the pair of `$topicId` and `$title` you have a
 
 #### .on(topicId) => Topic
 
-Set the topicId as parent node and the other methods will depend on it.
+Set the topicId as parent node and the other methods will depend on it
+
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
 | topicId | String | `Central Topic` | false | The topic that you have added |
 
+
 #### .add(options) => Topic
 
-The component will be added if you call it with a valid title string.
+The component will be added if you call it with a valid title string
+
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
 | options.title | String | null | true | A title of topic |
 
+
 #### .note(text) => Topic
 
-Add a note text on the parent node.
+Add a note text on the parent node
+
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
 | text | String | null | true | A note text message |
 
+
 #### .marker(options) => Topic
 
-Add a marker flag on the parent node.
+Add a marker flag on the parent node
 
 [Use `Marker Object` to generate the options](#marker-flags)
 
+
 #### .summary(options) => Topic
- 
+
 Adding a summary for topics with an optional range
- 
+
+
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
 | title | String | null | true | The Summary title |
 | edge | String | null | false | The topicId that must parallel with your parent node |
 
+
 [!`edge` graphic](docs/edge.graphic.txt)
+
 
 #### .destroy(topicId) => Topic
 
-Destroy a topic component from the Map-tree.
+Destroy a topic component from the Map-tree
+
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
 | topicId | String | null | true | The topicId that you have added by call `.add()` |
+
 
 ## Marker flags
 
@@ -209,6 +228,7 @@ We provides an instance of `Marker` that includes all the markers. such as below
 
 **The `name` of marker available [!here](docs/icons.md)**
 
+
 ## Zipper
 
 The Zipper only works on backend.
@@ -217,11 +237,13 @@ The Zipper only works on backend.
 
 #### ZipperOptions
 
+
 | Name | Type | Default | Required | Description | 
 |:----:|:----:|:-------:|:--------:|:------------|
 | path | String | null | true | The path where the .xmind file to save |
 | workbook | Workbook | null | true | The instance of Workbook |
 | filename | String | 'default' | false | `default.xmind` |
+
 
 #### .save() => Promise\<boolean\>
 
