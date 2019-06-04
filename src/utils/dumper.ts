@@ -20,9 +20,9 @@ export interface DumperOptions {
 export class Dumper {
   private workbook: Workbook;
 
-  constructor(protected options: DumperOptions) {
-    if (options && !(options.workbook instanceof Workbook)) {
-      throw new Error('The workbook instance is required');
+  constructor(protected options: DumperOptions = <DumperOptions>{}) {
+    if (!(options.workbook instanceof Workbook)) {
+      throw new Error('The instance of workbook is required');
     }
     this.workbook = options.workbook;
   }
