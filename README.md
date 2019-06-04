@@ -114,7 +114,7 @@ Show up components info as `STRING` format.
 
 ## Zipper(ZipperOptions) => Zipper
 
-#### `async` .save(path) => `Promise<boolean>`
+#### `async` .save(path) => Promise<boolean>
  
 | Name | Type | Default | Required | Description | 
 |:----:|:----:|:-------:|:--------:|:------------|
