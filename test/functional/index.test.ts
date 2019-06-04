@@ -2,6 +2,7 @@ import { Workbook, Topic, Marker, Zipper } from '../../src';
 import * as chai from 'chai';
 import * as fs from 'fs';
 import * as JSZip from 'jszip';
+import {win32} from 'path';
 import Core = require('xmind-model');
 
 const expect = chai.expect;
@@ -11,7 +12,7 @@ const getComponents = function() {
   const workbook = new Workbook();
   const topic = new Topic({sheet: workbook.createSheet('sheet1', 'centralTopic')});
   if (process.platform === 'win32') {
-    p = 'C:\\\\tmp'
+    p = win32.normalize('C:\\tmp');
   }
   const zip = new Zipper({path: p, workbook});
   return {topic, workbook, zip};
