@@ -11,7 +11,7 @@ install:
 test_script:
   - node --version
   - npm --version
-  - DEBUG=xmind-sdk:* npm run test
+  - set DEBUG=xmind-sdk:* npm run test
   - npm run build
 
 build: off
