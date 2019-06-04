@@ -5,11 +5,15 @@ import * as JSZip from 'jszip';
 import Core = require('xmind-model');
 
 const expect = chai.expect;
+let p = '/tmp';
 
 const getComponents = function() {
   const workbook = new Workbook();
   const topic = new Topic({sheet: workbook.createSheet('sheet1', 'centralTopic')});
-  const zip = new Zipper({path: '/tmp', workbook});
+  if (process.platform === 'win32') {
+    p = 'C:\\\\tmp'
+  }
+  const zip = new Zipper({path: p, workbook});
   return {topic, workbook, zip};
 }
 
