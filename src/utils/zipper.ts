@@ -38,7 +38,7 @@ export class Zipper extends Base {
   constructor(options: ZipperOptions) {
     super({debug: 'xmind-sdk:zipper'});
     if (!options.path || !fs.existsSync(options.path)) {
-      this.debug('received %s', options.path);
+      this.debug('received %s', options.path)
       throw new Error('the `path` is required or must exists');
     }
     this.filename = options.filename || DEFAULT_FILENAME;
