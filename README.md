@@ -14,7 +14,7 @@ The [`xmind-sdk-js`](https://github.com/xmindltd/xmind-sdk-js) is an official li
 
 In order to use, there is a very important concept you should know that is everything is component and each of component has a unique **topicId**.
 
-All of the components will be connected likes a Map-Tree.
+All of the components will be connected as a Map-tree.
 
 ## Getting started
 
