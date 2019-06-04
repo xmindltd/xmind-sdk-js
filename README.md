@@ -112,9 +112,9 @@ Show up components info as `JSON` format.
 
 Show up components info as `STRING` format.
 
-## Zipper(ZipperOptions)
+## Zipper(ZipperOptions) => Zipper
 
-#### `async` .zipper.save(path) => `Promise<boolean>`
+#### `async` .save(path) => `Promise<boolean>`
   - `path` - 
  
 | Name | Type | Default | Required | Description | 
