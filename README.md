@@ -130,9 +130,15 @@ Show up components info as `STRING` format.
 
 ### Methods
 
-#### .topicId() => String;
+#### .topicId(title) => String
 
-#### .topicIds() => Array;
+In default, returns the `central topicId`.
+
+Also, you can get a topicId by the `title` but you should be careful about the title to be repeated, or it will find the first one and return it.
+
+#### .topicIds() => {$topicId: $title}
+
+Gives you an object that contains the pair of `$topicId` and `$title` you have added
 
 #### .on(topicId) => Topic
 
@@ -144,7 +150,7 @@ Set the topicId as parent node and the other methods will depend on it.
 
 #### .add(options) => Topic
 
-The components will be added if you call it with a valid title string.
+The component will be added if you call it with a valid title string.
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
@@ -152,34 +158,49 @@ The components will be added if you call it with a valid title string.
 
 #### .note(text) => Topic
 
-Adding a note text on the internal topic
+Add a note text on the parent node.
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
 | text | String | null | true | A note text message |
 
-#### .marker(options:<Marker>{groupId: `string`, markerId: `string`}) => Topic
+#### .marker(options) => Topic
 
-Adding a marker flag on the internal topic
+Add a marker flag on the parent node.
 
 [Use `Marker Object` to generate the options](#marker-flags)
 
-#### .summary(options: {title: 'summary title', include?: 'a subtopic title'}) => Topic
+#### .summary(options) => Topic
  
 Adding a summary for topics with an optional range
  
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
-| title | String | null | true | A summary title |
-| include | String | null | false | A topic title that must be below in the direction of internal topic |
+| title | String | null | true | The Summary title |
+| edge | String | null | false | The topicId that must parallel with your parent node |
 
-#### .destroy(title) => Topic
+> `edge` Graphic explanation:
+> |--------------------------------------------------------------------------------------|
+> |                                                                                      |
+> |      /* set main topic 1 as the parent node.*/                                       |
+> |      /* topic.on(topic.topicId('main topic 1')) */                                   |
+> |      main topic 1 - ...                                                              |
+> |                                                                                      |
+> |      main topic 2 - ...                                                              |
+> |                     `subtopic 1` belows `main topic 1`                               |
+> |                   /                                                                  |
+> |      main topic 3 - `subtopic 2` belows `main topic 1`                               |
+> |      /* so now, you can call summary with the edge = topic.topicId('main topic 3') */|
+> |      /* Only `main topic 1` is left if you set edge = topic.topicId('subtopic 1') */ |
+> |--------------------------------------------------------------------------------------|
+
+#### .destroy(topicId) => Topic
 
 Destroy a topic component from the Map-Tree
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
-| title | String | null | true | The title you added by call `.add()` |
+| topicId | String | null | true | The topicId that you have added by call `.add()` |
 
 ## Marker flags
 
@@ -216,6 +237,7 @@ We provides an instance of `Marker` that includes all the markers. such as below
 If you run into any problems please feel free to reach out to us 🙂.
 
 Also you can PRs immediately.
+
 
 ## LICENSE
 
