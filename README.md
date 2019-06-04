@@ -14,11 +14,11 @@ The [`xmind-sdk-js`](https://github.com/xmindltd/xmind-sdk-js) is an official li
 
 In order to use, there is a very important concept you should know that is everything is component and each of component has a unique **topicId**.
 
-All of the components will be connected like a Map-Tree.
+All of the components will be connected likes a Map-Tree.
 
 ## Getting started
 
-##### Node.js
+#### Usage in Node.js
 
 ```shell
 $ npm i --save xmind-sdk
@@ -26,21 +26,31 @@ $ npm i --save xmind-sdk
 const {Workbook, Topic, Marker} = require('xmind-sdk');
 ```
 
-##### Browser
+#### Usage in Browser
 
-**Preparing**
+```jsx harmony
+// JSX
+import {Workbook, Topic, Marker} from 'xmind-sdk';
+```
+
+```html
+// HTML
+<script src="https://cdn.jsdelivr.net/npm/xmind-sdk@latest/dist/xmind-sdk-js.bundle.js"></script>
+<script>
+  const { Workbook, Topic, Marker } = window;
+</script>
+
+```
 
 ## Usage
 
 ```js
-const { Workbook, Topic, Marker } = require('xmind-sdk');
+const { Workbook, Topic, Marker, Zipper } = require('xmind-sdk');
 
-const wb = new Workbook();
-const marker = new Marker();
-const sheetName = 'sheet1';
-const centralTopicName = 'Central Topic';
+const [workbook, marker] = [new Workbook(), new Marker()];
 
-const topic = new Topic({sheet: wb.createSheet(sheetName, centralTopicName)});
+const topic = new Topic({sheet: workbook.createSheet('sheet title', 'Central Topic')});
+const zipper = new Zipper({path: '/tmp', workbook, filename: 'MyFirstMap'});
 
 // topic.on() default: `central topic`
 topic.add({title: 'main topic 1'});
@@ -53,7 +63,7 @@ topic
   .add({title: 'subtopic 2'})
    
    // add a note text on `main topic 1`
-  .note('this is a note')
+  .note('This is a note attached on main topic 1')
   
   // add a marker flag on `subtopic 1`
   .on(topic.topicId('subtopic 1'))
@@ -62,41 +72,47 @@ topic
    // add a summary component that contains two subtopics
   .summary({title: 'subtopic summary', include: topic.topicId('subtopic 2')})
   
-wb.zipper.save().then(status => { 
-  if (status === true) {
-    console.info('It saved and you can open it with XMind Zen or Lighten.');
-  } else {
-    console.error('Saving .xmind file is failure.');
-  }
-});
-
+zipper.save().then(status => status && console.log('Saved /tmp/MyFirstMap.xmind'));
 ```
+
 ## More Examples
 
-[Click here](example)
+[!Click here](example)
 
-## Workbook(options)
+## Workbook() => Workbook
 
-The `Workbook` extends `class Sheet` and has a zip kit.
-
-### Options
-
-| Name | Type | Default | System | Description | 
-| ---- | ---- | ------- | ------ |:----------- |
-| options.path | String | `linux/darwin` | /tmp/default.xmind |  An absolute directory where the `.xmind` file is going to store |
-| options.path | String | `Win32` | null | |
+The workbook is a basic container to store the Real-Data of component.
 
 ### Methods
 
-#### .createSheet(sheetTitle, rootTopicTitle) => `Sheet`
+#### .createSheet(sheetTitle, centralTopicTitle) => `Sheet`
 
-That will create a instance of Sheet and returns
+That will create a instance of Sheet and it will be returned
 
 | Name | Type | Default | Required | Description | 
 |:----:|:----:|:-------:|:--------:|:------------|
-| sheetTitle | String | null | true | The unique title string of sheet |
-| rootTopicTitle | String | 'Central Topic' | false | The unique title string of central topic |
+| sheetTitle | String | null | true | The title of sheet that is invisible element |
+| centralTopicTitle | String | 'Central Topic' | false | The topic title of central element |
 
+
+#### .theme(sheetTitle, themeName) => Boolean
+
+Set map theme.
+
+| Name | Type | Default | Required | Description | 
+|:----:|:----:|:-------:|:--------:|:------------|
+| sheetTitle | String | null | true | The sheet title |
+| themeName | String | null | true | The names robust, snowbrush, business are available for now |
+
+#### .toJSON() => JSON
+
+Show up components info as `JSON` format.
+
+#### .toString() => String
+
+Show up components info as `STRING` format.
+
+## Zipper(ZipperOptions)
 
 #### `async` .zipper.save(path) => `Promise<boolean>`
   - `path` - 
@@ -106,25 +122,29 @@ That will create a instance of Sheet and returns
 | path | String | null | false | The path has priority over `Workbook's options.path` |
  
 
-## Topic(options)
+## Topic(TopicOptions) => Topic
 
-### Options
+### TopicOptions
 
-* `options.sheet` - An instance of Sheet
+* `sheet` - The instance of Workbook.createSheet(...)
 
 ### Methods
 
-#### .on(title) => Topic
+#### .topicId() => String;
 
-Set the direction of the internal topic of the instance
+#### .topicIds() => Array;
+
+#### .on(topicId) => Topic
+
+Set the topicId as parent node and the other methods will depend on it.
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
-| title | String | `Central Topic` | false | The title you added by call `.add()` |
+| topicId | String | `Central Topic` | false | The topic that you have added |
 
-#### .add(options = {title: `string`}) => Topic
+#### .add(options) => Topic
 
-Adding a topic component on the internal topic that specified by call `.on()`
+The components will be added if you call it with a valid title string.
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
@@ -163,7 +183,7 @@ Destroy a topic component from the Map-Tree
 
 ## Marker flags
 
-We provides a instance of `Marker` that includes all the markers. such as below:
+We provides an instance of `Marker` that includes all the markers. such as below:
 
 * **.priority(name: `string`)** - the priority markers
 

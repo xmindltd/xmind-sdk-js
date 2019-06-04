@@ -28,7 +28,7 @@ topic
   .add({title: 'dynamic'})
   .add({title: 'static'})
   
-  .on(topic.topicId()/* The topic.topicId('static') is working */)
+  .on(topic.topicId()/* Also the topic.topicId('static') is working */)
   .add({title: 'C'})
   .add({title: 'C++'})
   .add({title: 'Java'})
