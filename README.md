@@ -8,7 +8,7 @@
 
 # XMind-sdk-js
 
-[The most popular mind mapping software.](https://www.xmind.net)
+[The SDK of most popular mind mapping software.](https://www.xmind.net)
 
 The [`xmind-sdk-js`](https://github.com/xmindltd/xmind-sdk-js) is an official library that implemented a lot of functions as same as the UI client. if you use UI client, you already know how to use this library.
 
