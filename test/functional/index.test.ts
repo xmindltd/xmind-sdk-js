@@ -68,7 +68,7 @@ describe('# Functional Test', () => {
       expect(children[0]).to.have.property('id');
 
       topic
-        .on(topic.topicId())
+        .on(topic.cid())
         .add({title: 'subtopic 1'})
         .add({title: 'subtopic 2'})
         .add({title: 'subtopic 3'});
@@ -90,10 +90,10 @@ describe('# Functional Test', () => {
       expect(children[0]).to.have.property('id');
 
       topic
-        .on(topic.topicId())
+        .on(topic.cid())
         .add({title: 'subtopic 1'})
         .add({title: 'subtopic 2'});
-      const subTopic2Id = topic.topicId();
+      const subTopic2Id = topic.cid();
 
       topic.add({title: 'subtopic 3'});
       topic.destroy(subTopic2Id);
@@ -112,7 +112,7 @@ describe('# Functional Test', () => {
     it('should be topic found by topicId', done => {
       const {topic} = getComponents();
       topic.add({title: 'main topic 1'});
-      const mainTopic1 = topic.find(topic.topicId());
+      const mainTopic1 = topic.find(topic.cid());
       expect(mainTopic1).to.not.be.empty;
       done();
     });
@@ -131,18 +131,18 @@ describe('# Functional Test', () => {
         .add({title: 'main topic 11'});
 
       topic
-        .on(topic.topicId('main topic 1111'))
+        .on(topic.cid('main topic 1111'))
         .add({title: 'subtopic 1111'});
 
       topic
-        .on(topic.topicId('main topic 1'))
+        .on(topic.cid('main topic 1'))
         .add({title: 'subtopic 1'});
 
       topic
-        .on(topic.topicId('main topic 222'))
+        .on(topic.cid('main topic 222'))
         .note('add note to main topic 222')
         .add({title: 'subtopic 222 with a note'})
-        .on(topic.topicId('subtopic 222 with a note'))
+        .on(topic.cid('subtopic 222 with a note'))
         .note('this is the note with');
 
       zip.save().then((status) => {
@@ -160,7 +160,7 @@ describe('# Functional Test', () => {
         .add({title: 'main topic 2'})
         .add({title: 'main topic 3'});
 
-      topic.destroy(topic.topicId('main topic 2'));
+      topic.destroy(topic.cid('main topic 2'));
       zip.save().then(async status => {
         expect(status).to.be.true;
         const p = '/tmp/default.xmind';
@@ -171,7 +171,7 @@ describe('# Functional Test', () => {
           expect(map).to.be.an('object');
           const {attached} = map.rootTopic.children;
           expect(attached.length).to.be.eq(2);
-          expect(attached.find(child => child.title === topic.topicId('main topic 2'))).to.be.undefined;
+          expect(attached.find(child => child.title === topic.cid('main topic 2'))).to.be.undefined;
           fs.unlinkSync(p);
           done();
         });
@@ -189,7 +189,7 @@ describe('# Functional Test', () => {
       const title = 'main topic 1';
       topic
         .add({title})
-        .on(topic.topicId()) // topic.topicId === last add title or topic.topicId(title)
+        .on(topic.cid()) // topic.cid === last add title or topic.cid(title)
         // @ts-ignore
         .marker({})
         // @ts-ignore
@@ -203,7 +203,7 @@ describe('# Functional Test', () => {
       const title = 'main topic 1';
       topic
         .add({title})
-        .on(topic.topicId(title))
+        .on(topic.cid(title))
         .marker(marker.smiley('cry'));
       zip.save().then(status => {
         expect(status).to.be.true;
@@ -229,7 +229,7 @@ describe('# Functional Test', () => {
 
       topic
         .add({title: 'main topic 1'})
-        .on(topic.topicId())
+        .on(topic.cid())
         .add({title: 'subtopic 1'})
         .add({title: 'subtopic 2'})
         .summary({title: 'Test Summary', edge: 'does not exists'});
@@ -257,7 +257,7 @@ describe('# Functional Test', () => {
 
       topic
         .add({title: 'main topic 1'})
-        .on(topic.topicId())
+        .on(topic.cid())
         .add({title: 'subtopic 1'})
         .add({title: 'subtopic 2'})
         .summary({title: 'Test Summary'});
@@ -292,14 +292,14 @@ describe('# Functional Test', () => {
         .add({title: 'main topic 1'})
         .add({title: 'main topic 2'})
         .add({title: 'main topic 3'})
-        .on(topic.topicId('main topic 1'))
+        .on(topic.cid('main topic 1'))
         .add({title: 'subtopic 1'})
         .add({title: 'subtopic 2'})
-        .on(topic.topicId('main topic 2'))
+        .on(topic.cid('main topic 2'))
         .add({title: 'subtopic 1'})
 
-        .on(topic.topicId('main topic 1')) /* position topic title */
-        .summary({title: 'Test Summary', edge: topic.topicId('main topic 2')});
+        .on(topic.cid('main topic 1')) /* position topic title */
+        .summary({title: 'Test Summary', edge: topic.cid('main topic 2')});
 
       zip.save().then(status => {
         expect(status).to.be.true;
@@ -323,14 +323,14 @@ describe('# Functional Test', () => {
         .add({title: 'main topic 1'})
         .add({title: 'main topic 2'})
         .add({title: 'main topic 3'})
-        .on(topic.topicId('main topic 1'))
+        .on(topic.cid('main topic 1'))
         .add({title: 'subtopic 1'})
         .add({title: 'subtopic 2'})
-        .on(topic.topicId('main topic 2'))
+        .on(topic.cid('main topic 2'))
         .add({title: 'subtopic 1'})
 
-        .on(topic.topicId('main topic 1')) /* position topic title */
-        .summary({title: 'Test Summary', edge: topic.topicId('main topic does not exists')});
+        .on(topic.cid('main topic 1')) /* position topic title */
+        .summary({title: 'Test Summary', edge: topic.cid('main topic does not exists')});
 
       zip.save().then(status => {
         expect(status).to.be.true;
@@ -353,14 +353,14 @@ describe('# Functional Test', () => {
         .add({title: 'main topic 1'})
         .add({title: 'main topic 2'})
         .add({title: 'main topic 3'})
-        .on(topic.topicId('main topic 1'))
+        .on(topic.cid('main topic 1'))
         .add({title: 'subtopic 1'})
         .add({title: 'subtopic 2'})
-        .on(topic.topicId('main topic 2'))
+        .on(topic.cid('main topic 2'))
         .add({title: 'subtopic 1'})
 
-        .on(topic.topicId('main topic 3')) /* position topic title */
-        .summary({title: 'Test Summary', edge: topic.topicId('main topic 1')});
+        .on(topic.cid('main topic 3')) /* position topic title */
+        .summary({title: 'Test Summary', edge: topic.cid('main topic 1')});
 
       zip.save().then(status => {
         expect(status).to.be.true;

@@ -55,10 +55,10 @@ const zipper = new Zipper({path: '/tmp', workbook, filename: 'MyFirstMap'});
 // topic.on() default: `central topic`
 topic.add({title: 'main topic 1'});
 
-// topic.topicId()
+// topic.cid()
 // 在没有参数的情况下，将返回最后一次调用 .add() 添加的组件 ID 或是中心主题 ID
 topic
-  .on(topic.topicId())
+  .on(topic.cid())
   // 将 `subtopic 1` 添加至 `main topic 1` 节点后
   .add({title: 'subtopic 1'})
   .add({title: 'subtopic 2'})
@@ -67,11 +67,11 @@ topic
   .note('This is a note attached on main topic 1')
   
   // 在 `subtopic 1` 上添加一个标记图标
-  .on(topic.topicId('subtopic 1'))
+  .on(topic.cid('subtopic 1'))
   .marker(marker.week('fri'))
    
    // 添加一个描述组件，且组件包含 `subtopic 1`，`subtopic 2`
-  .summary({title: 'subtopic summary', include: topic.topicId('subtopic 2')})
+  .summary({title: 'subtopic summary', include: topic.cid('subtopic 2')})
   
 zipper.save().then(status => status && console.log('/tmp/MyFirstMap.xmind 已保存'));
 ```
@@ -124,25 +124,25 @@ Workbook 是一个存储了所有组件的临时数据的容器
 
 ### 方法
 
-###### .cid(title) => String | .topicId(title) => String
+###### .cid(title) => String
 
 ###### 
 
-* 如果没有基于中心主题添加任何组件时 `central topicId` 将会返回，否则将返回最后一个被添加组件的ID
+* 如果没有基于中心主题添加任何组件时 `central topic Id` 将会返回，否则将返回最后一个被添加组件的ID
 
 * 同样可以使用`title`来获取 ID，但使用时需要特别注意重复的`title`，如果存在重复数据，将返回第一个被找到的组件
 
-###### .cids() => {$topicId: $title} | .topicIds() => {$topicId: $title}
+###### .cids() => {$cid: $title}
 
 * 将返回一个包含`$id:$title`的数据集合
 
-###### .on(topicId) => Topic
+###### .on(cid) => Topic
 
 * 将基于ID设置组件为当前父节点，其他添加操作将会基于父节点展开
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
-| topicId | String | `Central Topic Id` | false | 组件ID |
+| cid | String | `Central Topic Id` | false | 组件ID |
 
 
 ###### .add(options) => Topic
@@ -184,13 +184,13 @@ Workbook 是一个存储了所有组件的临时数据的容器
 > [!`edge` 参数视图简介](docs/edge.graphic.txt)
 
 
-###### .destroy(topicId) => Topic
+###### .destroy(cid) => Topic
 
 * 从树中销毁一个组件。注: 如果组件包含子节点，将会被一起销毁
 
 | 参数 | 类型 | 默认值 | 必须 | 描述 |
 |:----:|:----:|:-------:|:--------:|:------------|
-| topicId | String | null | true | 组件ID |
+| cid | String | null | true | 组件ID |
 
 
 ## Marker flags

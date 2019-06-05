@@ -18,13 +18,13 @@ topic
   .add({title: 'main topic 2.2'})
   .add({title: 'main topic 3'})
   
-  .on(topic.topicId('main topic 1'))
+  .on(topic.cid('main topic 1'))
   .add({title: 'subtopic 1 on main topic 1'})
   
-  .on(topic.topicId('main topic 2'))
+  .on(topic.cid('main topic 2'))
   .add({title: 'subtopic 1 on main topic 2'})
 
-  .on(topic.topicId('subtopic 1 on main topic 2'))
+  .on(topic.cid('subtopic 1 on main topic 2'))
   .add({title: 'test node'});
 
 

@@ -20,10 +20,6 @@ export class Topic extends Base implements AbstractTopic {
   // Save the last component id
   private lastId: string;
 
-  // alias topicId
-  public readonly cid;
-  public readonly cids;
-
   constructor(options: TopicOptions = <TopicOptions>{}) {
     super({debug: 'xmind-sdk:topic'});
     if (options && !options.sheet) {
@@ -34,21 +30,19 @@ export class Topic extends Base implements AbstractTopic {
     this.root = this.sheet.getRootTopic();
     this.componentId = this.lastId = this.root.getId();
     this.resources[this.componentId] = 'Central Topic';
-    this.cid = this.topicId;
-    this.cids = this.topicIds;
   }
 
-  public on(topicId?: string) {
-    if (!topicId) {
+  public on(componentId?: string) {
+    if (!componentId) {
       this.componentId = this.root.getId();
       return this;
     }
 
-    if (!this.isValidTopicId(String(topicId))) {
-      throw new Error(`Invalid topicId ${String(topicId)}`);
+    if (!this.isValidTopicId(String(componentId))) {
+      throw new Error(`Invalid topicId ${String(componentId)}`);
     }
 
-    this.componentId = topicId;
+    this.componentId = componentId;
     return this;
   }
 
@@ -72,15 +66,15 @@ export class Topic extends Base implements AbstractTopic {
     return this;
   }
 
-  public destroy(topicId: string) {
-    if (!this.isValidTopicId(topicId)) {
-      this.debug('E - target: "%s" does not exists', topicId);
+  public destroy(componentId: string) {
+    if (!this.isValidTopicId(componentId)) {
+      this.debug('E - target: "%s" does not exists', componentId);
       return this;
     }
     try {
-      const topic = this.find(topicId);
+      const topic = this.find(componentId);
       topic.parent().removeChildTopic(topic);
-      delete this.resources[topicId];
+      delete this.resources[componentId];
     } catch (e) {
       /* istanbul ignore next */
       this.debug('D - %s', e.message);
@@ -130,7 +124,7 @@ export class Topic extends Base implements AbstractTopic {
   }
 
 
-  public topicId(title?: string) {
+  public cid(title?: string) {
     if (title && typeof title === 'string') {
       for (const topicId in this.resources) {
         if (this.resources[topicId] === title) {
@@ -142,18 +136,18 @@ export class Topic extends Base implements AbstractTopic {
     return this.lastId;
   }
 
-  public topicIds() {
+  public cids() {
     return this.resources;
   }
 
-  public find(topicId: string = null) {
+  public find(componentId: string = null) {
     const rootId = this.root.getId();
 
-    if (!topicId || topicId === rootId) {
+    if (!componentId || componentId === rootId) {
       return this.root;
     }
 
-    return this.sheet.findComponentById(topicId);
+    return this.sheet.findComponentById(componentId);
   }
 
   /**
@@ -183,14 +177,14 @@ export class Topic extends Base implements AbstractTopic {
 
   /**
    * @description Check topic id
-   * @param {String} topicId
+   * @param {String} componentId
    * @return {Boolean}
    * @private
    */
-  private isValidTopicId(topicId: string) {
-    if (!topicId) {
+  private isValidTopicId(componentId: string) {
+    if (!componentId) {
       return false;
     }
-    return this.resources.hasOwnProperty(topicId);
+    return this.resources.hasOwnProperty(componentId);
   }
 }

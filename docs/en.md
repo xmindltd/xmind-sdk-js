@@ -8,7 +8,7 @@
 
 The [`xmind-sdk-js`](https://github.com/xmindltd/xmind-sdk-js) is an official library that implements a lot of functions as same as the UI client. If you use UI client, you could have already known how to use this library.
 
-In order to use conveniently, a very important concept you should know is that everything is component and each of component has a unique `topicId`.
+In order to use conveniently, a very important concept you should know is that everything is component and each of component has a unique `componentId`.
 
 All of the components will be connected as a map tree.
 
@@ -54,7 +54,7 @@ const zipper = new Zipper({path: '/tmp', workbook, filename: 'MyFirstMap'});
 topic.add({title: 'main topic 1'});
 
 topic
-  .on(topic.topicId(/*In default, the topic id is last element*/))
+  .on(topic.cid(/*In default, the componentId is last element*/))
   
   // add a subtopic on `main topic 1`
   .add({title: 'subtopic 1'})
@@ -64,18 +64,18 @@ topic
   .note('This is a note attached on main topic 1')
   
   // add a marker flag on `subtopic 1`
-  .on(topic.topicId('subtopic 1'))
+  .on(topic.cid('subtopic 1'))
   .marker(marker.week('fri'))
    
    // add a summary component that contains two subtopics
-  .summary({title: 'subtopic summary', include: topic.topicId('subtopic 2')})
+  .summary({title: 'subtopic summary', include: topic.cid('subtopic 2')})
   
 zipper.save().then(status => status && console.log('Saved /tmp/MyFirstMap.xmind'));
 ```
 
 ## More Examples
 
-[Go to examples directory](example)
+[Go to examples directory](../example)
 
 
 ## Workbook
@@ -90,8 +90,8 @@ The workbook is a basic container to store the real data of component
 
 | Name | Type | Default | Required | Description | 
 |:----:|:----:|:-------:|:--------:|:------------|
-| sheetTitle | String | null | true | The title of sheet that is invisible element |
-| centralTopicTitle | String | 'Central Topic' | false | The topic title of central element |
+| sheetTitle | String | null | true | The title of sheet |
+| centralTopicTitle | String | 'Central Topic' | false | The title of central topic |
 
 
 ###### .theme(sheetTitle, themeName) => Boolean
@@ -121,23 +121,23 @@ The workbook is a basic container to store the real data of component
 
 ### Methods
 
-###### .topicId(title) => String
+###### .cid(title) => String
 
-* In default, returns the `central topicId`.
+* In default, returns the `central topic id`.
 
-* Also, you can get a topicId by the `title` but you should be careful about the title to be repeated, or it will find the first one and return it
+* Also, you can get a componentId by the `title` but you should be careful about the title to be repeated, or it will find the first one and return it
 
-###### .topicIds() => {$topicId: $title}
+###### .cids() => {$cid: $title}
 
-* Gives you an object that contains the pair of `$topicId` and `$title` you have added
+* Gives you an object that contains the pair of `$componentId` and `$title` you have added
 
-###### .on(topicId) => Topic
+###### .on(cid) => Topic
 
-* Set the topicId as parent node and the other methods will depend on it
+* Set the component as parent node and the other methods will depend on it
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
-| topicId | String | `Central Topic` | false | The topic that you have added |
+| cid | String | `Central Topic` | false | The componentId that you have added |
 
 
 ###### .add(options) => Topic
@@ -146,13 +146,12 @@ The workbook is a basic container to store the real data of component
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
-| options.title | String | null | true | A title of topic |
+| options.title | String | null | true | the title of topic |
 
 
 ###### .note(text) => Topic
 
 * Add a note text on the parent node
-
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
@@ -168,24 +167,24 @@ The workbook is a basic container to store the real data of component
 
 ###### .summary(options) => Topic
 
-* Add a summary for topics with an optional range, but cannot to add summary on the `Central Topic`
+* Add a summary for components with an optional range, but cannot to add summary on the `Central Topic`
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
 | title | String | null | true | The Summary title |
-| edge | String | null | false | The topicId that must parallel with your parent node |
+| edge | String | null | false | The cid that must parallel with your parent node |
 
 
-> [!`edge` graphic](docs/edge.graphic.txt)
+> [!`edge` graphic](edge.graphic.txt)
 
 
-###### .destroy(topicId) => Topic
+###### .destroy(cid) => Topic
 
 * Destroy a topic component from the map tree
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
-| topicId | String | null | true | The topicId that you have added by call `.add()` |
+| cid | String | null | true | The componentId that you have added |
 
 
 ## Marker flags

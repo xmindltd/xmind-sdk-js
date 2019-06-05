@@ -24,32 +24,32 @@ topic
   .marker(marker.smiley('smile'))
   
   
-  .on(topic.topicId('Programming Language'))
+  .on(topic.cid('Programming Language'))
   .add({title: 'dynamic'})
   .add({title: 'static'})
   
-  .on(topic.topicId()/* Also the topic.topicId('static') is working */)
+  .on(topic.cid()/* Also the topic.cid('static') is working */)
   .add({title: 'C'})
   .add({title: 'C++'})
   .add({title: 'Java'})
-  .on(topic.topicId('C'))
-  .summary({title: 'Low level that is hard to learning', edge: topic.topicId('C++')})
+  .on(topic.cid('C'))
+  .summary({title: 'Low level that is hard to learning', edge: topic.cid('C++')})
   
-  .on(topic.topicId('dynamic'))
+  .on(topic.cid('dynamic'))
   .note('The static languages are fast more than dynamic language')
   .add({title: 'Node.js'})
   .add({title: 'Python'})
   .add({title: 'Ruby'})
-  .on(topic.topicId('dynamic'))
+  .on(topic.cid('dynamic'))
   .summary({title: 'In popular'})
 
 
   // on Software
-  .on(topic.topicId('Software'))
+  .on(topic.cid('Software'))
   .add({title: 'jetBrains'})
   .add({title: 'Microsoft'})
   
-  .on(topic.topicId('jetBrains'))
+  .on(topic.cid('jetBrains'))
   .marker(marker.smiley('smile'))
   .add({title: 'WebStorm'})
   .add({title: 'Pycharm'})
@@ -58,7 +58,7 @@ topic
   .add({title: 'etc.'})
   .summary({title: 'all of the productions belongs to jetbrains'})
   
-  .on(topic.topicId('Microsoft'))
+  .on(topic.cid('Microsoft'))
   .marker(marker.smiley('cry'))
   .add({title: 'vs code'});
 

@@ -103,10 +103,10 @@ describe('# Topic Unit Test', () => {
       .add({title: '1'})
       .add({title: '2'});
 
-    const topics = topic.topicIds();
-    expect(topics).to.have.property(topic.topicId('1'));
-    expect(topics).to.have.property(topic.topicId('2'));
-    expect(topics).to.have.property(topic.topicId('Central Topic'));
+    const topics = topic.cids();
+    expect(topics).to.have.property(topic.cid('1'));
+    expect(topics).to.have.property(topic.cid('2'));
+    expect(topics).to.have.property(topic.cid('Central Topic'));
     expect(topics).to.have.property(topic.rootTopicId);
     done();
   });
@@ -131,7 +131,7 @@ describe('# Topic Unit Test', () => {
       .on(topic.rootTopicId)
       .add({title: 'main topic 1'})
       .add({title: 'main topic 2'})
-      .on(topic.topicId('main topic 1'))
+      .on(topic.cid('main topic 1'))
       .summary();
 
     zip.save().then(status => status && done());
@@ -140,7 +140,7 @@ describe('# Topic Unit Test', () => {
   it('should return the central topic id if never to add component', done => {
     const {topic} = getComponents();
 
-    const id = topic.topicId();
+    const id = topic.cid();
     expect(id).to.eq(topic.rootTopic.getId());
     expect(id).to.eq(topic.rootTopicId);
     done();

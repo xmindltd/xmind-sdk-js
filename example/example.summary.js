@@ -27,7 +27,7 @@ topic
 
   // In default, The topicId() returns id of `main topic 4`
   // Also topic.topicId('main topic 4') is working
-  .on(topic.topicId())
+  .on(topic.cid())
   
   // adding some subtopics on `main topic 4`
   .add({title: 'subtopic 1'})
@@ -43,13 +43,13 @@ topic
 topic
   .on()
   .add({title: 'main topic 2'})
-  .on(topic.topicId('main topic 2'))
+  .on(topic.cid('main topic 2'))
   .add({title: 'subtopic 1 on main topic 2'})
   .add({title: 'subtopic 2 on main topic 2'})
   .add({title: 'subtopic 3 on main topic 2'})
   .add({title: 'subtopic 4 on main topic 2'})
-  .on(topic.topicId('subtopic 1 on main topic 2'))
-  .summary({title: 'contains subtopic 1 - 3', edge: topic.topicId('subtopic 3 on main topic 2')})
+  .on(topic.cid('subtopic 1 on main topic 2'))
+  .summary({title: 'contains subtopic 1 - 3', edge: topic.cid('subtopic 3 on main topic 2')})
 
 
 const zip = new Zipper({path: '/tmp', workbook: wb});

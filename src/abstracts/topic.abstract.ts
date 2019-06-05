@@ -16,10 +16,10 @@ export interface AbstractTopic {
 
   /**
    * @description Set topic as the parent node
-   * @param {String} [topicId] - The root topic will be used as the parent node if you don't given
+   * @param {String} [componentId] - The root topic will be used as the parent node if you don't given
    * @return {Topic}
    */
-  on(topicId?: string): Topic;
+  on(componentId?: string): Topic;
 
   /**
    * @description Add a topic on the parent node
@@ -33,17 +33,17 @@ export interface AbstractTopic {
 
   /**
    * @description Get topic by topicId
-   * @param {String} topicId
+   * @param {String} componentId
    * @return {Core.Topic}
    */
-  find(topicId: string): Core.Topic;
+  find(componentId: string): Core.Topic;
 
   /**
    * @description Destroy a component from map tree
-   * @param {String} topicId
+   * @param {String} componentId
    * @return {Topic}
    */
-  destroy(topicId: string): Topic;
+  destroy(componentId: string): Topic;
 
   /**
    * @description Add info of summary to topic and range topics
@@ -67,11 +67,12 @@ export interface AbstractTopic {
    * @param {String} title - Find out topicId by `Title`.
    * @return {String}
    */
-  topicId(title?: string): string;
+  cid(title?: string): string;
+
 
   /**
    * @description Get an object that contains pairs of $topicId and $title
    * @return {Object}
    */
-  topicIds(): object;
+  cids(): object;
 }
