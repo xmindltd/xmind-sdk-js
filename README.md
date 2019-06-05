@@ -6,13 +6,13 @@
 ![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/xmindltd/xmind-sdk-js/master.svg?color=red&label=version)
 ![GitHub](https://img.shields.io/github/license/xmindltd/xmind-sdk-js.svg)
 
-# XMind
+# xmind-sdk-js
 
 [The SDK of most popular mind mapping software.](https://www.xmind.net)
 
 The `xmind-sdk-js` is a library similar with `XMind UI client` that written by typescript and that cloud be used in node.js and browser environments.
 
-## Documents
+## Docs
 
 [Chinese 中文](docs/zh.md)
 
