@@ -1,3 +1,5 @@
+# xmind-sdk-js
+
 [![Build status](https://ci.appveyor.com/api/projects/status/qll0sp4ny7bl7yo0/branch/master?svg=true)](https://ci.appveyor.com/project/danielsss/xmind-sdk-js/branch/master)
 [![npm (scoped)](https://img.shields.io/badge/XMind-ZEN-red.svg)](https://www.xmind.net)
 [![npm (scoped)](https://img.shields.io/badge/Lighten-Pro-purple.svg)](https://lighten.xmind.net)
@@ -6,11 +8,9 @@
 ![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/xmindltd/xmind-sdk-js/master.svg?color=red&label=version)
 ![GitHub](https://img.shields.io/github/license/xmindltd/xmind-sdk-js.svg)
 
-# xmind-sdk-js
-
 [The SDK of most popular mind mapping software.](https://www.xmind.net)
 
-The `xmind-sdk-js` is a library similar with `XMind UI client` that written by typescript and that cloud be used in node.js and browser environments.
+This library is similar to the client of XMind-UI that written by typescript and It could be used in node.js and browser both environments.
 
 ## Docs
 
