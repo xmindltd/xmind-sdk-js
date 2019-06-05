@@ -22,10 +22,11 @@
   "keywords": [
     "xmind-sdk",
     "xmindsdk",
-    "xmind"
+    "xmind",
+    "xmind-sdk-js",
+    "xmind-sdk-ts"
   ],
   "dependencies": {
-    "backbone": "^1.4.0",
     "debug": "^4.1.1",
     "jszip": "^3.2.1",
     "lodash": "^4.17.11",
@@ -33,7 +34,6 @@
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^0.1.3",
-    "@types/backbone": "^1.4.0",
     "@types/chai": "^4.1.7",
     "@types/debug": "^4.1.4",
     "@types/jszip": "^3.1.5",
