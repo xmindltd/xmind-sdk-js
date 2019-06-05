@@ -15,8 +15,14 @@ export class Topic extends Base implements AbstractTopic {
   private readonly root: Core.Topic;
   private readonly resources: {[key: string]: string} = {};
 
-  private _topicId: string;
-  private _lastTopicId: string;
+  private componentId: string;
+
+  // Save the last component id
+  private lastId: string;
+
+  // alias topicId
+  public readonly cid;
+  public readonly cids;
 
   constructor(options: TopicOptions = <TopicOptions>{}) {
     super({debug: 'xmind-sdk:topic'});
@@ -26,13 +32,15 @@ export class Topic extends Base implements AbstractTopic {
 
     this.sheet = options.sheet;
     this.root = this.sheet.getRootTopic();
-    this._topicId = this.root.getId();
-    this.resources[this._topicId] = 'Central Topic';
+    this.componentId = this.lastId = this.root.getId();
+    this.resources[this.componentId] = 'Central Topic';
+    this.cid = this.topicId;
+    this.cids = this.topicIds;
   }
 
   public on(topicId?: string) {
     if (!topicId) {
-      this._topicId = this.root.getId();
+      this.componentId = this.root.getId();
       return this;
     }
 
@@ -40,7 +48,7 @@ export class Topic extends Base implements AbstractTopic {
       throw new Error(`Invalid topicId ${String(topicId)}`);
     }
 
-    this._topicId = topicId;
+    this.componentId = topicId;
     return this;
   }
 
@@ -52,7 +60,7 @@ export class Topic extends Base implements AbstractTopic {
     this.resources[topic.id] = topic.title;
     const cur = this.current();
     cur.addChildTopic(topic, options);
-    this._lastTopicId = topic.id;
+    this.lastId = topic.id;
     return this;
   }
 
@@ -99,12 +107,13 @@ export class Topic extends Base implements AbstractTopic {
     const type = this.current().getType();
     const parent = this.current().parent();
     const children = parent.getChildrenByType(type);
-    const condition = [this._topicId, !edge ? this._topicId : edge];
+    const condition = [this.componentId, !edge ? this.componentId : edge];
     summary.range({ children, condition });
     const summaryOptions = {title: options.title || 'Summary', id: this.id};
     summary.topicId = summaryOptions.id;
     parent.addSummary(summary.toJSON(), summaryOptions);
     this.resources[summaryOptions.id] = summaryOptions.title;
+    this.lastId = summaryOptions.id;
     return this;
   }
 
@@ -130,7 +139,7 @@ export class Topic extends Base implements AbstractTopic {
       }
       return null;
     }
-    return this._lastTopicId;
+    return this.lastId;
   }
 
   public topicIds() {
@@ -169,7 +178,7 @@ export class Topic extends Base implements AbstractTopic {
    * @private
    */
   private current() {
-    return (this._topicId === this.root.getId()) ? this.root : this.find(this._topicId);
+    return (this.componentId === this.root.getId()) ? this.root : this.find(this.componentId);
   }
 
   /**

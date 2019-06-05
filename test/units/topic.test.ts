@@ -137,4 +137,13 @@ describe('# Topic Unit Test', () => {
     zip.save().then(status => status && done());
   });
 
+  it('should return the central topic id if never to add component', done => {
+    const {topic} = getComponents();
+
+    const id = topic.topicId();
+    expect(id).to.eq(topic.rootTopic.getId());
+    expect(id).to.eq(topic.rootTopicId);
+    done();
+  });
+
 });
