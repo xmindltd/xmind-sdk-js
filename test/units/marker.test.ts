@@ -42,4 +42,22 @@ describe('# Marker Unit Test', () => {
     expect(marker.priority(2)).to.have.property('markerId');
     done();
   });
+
+  it('should return an array of group names', done => {
+    expect(Marker.groups()).to.be.an('array');
+    expect(Marker.groups().length).to.greaterThan(0);
+    done();
+  });
+
+  it('should find out an array of names', done => {
+    const groups = Marker.groups();
+    expect(Marker.names(groups[0])).to.be.an('array');
+    expect(Marker.names(groups[0]).length).to.greaterThan(0);
+    expect(Marker.names(null)).to.be.undefined;
+    expect(Marker.names('{}')).to.be.undefined;
+    expect(Marker.names(undefined)).to.be.undefined;
+    // @ts-ignore
+    expect(Marker.names(new Object())).to.be.undefined;
+    done();
+  });
 });

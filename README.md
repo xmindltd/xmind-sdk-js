@@ -174,7 +174,7 @@ The workbook is a basic container to store the real data of component
 
 ###### .summary(options) => Topic
 
-* Adding a summary for topics with an optional range
+* Add a summary for topics with an optional range, but cannot to add summary on the `Central Topic`
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
@@ -223,6 +223,19 @@ We provides an instance of `Marker` that includes all the markers. such as below
 * **.other(name: `string`)** - the other markers
 
 > **The `name` of marker available [!here](docs/icons.md)**
+> 
+> Also static methods Marker.groups and Marker.names works
+
+
+#### Static methods
+
+###### Marker.groups() => Array\<groupName\>
+
+* To list group names
+
+###### Marker.names(groupName) => Array\<name\>
+
+* To find a available name by `group name`
 
 
 ## Zipper

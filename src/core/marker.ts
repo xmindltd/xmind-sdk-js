@@ -25,4 +25,23 @@ export class Marker extends AbstractMarker {
       };
     }
   }
+
+  /**
+   * @description Get names by group name
+   * @param {String} groupName
+   * @return {Array<string>}
+   * @static
+   */
+  static names(groupName: string) {
+    return icons['iterable'][String(groupName)];
+  }
+
+  /**
+   * @description Get group names
+   * @return {Array<string>}
+   * @static
+   */
+  static groups() {
+    return Object.keys(icons['iterable']);
+  }
 }

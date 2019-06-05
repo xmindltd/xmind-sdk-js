@@ -1,5 +1,3 @@
-const BUILD_DOCS = process.env['BUILD_DOCS'] || false;
-
 const marker = {
   'priorityMarkers': {
     'id': 'priorityMarkers',
@@ -1165,6 +1163,7 @@ const marker = {
 };
 
 export const icons = {};
+const iterable = {};
 
 for(const key in marker) {
   const realGroupId = key;
@@ -1176,17 +1175,25 @@ for(const key in marker) {
     const arr = markerId.split('-');
     const collection = arr[0];
     const name = arr.length > 2 ? arr.slice(1, arr.length).join('-') : arr[1];
-    
+
+    if (!iterable[collection]) {
+      iterable[collection] = [];
+    }
+
     if (!icons[collection]) {
       icons[collection] = {};
     }
 
+    iterable[collection].push(name);
     icons[collection][name] = { groupId: realGroupId, markerId: markerId };
-    if (BUILD_DOCS) {
-      const encoded = encodeURIComponent(map[markerId].svg ? map[markerId].svg : map[markerId].resource);
-      icons[collection][name].href = 'https://s3.amazonaws.com/assets.xmind.net/icons/' + encoded;
-    }
   }
 }
+
+Object.defineProperty(icons, 'iterable', {
+  value: iterable,
+  enumerable: false,
+  configurable: false,
+  writable: false
+});
 
 module.exports = exports = icons;

@@ -34,10 +34,10 @@ export class Topic extends Base implements AbstractTopic {
     if (!topicId) {
       this._topicId = this.root.getId();
       return this;
-    } else {
-      if (!this.isValidTopicId(topicId)) {
-        throw new Error('Invalid topic id:' + topicId);
-      }
+    }
+
+    if (!this.isValidTopicId(String(topicId))) {
+      throw new Error(`Invalid topicId ${String(topicId)}`);
     }
 
     this._topicId = topicId;
@@ -78,10 +78,6 @@ export class Topic extends Base implements AbstractTopic {
       this.debug('D - %s', e.message);
     }
     return this;
-  }
-
-  public find(topicId?: string) {
-    return this.sheet.findComponentById(topicId || this._topicId);
   }
 
   public summary(options: SummaryOptions = <SummaryOptions>{}) {
@@ -141,6 +137,16 @@ export class Topic extends Base implements AbstractTopic {
     return this.resources;
   }
 
+  public find(topicId: string = null) {
+    const rootId = this.root.getId();
+
+    if (!topicId || topicId === rootId) {
+      return this.root;
+    }
+
+    return this.sheet.findComponentById(topicId);
+  }
+
   /**
    * @description Get root topic
    * @return {Topic}
@@ -173,7 +179,9 @@ export class Topic extends Base implements AbstractTopic {
    * @private
    */
   private isValidTopicId(topicId: string) {
-    if (!topicId || typeof topicId !== 'string') return false;
+    if (!topicId) {
+      return false;
+    }
     return this.resources.hasOwnProperty(topicId);
   }
 }

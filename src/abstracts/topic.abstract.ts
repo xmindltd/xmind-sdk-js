@@ -33,10 +33,10 @@ export interface AbstractTopic {
 
   /**
    * @description Get topic by topicId
-   * @param {String} [topicId]
+   * @param {String} topicId
    * @return {Core.Topic}
    */
-  find(topicId?: string): Core.Topic;
+  find(topicId: string): Core.Topic;
 
   /**
    * @description Destroy a component from map tree

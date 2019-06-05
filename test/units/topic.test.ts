@@ -32,8 +32,19 @@ describe('# Topic Unit Test', () => {
     }
   });
 
+  it('should be failed if call .on() with an invalid topicId', done => {
+    try {
+      const {topic} = getComponents();
+      // @ts-ignore
+      topic.on({});
+    } catch (e) {
+      expect(e).to.be.an('error');
+      done();
+    }
+  });
+
   it('should be failed to add a topic with an invalid topicId', done => {
-    const doesNotExists = 'this is a does not exists title';
+    const doesNotExists = 'does not exists topicId';
     try {
       const {topic} = getComponents();
       topic
@@ -41,7 +52,7 @@ describe('# Topic Unit Test', () => {
         .add({title: 'main topic 1'})
         .on(doesNotExists);
     } catch (e) {
-      expect(e.message).to.be.eq('Invalid topic id:' + doesNotExists);
+      expect(e.message).to.be.eq(`Invalid topicId ${doesNotExists}`);
       done();
     }
   });
@@ -52,6 +63,9 @@ describe('# Topic Unit Test', () => {
       .add({title: '1'})
       .add({title: '2'})
       .destroy('22');
+
+    // @ts-ignore
+    topic.destroy();
 
     zip.save().then(async status => {
       expect(status).to.be.true;
@@ -95,6 +109,32 @@ describe('# Topic Unit Test', () => {
     expect(topics).to.have.property(topic.topicId('Central Topic'));
     expect(topics).to.have.property(topic.rootTopicId);
     done();
+  });
+
+  it('should be .find(topicId?) worked with a topicId', done => {
+    const {topic} = getComponents();
+    const component = topic.find(topic.rootTopicId) || null;
+    expect(component).to.be.not.null;
+    done();
+  });
+
+  it('should return a component of root topic by .find(topicId?) if does not given topicId', done => {
+    const {topic} = getComponents();
+    const component = topic.find() || null;
+    expect(component).to.be.not.null;
+    done();
+  });
+
+  it('the component of summary should be created if does not given options', done => {
+    const {topic, zip} = getComponents();
+    topic
+      .on(topic.rootTopicId)
+      .add({title: 'main topic 1'})
+      .add({title: 'main topic 2'})
+      .on(topic.topicId('main topic 1'))
+      .summary();
+
+    zip.save().then(status => status && done());
   });
 
 });
