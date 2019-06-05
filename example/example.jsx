@@ -1,11 +1,7 @@
-import { Workbook, Topic, Marker, Zipper } from '../src';
+import { Workbook, Topic, Marker, Zipper } from 'xmind-sdk';
 
-
-// create workbook & sheet
 const wb = new Workbook();
 wb.createSheet('sheet-1','Root Topic');
-
-// create topic
 const topic = new Topic({sheet: wb.sheet})
 const marker = new Marker();
 
@@ -28,9 +24,6 @@ topic
   .add({title: 'main topic 2.2'})
   .add({title: 'main topic 2.1'})
 
-// be care of use topic.topicId(title)
-// We've two `main topic 1`
-// It will return the first element and it is non-fixed
 console.info('Main topic Id:', topic.topicId('main topic 1'));
 console.info(topic.topicIds());
 
