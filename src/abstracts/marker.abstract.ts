@@ -4,7 +4,8 @@ export interface Marker {
 }
 
 /**
- * @description Marker abstract
+ * @description Marker abstract class
+ * should to override all the methods
  */
 export class AbstractMarker {
   /**

@@ -3,7 +3,8 @@ import Base from './base';
 
 export class Summary extends Base implements AbstractSummary {
   private _range: string;
-  private _topicId: string;
+
+  public topicId: string;
 
   constructor() {
     super({debug: 'xmind-sdk:summary'});
@@ -38,13 +39,5 @@ export class Summary extends Base implements AbstractSummary {
 
   public toJSON() {
     return { id: this.id, range: this._range, topicId: this.topicId };
-  }
-
-  get topicId() {
-    return this._topicId;
-  }
-
-  set topicId(id) {
-    this._topicId = id;
   }
 }
