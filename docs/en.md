@@ -170,7 +170,7 @@ The workbook is a basic container to store the temporary data of components
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
-| title | String | null | true | The Summary title |
+| title | String | null | true | The title of summary |
 | edge | String | null | false | The componentId that must parallel with your parent node |
 
 
