@@ -80,13 +80,13 @@ zipper.save().then(status => status && console.log('Saved /tmp/MyFirstMap.xmind'
 
 ## Workbook
 
-The workbook is a basic container to store the real data of component
+The workbook is a basic container to store the temporary data of components
 
 ### Methods
 
 ###### .createSheet(sheetTitle, centralTopicTitle) => `Sheet`
 
-* That will create a instance of Sheet and it will be returned
+* That will create a instance of Sheet
 
 | Name | Type | Default | Required | Description | 
 |:----:|:----:|:-------:|:--------:|:------------|
@@ -96,7 +96,7 @@ The workbook is a basic container to store the real data of component
 
 ###### .theme(sheetTitle, themeName) => Boolean
 
-* Set map theme
+* Set map global theme
 
 | Name | Type | Default | Required | Description | 
 |:----:|:----:|:-------:|:--------:|:------------|
@@ -105,44 +105,43 @@ The workbook is a basic container to store the real data of component
 
 ###### .toJSON() => JSON
 
-* Show up components info as `JSON` format
+* Gives all the components as `JSON` format
 
 ###### .toString() => String
 
-* Show up components info as `STRING` format
+* Gives all the components as `STRING` format
 
 
 ## Topic
 
 ### TopicOptions
 
-* `sheet` - The instance of Workbook.createSheet(...)
-
+* `sheet` - The `Topic` needs an instance of Sheet for components management
 
 ### Methods
 
 ###### .cid(title) => String
 
-* In default, returns the `central topic id`.
+* In default, returns the `central topic id` if title does not given
 
 * Also, you can get a componentId by the `title` but you should be careful about the title to be repeated, or it will find the first one and return it
 
 ###### .cids() => {$cid: $title}
 
-* Gives you an object that contains the pair of `$componentId` and `$title` you have added
+* Gives an object that contains the pair of `$componentId` and `$title` you have added
 
-###### .on(cid) => Topic
+###### .on(componentId) => Topic
 
-* Set the component as parent node and the other methods will depend on it
+* Set the component as parent node and the operation of `Topic` depends on it
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
-| cid | String | `Central Topic` | false | The componentId that you have added |
+| componentId | String | `Central Topic` | false | The componentId that you have added |
 
 
 ###### .add(options) => Topic
 
-* The component will be added if you call it with a valid title string
+* The topic will be added if you call it with a valid title string
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
@@ -167,68 +166,70 @@ The workbook is a basic container to store the real data of component
 
 ###### .summary(options) => Topic
 
-* Add a summary for components with an optional range, but cannot to add summary on the `Central Topic`
+* Add a summary for components with an optional range, but cannot add summary on the `Central Topic`
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
 | title | String | null | true | The Summary title |
-| edge | String | null | false | The cid that must parallel with your parent node |
+| edge | String | null | false | The componentId that must parallel with your parent node |
 
 
 > [!`edge` graphic](edge.graphic.txt)
 
 
-###### .destroy(cid) => Topic
+###### .destroy(componentId) => Topic
 
-* Destroy a topic component from the map tree
+* Destroy a component from the map tree
+
+* The children will be disappeared if the parent node was destroyed
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
-| cid | String | null | true | The componentId that you have added |
+| componentId | String | null | true | The componentId that you have added |
 
 
 ## Marker flags
 
 We provides an instance of `Marker` that includes all the markers. such as below:
 
-* **.priority(name: `string`)** - the priority markers
+###### .priority(name: `string`)
 
-* **.smiley(name: `string`)** - the smiley markers
+###### .smiley(name: `string`)
 
-* **.task(name: `string`)** - the task markers
+###### .task(name: `string`)
 
-* **.flag(name: `string`)** - the flag markers
+###### .flag(name: `string`)
 
-* **.star(name: `string`)** - the star markers
+###### .star(name: `string`)
 
-* **.people(name: `string`)** - the people markers
+###### .people(name: `string`)
 
-* **.arrow(name: `string`)** - the arrow markers
+###### .arrow(name: `string`)
 
-* **.symbol(name: `string`)** - the symbol markers
+###### .symbol(name: `string`)
 
-* **.month(name: `string`)** - the month markers
+###### .month(name: `string`)
 
-* **.week(name: `string`)** - the week markers
+###### .week(name: `string`)
 
-* **.half(name: `string`)** - the half markers
+###### .half(name: `string`)
 
-* **.other(name: `string`)** - the other markers
+###### .other(name: `string`)
 
-> **The `name` of marker available [!here](docs/icons.md)**
+> **The `name` of marker available [!here](icons.md)**
 > 
-> Also static methods Marker.groups and Marker.names works
+> You also can use the static methods Marker.groups and Marker.names to find out available name
 
 
 #### Static methods
 
 ###### Marker.groups() => Array\<groupName\>
 
-* To list group names
+* List all available group names
 
 ###### Marker.names(groupName) => Array\<name\>
 
-* To find a available name by `group name`
+* Get the flag names by `groupName`
 
 
 ## Zipper
@@ -248,7 +249,7 @@ The Zipper only works on backend.
 
 ###### .save() => Promise\<boolean\>
 
-* The saver method is `asynchronous`
+* Save all components to the logic disk in zip format
 
 ## Dumper
 
@@ -256,7 +257,9 @@ The Zipper only works on backend.
 
 ###### .dumping() => Array<{filename: string, value: string}>
 
-* You should consider to save the dumped data and zip it as file `*.xmind`
+* Returns an array of the object that composed of file contents
+
+* In order to open it on the official software, You need to compress all the files in zip format and end with `.xmind`
 
 > **Important**
 > 

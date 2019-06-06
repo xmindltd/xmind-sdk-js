@@ -78,7 +78,7 @@ zipper.save().then(status => status && console.log('/tmp/MyFirstMap.xmind 已保
 
 ## 更多示例
 
-[点击前往示例目录](example)
+[点击前往示例目录](../example)
 
 
 ## Workbook
@@ -108,11 +108,11 @@ Workbook 是一个存储了所有组件的临时数据的容器
 
 ###### .toJSON() => JSON
 
-* 以 `JSON` 将所有组件数据展示
+* 以`JSON`形式将所有组件数据展示返回
 
 ###### .toString() => String
 
-* 以 `STRING` 将所有组件数据展示
+* 以`STRING`形式将所有组件数据返回
 
 
 ## Topic
@@ -181,7 +181,7 @@ Workbook 是一个存储了所有组件的临时数据的容器
 | edge | String | null | false | 组件ID，必须与父节点为平行关系 |
 
 
-> [!`edge` 参数视图简介](docs/edge.graphic.txt)
+> [!`edge` 参数视图简介](edge.graphic.txt)
 
 
 ###### .destroy(cid) => Topic
@@ -197,31 +197,31 @@ Workbook 是一个存储了所有组件的临时数据的容器
 
 `Marker` 对象实例提供了如下标记组, 可以通过传入具体标记名称获取 .marker 的参数
 
-* **.priority(name: `string`)** - The priority markers
+###### .priority(name: `string`)
 
-* **.smiley(name: `string`)** - The smiley markers
+###### .smiley(name: `string`)
 
-* **.task(name: `string`)** - The task markers
+###### .task(name: `string`)
 
-* **.flag(name: `string`)** - The flag markers
+###### .flag(name: `string`)
 
-* **.star(name: `string`)** - The star markers
+###### .star(name: `string`)
 
-* **.people(name: `string`)** - The people markers
+###### .people(name: `string`)
 
-* **.arrow(name: `string`)** - The arrow markers
+###### .arrow(name: `string`)
 
-* **.symbol(name: `string`)** - The symbol markers
+###### .symbol(name: `string`)
 
-* **.month(name: `string`)** - The month markers
+###### .month(name: `string`)
 
-* **.week(name: `string`)** - The week markers
+###### .week(name: `string`)
 
-* **.half(name: `string`)** - The half markers
+###### .half(name: `string`)
 
-* **.other(name: `string`)** - The other markers
+###### .other(name: `string`)
 
-> **所有可用 `name` [!点击这里](docs/icons.md)**
+> **所有可用 `name` [!点击这里](icons.md)**
 > 
 > 当然也可以使用静态方法 Marker.groups 和 Marker.names 查看可用 `name`
 
