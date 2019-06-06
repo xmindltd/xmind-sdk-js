@@ -20,9 +20,7 @@ The final file `.xmind` that could be opened by the software.
 
 ## Docs
 
-[Chinese 中文](docs/zh.md)
-
-[English 英文](docs/en.md)
+[Chinese 中文](docs/zh.md) / [English 英文](docs/en.md)
 
 ## Supported Platforms
 
