@@ -2,19 +2,26 @@ import { Workbook, Topic, Marker, Zipper } from '../../src';
 import * as chai from 'chai';
 import * as fs from 'fs';
 import * as JSZip from 'jszip';
-import {win32} from 'path';
+import { win32 } from 'path';
 import Core = require('xmind-model');
 
 const expect = chai.expect;
-let p = '/tmp';
+
+const getBuildTemporaryPath = function() {
+  if (process.platform === 'win32') {
+    if (!fs.existsSync(win32.normalize('C:\tmp'))) {
+      fs.mkdirSync(win32.normalize('C:\tmp'));
+    }
+    return win32.normalize('C:\tmp');
+  }
+
+  return '/tmp';
+}
 
 const getComponents = function() {
   const workbook = new Workbook();
   const topic = new Topic({sheet: workbook.createSheet('sheet1', 'centralTopic')});
-  if (process.platform === 'win32') {
-    p = win32.normalize('C:\\tmp');
-  }
-  const zip = new Zipper({path: p, workbook});
+  const zip = new Zipper({path: getBuildTemporaryPath(), workbook});
   return {topic, workbook, zip};
 }
 

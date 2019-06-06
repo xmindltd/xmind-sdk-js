@@ -2,12 +2,24 @@ import {Topic, Workbook, Zipper} from '../../src';
 import {expect} from 'chai';
 import * as fs from "fs";
 import * as JSZip from 'jszip';
+import { win32 } from 'path';
+
+const getBuildTemporaryPath = function() {
+  if (process.platform === 'win32') {
+    if (!fs.existsSync(win32.normalize('C:\tmp'))) {
+      fs.mkdirSync(win32.normalize('C:\tmp'));
+    }
+    return win32.normalize('C:\tmp');
+  }
+
+  return '/tmp';
+}
 
 // @ts-ignore
 const getComponents = function() {
   const workbook = new Workbook();
   const topic = new Topic({sheet: workbook.createSheet('sheet1', 'centralTopic')});
-  const zip = new Zipper({path: '/tmp', workbook});
+  const zip = new Zipper({path: getBuildTemporaryPath(), workbook});
   return {topic, workbook, zip};
 }
 
