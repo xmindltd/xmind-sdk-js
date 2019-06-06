@@ -1,15 +1,21 @@
-image:
-  - Ubuntu
-
-stack: node 8, node 10, node 12
+environment:
+  matrix:
+    - nodejs_version: '8'
+    - nodejs_version: '10'
 
 install:
+
+  # Get the latest stable version of Node.js or io.js
+  - ps: Install-Product node $env:nodejs_version
+
+  # install modules
+  - npm install
   - npm i ts-node
 
 test_script:
   - node --version
   - npm --version
-  - set DEBUG=xmind-sdk:* npm run test
-  - npm run build
+  - npm run test
 
+# Don't actually build.
 build: off
