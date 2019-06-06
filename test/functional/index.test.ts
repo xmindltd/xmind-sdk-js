@@ -2,20 +2,20 @@ import { Workbook, Topic, Marker, Zipper } from '../../src';
 import * as chai from 'chai';
 import * as fs from 'fs';
 import * as JSZip from 'jszip';
-import { win32 } from 'path';
+import { win32, join } from 'path';
 import Core = require('xmind-model');
 
 const expect = chai.expect;
 
-const getBuildTemporaryPath = function() {
+const getBuildTemporaryPath = function(filename?: string) {
   if (process.platform === 'win32') {
     if (!fs.existsSync(win32.normalize('C:\\tmp'))) {
       fs.mkdirSync(win32.normalize('C:\\tmp'));
     }
-    return win32.normalize('C:\\tmp');
+    return filename ? win32.join(win32.normalize('C:\\tmp'), filename): win32.normalize('C:\\tmp');
   }
 
-  return '/tmp';
+  return filename ? join('/tmp', filename): '/tmp';
 }
 
 const getComponents = function() {
@@ -124,8 +124,8 @@ describe('# Functional Test', () => {
       done();
     });
 
-    it('should be default.xmind file saved to /tmp/default.xmind', done => {
-      const p = '/tmp/default.xmind';
+    it(`should be default.xmind file to save in ${getBuildTemporaryPath('default.xmind')}`, done => {
+      const p = getBuildTemporaryPath('default.xmind');
       if (fs.existsSync(p)) {
         fs.unlinkSync(p);
       }
@@ -170,7 +170,7 @@ describe('# Functional Test', () => {
       topic.destroy(topic.cid('main topic 2'));
       zip.save().then(async status => {
         expect(status).to.be.true;
-        const p = '/tmp/default.xmind';
+        const p = getBuildTemporaryPath('default.xmind');
         const content = fs.readFileSync(p);
         JSZip.loadAsync(content).then(async zip => {
           const text = await zip.file('content.json').async('text');
@@ -214,7 +214,7 @@ describe('# Functional Test', () => {
         .marker(marker.smiley('cry'));
       zip.save().then(status => {
         expect(status).to.be.true;
-        const p = '/tmp/default.xmind';
+        const p = getBuildTemporaryPath('default.xmind');
         const content = fs.readFileSync(p);
         JSZip.loadAsync(content).then(async zip => {
           const text = await zip.file('content.json').async('text');
@@ -243,7 +243,7 @@ describe('# Functional Test', () => {
 
       zip.save().then(status => {
         expect(status).to.be.true;
-        const p = '/tmp/default.xmind';
+        const p = getBuildTemporaryPath('default.xmind');
         const content = fs.readFileSync(p);
         JSZip.loadAsync(content).then(async zip => {
           const text = await zip.file('content.json').async('text');
@@ -271,7 +271,7 @@ describe('# Functional Test', () => {
 
       zip.save().then(status => {
         expect(status).to.be.true;
-        const p = '/tmp/default.xmind';
+        const p = getBuildTemporaryPath('default.xmind');
         const content = fs.readFileSync(p);
         JSZip.loadAsync(content).then(async zip => {
           const text = await zip.file('content.json').async('text');
@@ -310,7 +310,7 @@ describe('# Functional Test', () => {
 
       zip.save().then(status => {
         expect(status).to.be.true;
-        const p = '/tmp/default.xmind';
+        const p = getBuildTemporaryPath('default.xmind');
         const content = fs.readFileSync(p);
         JSZip.loadAsync(content).then(async zip => {
           const text = await zip.file('content.json').async('text');
@@ -341,7 +341,7 @@ describe('# Functional Test', () => {
 
       zip.save().then(status => {
         expect(status).to.be.true;
-        const p = '/tmp/default.xmind';
+        const p = getBuildTemporaryPath('default.xmind');
         const content = fs.readFileSync(p);
         JSZip.loadAsync(content).then(async zip => {
           const text = await zip.file('content.json').async('text');
@@ -371,7 +371,7 @@ describe('# Functional Test', () => {
 
       zip.save().then(status => {
         expect(status).to.be.true;
-        const p = '/tmp/default.xmind';
+        const p = getBuildTemporaryPath('default.xmind');
         const content = fs.readFileSync(p);
         JSZip.loadAsync(content).then(async zip => {
           const text = await zip.file('content.json').async('text');

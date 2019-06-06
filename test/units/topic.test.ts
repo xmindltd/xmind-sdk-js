@@ -2,17 +2,17 @@ import {Topic, Workbook, Zipper} from '../../src';
 import {expect} from 'chai';
 import * as fs from "fs";
 import * as JSZip from 'jszip';
-import { win32 } from 'path';
+import {join, win32} from 'path';
 
-const getBuildTemporaryPath = function() {
+const getBuildTemporaryPath = function(filename?: string) {
   if (process.platform === 'win32') {
     if (!fs.existsSync(win32.normalize('C:\\tmp'))) {
       fs.mkdirSync(win32.normalize('C:\\tmp'));
     }
-    return win32.normalize('C:\\tmp');
+    return filename ? win32.join(win32.normalize('C:\\tmp'), filename): win32.normalize('C:\\tmp');
   }
 
-  return '/tmp';
+  return filename ? join('/tmp', filename): '/tmp';
 }
 
 // @ts-ignore
@@ -81,7 +81,7 @@ describe('# Topic Unit Test', () => {
 
     zip.save().then(async status => {
       expect(status).to.be.true;
-      const p = '/tmp/default.xmind';
+      const p = getBuildTemporaryPath('default.xmind');
       const content = fs.readFileSync(p);
       JSZip.loadAsync(content).then(async zip => {
         const text = await zip.file('content.json').async('text');
@@ -108,7 +108,7 @@ describe('# Topic Unit Test', () => {
     done();
   });
 
-  it('should return topics if cids called', done => {
+  it('should return components if cids called', done => {
     const {topic} = getComponents();
 
     topic
