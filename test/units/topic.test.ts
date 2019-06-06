@@ -2,18 +2,7 @@ import {Topic, Workbook, Zipper} from '../../src';
 import {expect} from 'chai';
 import * as fs from "fs";
 import * as JSZip from 'jszip';
-import {join, win32} from 'path';
-
-const getBuildTemporaryPath = function(filename?: string) {
-  if (process.platform === 'win32') {
-    if (!fs.existsSync(win32.normalize('C:\\tmp'))) {
-      fs.mkdirSync(win32.normalize('C:\\tmp'));
-    }
-    return filename ? win32.join(win32.normalize('C:\\tmp'), filename): win32.normalize('C:\\tmp');
-  }
-
-  return filename ? join('/tmp', filename): '/tmp';
-}
+import { getBuildTemporaryPath } from '../fixtures/utils';
 
 // @ts-ignore
 const getComponents = function() {

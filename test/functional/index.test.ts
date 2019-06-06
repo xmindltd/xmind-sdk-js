@@ -2,21 +2,12 @@ import { Workbook, Topic, Marker, Zipper } from '../../src';
 import * as chai from 'chai';
 import * as fs from 'fs';
 import * as JSZip from 'jszip';
-import { win32, join } from 'path';
+import { getBuildTemporaryPath } from '../fixtures/utils';
 import Core = require('xmind-model');
+
 
 const expect = chai.expect;
 
-const getBuildTemporaryPath = function(filename?: string) {
-  if (process.platform === 'win32') {
-    if (!fs.existsSync(win32.normalize('C:\\tmp'))) {
-      fs.mkdirSync(win32.normalize('C:\\tmp'));
-    }
-    return filename ? win32.join(win32.normalize('C:\\tmp'), filename): win32.normalize('C:\\tmp');
-  }
-
-  return filename ? join('/tmp', filename): '/tmp';
-}
 
 const getComponents = function() {
   const workbook = new Workbook();

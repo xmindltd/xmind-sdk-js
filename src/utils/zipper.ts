@@ -1,19 +1,15 @@
-import { join } from 'path';
+import * as path from 'path';
 import { promisify } from 'util';
 import { Workbook } from '..';
 import { isObject } from 'lodash';
 import * as fs from 'fs';
 import Base from '../core/base';
+import { PACKAGE_MAP } from '../common/constants';
+
 import JSZip = require('jszip');
 
-const PACKAGE_MAP = {
-  MANIFEST: { NAME: 'manifest.json', TYPE: 'json' },
-  CONTENT_JSON: { NAME: 'content.json', TYPE: 'json'},
-  CONTENT_XML: { NAME: 'content.xml', TYPE: 'xml'},
-  METADATA: { NAME: 'metadata.json', TYPE: 'json'},
-  THUMBNAILS: {NAME: 'Thumbnails', TYPE: 'directory'},
-  RESOURCES: { NAME: 'resources', TYPE: 'directory'}
-};
+/* istanbul ignore next */
+const join = (process.platform === 'win32' ? path.win32.join : path.join);
 
 const SUFFIX = '.xmind';
 const DEFAULT_FILENAME = `default${SUFFIX}`;
@@ -68,6 +64,7 @@ export class Zipper extends Base {
       compressionOptions: {level: 9},
       platform: 'UNIX'
     };
+
     const metadata = await this.zip.generateAsync(options);
     const target = join(this.path, this.filename);
     return promisify(fs.writeFile)(target, metadata)
