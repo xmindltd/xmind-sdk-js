@@ -24,12 +24,20 @@ The final file `.xmind` that could be opened by the software.
 
 [English 英文](docs/en.md)
 
+## Supported Platforms
 
-## Contributing
+* Linux
+
+* Win32
+
+* Browser
+
+
+## Contribution
 
 If you run into any problems please feel free to reach out to us 🙂
 
-Also you can PRs immediately
+Also, You can PRs immediately
 
 
 ## LICENSE
