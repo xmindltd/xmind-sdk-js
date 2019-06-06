@@ -9,10 +9,10 @@ const expect = chai.expect;
 
 const getBuildTemporaryPath = function() {
   if (process.platform === 'win32') {
-    if (!fs.existsSync(win32.normalize('C:\tmp'))) {
-      fs.mkdirSync(win32.normalize('C:\tmp'));
+    if (!fs.existsSync(win32.normalize('C:\\tmp'))) {
+      fs.mkdirSync(win32.normalize('C:\\tmp'));
     }
-    return win32.normalize('C:\tmp');
+    return win32.normalize('C:\\tmp');
   }
 
   return '/tmp';
