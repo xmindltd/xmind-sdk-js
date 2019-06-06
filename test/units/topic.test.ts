@@ -32,7 +32,7 @@ describe('# Topic Unit Test', () => {
     }
   });
 
-  it('should be failed if call .on() with an invalid topicId', done => {
+  it('should be failed if call .on() with an invalid componentId', done => {
     try {
       const {topic} = getComponents();
       // @ts-ignore
@@ -43,8 +43,8 @@ describe('# Topic Unit Test', () => {
     }
   });
 
-  it('should be failed to add a topic with an invalid topicId', done => {
-    const doesNotExists = 'does not exists topicId';
+  it('should be failed to add a topic with an invalid componentId', done => {
+    const doesNotExists = 'does not exists componentId';
     try {
       const {topic} = getComponents();
       topic
@@ -52,7 +52,7 @@ describe('# Topic Unit Test', () => {
         .add({title: 'main topic 1'})
         .on(doesNotExists);
     } catch (e) {
-      expect(e.message).to.be.eq(`Invalid topicId ${doesNotExists}`);
+      expect(e.message).to.be.eq(`Invalid componentId ${doesNotExists}`);
       done();
     }
   });
@@ -96,7 +96,7 @@ describe('# Topic Unit Test', () => {
     done();
   });
 
-  it('should return topics if topicIds called', done => {
+  it('should return topics if cids called', done => {
     const {topic} = getComponents();
 
     topic
@@ -111,14 +111,14 @@ describe('# Topic Unit Test', () => {
     done();
   });
 
-  it('should be .find(topicId?) worked with a topicId', done => {
+  it('should be .find(componentId?) worked with a componentId', done => {
     const {topic} = getComponents();
     const component = topic.find(topic.rootTopicId) || null;
     expect(component).to.be.not.null;
     done();
   });
 
-  it('should return a component of root topic by .find(topicId?) if does not given topicId', done => {
+  it('should return a component of root topic by .find(componentId?) if does not given topicId', done => {
     const {topic} = getComponents();
     const component = topic.find() || null;
     expect(component).to.be.not.null;

@@ -109,7 +109,7 @@ describe('# Functional Test', () => {
       done();
     });
 
-    it('should be topic found by topicId', done => {
+    it('should be topic found by componentId', done => {
       const {topic} = getComponents();
       topic.add({title: 'main topic 1'});
       const mainTopic1 = topic.find(topic.cid());

@@ -39,7 +39,7 @@ export class Topic extends Base implements AbstractTopic {
     }
 
     if (!this.isValidTopicId(String(componentId))) {
-      throw new Error(`Invalid topicId ${String(componentId)}`);
+      throw new Error(`Invalid componentId ${String(componentId)}`);
     }
 
     this.componentId = componentId;

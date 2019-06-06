@@ -25,8 +25,8 @@ topic
   // adding main topic 4 on central topic
   .add({title: 'main topic 4'})
 
-  // In default, The topicId() returns id of `main topic 4`
-  // Also topic.topicId('main topic 4') is working
+  // In default, The cid() returns id of `main topic 4`
+  // Also topic.cid('main topic 4') is working
   .on(topic.cid())
   
   // adding some subtopics on `main topic 4`

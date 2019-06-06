@@ -3,7 +3,7 @@
 |--------------------------------------------------------------------------------------|
 |                                                                                      |
 |      /* set main topic 1 as the parent node.*/                                       |
-|      /* topic.on(topic.topicId('main topic 1')) */                                   |
+|      /* topic.on(topic.cid('main topic 1')) */                                   |
 |      main topic 1 - ... subtopics                                                    |
 |                                                                                      |
 |      main topic 2 - ... subtopics                                                    |
@@ -11,6 +11,6 @@
 |                     `subtopic 1` belows `main topic 1`                               |
 |                   /                                                                  |
 |      main topic 3 - `subtopic 2` belows `main topic 1`                               |
-|      /* so now, you can call summary with the edge = topic.topicId('main topic 3') */|
-|      /* Only `main topic 1` is left if you set edge = topic.topicId('subtopic 1') */ |
+|      /* so now, you can call summary with the edge = topic.cid('main topic 3') */|
+|      /* Only `main topic 1` is left if you set edge = topic.cid('subtopic 1') */ |
 |--------------------------------------------------------------------------------------|
