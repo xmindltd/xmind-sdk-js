@@ -1,7 +1,7 @@
 import { AbstractWorkbook } from '../abstracts/workbook.abstract';
 import { Theme } from './theme';
 import Base from './base';
-import Core = require('xmind-model');
+import * as Core from 'xmind-model';
 
 
 /**

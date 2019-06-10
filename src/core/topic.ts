@@ -5,7 +5,7 @@ import { Note } from './note';
 import { isEmpty, isObject } from 'lodash';
 import Base from './base';
 import * as Model from '../common/model';
-import Core = require('xmind-model');
+import * as Core from 'xmind-model';
 
 /**
  * @description Topic common methods
@@ -98,7 +98,7 @@ export class Topic extends Base implements AbstractTopic {
     }
 
     const summary = new Summary();
-    const type = this.current().getType();
+    const type = <string>this.current().getType();
     const parent = this.current().parent();
     const children = parent.getChildrenByType(type);
     const condition = [this.componentId, !edge ? this.componentId : edge];
@@ -168,7 +168,7 @@ export class Topic extends Base implements AbstractTopic {
 
   /**
    * @description Get current topic instance
-   * @return {Topic}
+   * @return {Core.Topic}
    * @private
    */
   private current() {

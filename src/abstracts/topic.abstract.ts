@@ -1,7 +1,8 @@
 import { Topic } from '..';
 import { SummaryOptions } from './summary.abstract';
 import * as Model from '../common/model';
-import Core = require('xmind-model');
+// import Core = require('xmind-model');
+import * as Core from 'xmind-model';
 
 export interface TopicOptions {
   sheet: Core.Sheet;

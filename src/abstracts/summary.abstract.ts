@@ -1,5 +1,5 @@
 import { Summary } from '../core/summary';
-import Core = require('xmind-model');
+import * as Core from 'xmind-model';
 
 export interface SummaryOptions {
   title?: string;

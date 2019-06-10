@@ -13,10 +13,10 @@ This library is similar to the client of XMind-UI that written by typescript and
 
 ## Recommendation
 
-The final file `.xmind` that could be opened by the software.
-
 [![npm (scoped)](https://img.shields.io/badge/XMind-ZEN-red.svg)](https://www.xmind.net)
 [![npm (scoped)](https://img.shields.io/badge/Lighten-Pro-purple.svg)](https://lighten.xmind.net)
+
+The final file `.xmind` that could be opened by the software
 
 ## Docs
 
