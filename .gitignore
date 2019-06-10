@@ -4,8 +4,6 @@ dist
 # Mac os
 .DS_Store
 
-.nyc_output
-
 # webstorm
 .idea
 
