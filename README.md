@@ -20,7 +20,7 @@ You can open the final `.xmind` file with the recommended software.
 
 ## Docs
 
-[See document](./docs/en.md)
+[See documents](./docs/en.md)
 
 ## Supports Platform
 

@@ -9,10 +9,7 @@
 The [`xmind-sdk-js`](https://github.com/xmindltd/xmind-sdk-js) is an official library that implements a lot of functions as same as the UI client. If you use UI client, you could have already known how to use this library.
 
 In order to use conveniently, an essential concept you should know is that everything is component and each component has a unique component ID.
-
 You can add child nodes under the component, but the `Marker` and `Note` only allows to be attached on the component.
-
-All the components are going to connect as a map tree.
 
 ## Getting started
 
