@@ -1,7 +1,6 @@
 import { Topic } from '..';
 import { SummaryOptions } from './summary.abstract';
 import * as Model from '../common/model';
-// import Core = require('xmind-model');
 import * as Core from 'xmind-model';
 
 export interface TopicOptions {
@@ -11,6 +10,7 @@ export interface TopicOptions {
 export interface MarkerOptions {
   groupId: string;
   markerId: string;
+  del?: boolean;
 }
 
 export interface AbstractTopic {
@@ -58,6 +58,9 @@ export interface AbstractTopic {
   /**
    * @description Add marker to topic
    * @param {MarkerOptions} options - The groupId & markerId
+   * @param {String} options.groupId
+   * @param {String} options.markerId
+   * @param {Boolean} options.del - The marker object will be removed if del set as true
    * @return {Topic}
    */
   marker(options: MarkerOptions): Topic;

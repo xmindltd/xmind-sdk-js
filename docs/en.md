@@ -8,9 +8,11 @@
 
 The [`xmind-sdk-js`](https://github.com/xmindltd/xmind-sdk-js) is an official library that implements a lot of functions as same as the UI client. If you use UI client, you could have already known how to use this library.
 
-In order to use conveniently, a very important concept you should know is that everything is component and each of component has a unique `componentId`.
+In order to use conveniently, an essential concept you should know is that everything is component and each component has a unique component ID.
 
-All of the components will be connected as a map tree.
+You can add child nodes under the component, but the `Marker` and `Note` only allows to be attached on the component.
+
+All the components are going to connect as a map tree.
 
 ## Getting started
 
@@ -60,14 +62,14 @@ topic
   .add({title: 'subtopic 1'})
   .add({title: 'subtopic 2'})
    
-   // add a note text on `main topic 1`
+   // add a text note on `main topic 1`
   .note('This is a note attached on main topic 1')
   
   // add a marker flag on `subtopic 1`
   .on(topic.cid('subtopic 1'))
   .marker(marker.week('fri'))
    
-   // add a summary component that contains two subtopics
+   // add a component of the summary that contains two subtopics
   .summary({title: 'subtopic summary', include: topic.cid('subtopic 2')})
   
 zipper.save().then(status => status && console.log('Saved /tmp/MyFirstMap.xmind'));
@@ -75,103 +77,118 @@ zipper.save().then(status => status && console.log('Saved /tmp/MyFirstMap.xmind'
 
 ## More Examples
 
-[Go to examples directory](../example)
+[Go to example directory](../example)
 
 
 ## Workbook
 
-The workbook is a basic container to store the temporary data of components
+The `Workbook` is a primary container that stores temporary data for all components .
 
 ### Methods
 
 ###### .createSheet(sheetTitle, centralTopicTitle) => `Sheet`
 
-* That will create a instance of Sheet
+* It will create an instance of the `Sheet`
 
 | Name | Type | Default | Required | Description | 
 |:----:|:----:|:-------:|:--------:|:------------|
-| sheetTitle | String | null | true | The title of sheet |
-| centralTopicTitle | String | 'Central Topic' | false | The title of central topic |
+| sheetTitle | String | null | true | The title of `Sheet` |
+| centralTopicTitle | String | 'Central Topic' | false | The title of `Central Topic` |
 
 
 ###### .theme(sheetTitle, themeName) => Boolean
 
-* Set map global theme
+* Setting the background theme
 
 | Name | Type | Default | Required | Description | 
 |:----:|:----:|:-------:|:--------:|:------------|
-| sheetTitle | String | null | true | The sheet title |
-| themeName | String | null | true | The names robust, snowbrush, business are available for now |
+| sheetTitle | String | null | true | The title of `Sheet` |
+| themeName | String | null | true | Only supports `robust, snowbrush, business` for now |
 
 ###### .toJSON() => JSON
 
-* Gives all the components as `JSON` format
+* Return component's data in the form `JSON`.
 
 ###### .toString() => String
 
-* Gives all the components as `STRING` format
-
+* Return component's data in the form `STRING`.
 
 ## Topic
 
-### TopicOptions
+### Topic Options
 
-* `sheet` - The `Topic` needs an instance of Sheet for components management
+* `sheet` - The value returns from `Workbook.createSheet()`.
 
 ### Methods
 
-###### .cid(title) => String
+###### .cid(title?) => String
 
-* In default, returns the `central topic id` if title does not given
+* Use .cid to get component ID corresponding to the `title`.
 
-* Also, you can get a componentId by the `title` but you should be careful about the title to be repeated, or it will find the first one and return it
+> _!!! NOTE THAT_
+>
+> _You should avoid duplication of component `title` if use the `title` lookups_
+
+* At least the ID of central topic will return if does not add any component.
+
+* If there is no `title`, it will return the last component's ID you have added. 
 
 ###### .cids() => {$cid: $title}
 
-* Gives an object that contains the pair of `$componentId` and `$title` you have added
+* It will return an object that contains `$componentId` and `$title`.
 
-###### .on(componentId) => Topic
+###### .on(componentId?) => Topic
 
-* Set the component as parent node and the operation of `Topic` depends on it
-
-| Name | Type | Default | Required | Description |
-|:----:|:----:|:-------:|:--------:|:------------|
-| componentId | String | `Central Topic` | false | The componentId that you have added |
+* Setting the component of corresponding to `componentId` to be parent component.
 
 
 ###### .add(options) => Topic
 
-* The topic will be added if you call it with a valid title string
+* Add a topic component under the parent component.
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
 | options.title | String | null | true | the title of topic |
+| options.index | Number | null | false | coming soon |
 
 
 ###### .note(text) => Topic
 
-* Add a note text on the parent node
+* To attach a text to the parent component.
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
-| text | String | null | true | A note text message |
+| text | String | null | true | Text message |
 
 
-###### .marker(options) => Topic
+###### .marker(object) => Topic
 
-* Add a marker flag on the parent node
+* To attach a marker flag to the parent component.
 
-> [Use `Marker Object` to generate the options](#marker-flags)
+* Also, you can detach a marker flag from the parent component by setting the `object.del` to `true`. default: `false`
+
+Example:
+
+```js
+const {Marker} = require('xmind-sdk');
+const marker = new Marker();
+// add
+topic.marker(marker.smiley('cry'));
+// del
+topic.marker(Object.assign({}, marker.smiley('cry'), {del: true}));
+```
+
+> [Use `Marker Object` to generate the object](#marker-flags)
 
 
 ###### .summary(options) => Topic
 
-* Add a summary for components with an optional range, but cannot add summary on the `Central Topic`
+* Add a component of summary under the parent component that allows using `edge` for a scope, but not allows to add summary under the `Central Topic`.
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
-| title | String | null | true | The title of summary |
-| edge | String | null | false | The componentId that must parallel with your parent node |
+| options.title | String | null | true | The title of summary |
+| options.edge | String | null | false | The component ID that must parallel with your parent component |
 
 
 > [!`edge` graphic](edge.graphic.txt)
@@ -179,13 +196,11 @@ The workbook is a basic container to store the temporary data of components
 
 ###### .destroy(componentId) => Topic
 
-* Destroy a component from the map tree
+* Destroy a component from the map tree.
 
-* The children will be disappeared if the parent node was destroyed
-
-| Name | Type | Default | Required | Description |
-|:----:|:----:|:-------:|:--------:|:------------|
-| componentId | String | null | true | The componentId that you have added |
+> _!!! IMPORTANT_
+>
+> The nodes under the parent component are going to destroy with it.
 
 
 ## Marker flags
@@ -216,51 +231,51 @@ We provides an instance of `Marker` that includes all the markers. such as below
 
 ###### .other(name: `string`)
 
-> **The `name` of marker available [!here](icons.md)**
+> **The `name` of marker is available [!here](icons.md)**
 > 
-> You also can use the static methods Marker.groups and Marker.names to find out available name
+> You can also use the `static method` Marker.groups and Marker.names to find out available name
 
 
 #### Static methods
 
 ###### Marker.groups() => Array\<groupName\>
 
-* List all available group names
+* List available group names.
 
 ###### Marker.names(groupName) => Array\<name\>
 
-* Get the flag names by `groupName`
+* Get the flag names by `groupName`.
 
 
 ## Zipper
 
-The Zipper only works on backend.
+The module of `Zipper` only works under backend.
 
 > [!See `Dumper` in browser environment](#dumper)
 
-### ZipperOptions
+### Zipper Options
 
 | Name | Type | Default | Required | Description | 
 |:----:|:----:|:-------:|:--------:|:------------|
-| path | String | null | true | The path where the .xmind file to save |
-| workbook | Workbook | null | true | The instance of Workbook |
-| filename | String | 'default' | false | `default.xmind` |
+| options.path | String | null | true | The path where the .xmind file to save |
+| options.workbook | Workbook | null | true | The instance of Workbook |
+| options.filename | String | 'default' | false | `default.xmind` |
 
 
 ###### .save() => Promise\<boolean\>
 
-* Save all components to the logic disk in zip format
+* To save components to the logic disk in form zip.
 
 ## Dumper
 
-* The Dumper only works on browser
+* The module of `Dumper` only works under browser.
 
 ###### .dumping() => Array<{filename: string, value: string}>
 
-* Returns an array of the object that composed of file contents
+* Return an array of the object that is composed of file content.
 
-* In order to open it on the official software, You need to compress all the files in zip format and end with `.xmind`
+* In order to open it in the official software, You need to compress file in form zip and ending with `.xmind`
 
 > **Important**
 > 
-> Do not includes the top level folder, or the software won't extra file from top level folder
+> Do not include the top level folder, otherwise the software won't extra the files from top level folder.

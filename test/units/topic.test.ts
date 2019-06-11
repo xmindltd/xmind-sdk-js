@@ -1,8 +1,9 @@
-import {Topic, Workbook, Zipper} from '../../src';
+import {Topic, Workbook, Zipper, Marker} from '../../src';
 import {expect} from 'chai';
 import * as fs from "fs";
 import * as JSZip from 'jszip';
 import { getBuildTemporaryPath } from '../fixtures/utils';
+import {extend} from 'lodash';
 
 // @ts-ignore
 const getComponents = function() {
@@ -144,6 +145,19 @@ describe('# Topic Unit Test', () => {
     const id = topic.cid();
     expect(id).to.eq(topic.rootTopic.getId());
     expect(id).to.eq(topic.rootTopicId);
+    done();
+  });
+
+  it('should be marker removed', done => {
+    const {topic} = getComponents();
+    const marker = new Marker();
+    const cry = marker.smiley('cry');
+    topic
+      .add({title: 'main topic 1'})
+      .marker(cry)
+      // del
+      .marker(extend({}, cry, {del: true}));
+
     done();
   });
 

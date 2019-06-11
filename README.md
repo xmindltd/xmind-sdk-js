@@ -9,20 +9,20 @@
 
 [The SDK of most popular mind mapping software.](https://www.xmind.net)
 
-This library is similar to the client of XMind-UI that written by typescript and It could be used in node.js and browser both environments.
+This library is written by typescript and it could be run on node.js and browser.
 
 ## Recommendation
 
 [![npm (scoped)](https://img.shields.io/badge/XMind-ZEN-red.svg)](https://www.xmind.net)
 [![npm (scoped)](https://img.shields.io/badge/Lighten-Pro-purple.svg)](https://lighten.xmind.net)
 
-The final file `.xmind` that could be opened by the software
+You can open the final `.xmind` file with the recommended software.
 
 ## Docs
 
-[Chinese 中文](docs/zh.md) / [English 英文](docs/en.md)
+[See document](./docs/en.md)
 
-## Supported Platforms
+## Supports Platform
 
 * Linux
 
@@ -35,7 +35,7 @@ The final file `.xmind` that could be opened by the software
 
 If you run into any problems please feel free to reach out to us 🙂
 
-Also, You can PRs immediately
+You also can PRs immediately.
 
 
 ## LICENSE

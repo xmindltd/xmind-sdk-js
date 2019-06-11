@@ -16,8 +16,6 @@ export class Topic extends Base implements AbstractTopic {
   private readonly resources: {[key: string]: string} = {};
 
   private componentId: string;
-
-  // Save the last component id
   private lastId: string;
 
   constructor(options: TopicOptions = <TopicOptions>{}) {
@@ -119,6 +117,13 @@ export class Topic extends Base implements AbstractTopic {
       this.debug('E - Invalid marker options: %j', options);
       return this;
     }
+
+    if (options.del === true) {
+      delete options.del;
+      this.current().removeMarker(options);
+      return this;
+    }
+
     this.current().addMarker(options);
     return this;
   }

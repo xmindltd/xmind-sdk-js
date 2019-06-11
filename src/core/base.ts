@@ -28,7 +28,7 @@ export default class Base {
   /**
    * @description uuid/v4
    */
-  get id() {
+  get id(): string {
     return v4();
   }
 }
