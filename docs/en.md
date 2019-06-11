@@ -39,7 +39,7 @@ import {Workbook, Topic, Marker} from 'xmind-sdk';
 
 ```
 
-## Usage
+## Simple example
 
 ```js
 const { Workbook, Topic, Marker, Zipper } = require('xmind-sdk');
@@ -66,7 +66,7 @@ topic
   .on(topic.cid('subtopic 1'))
   .marker(marker.week('fri'))
    
-   // add a component of the summary that contains two subtopics
+   // add a component of the summary that contains two sub topics
   .summary({title: 'subtopic summary', include: topic.cid('subtopic 2')})
   
 zipper.save().then(status => status && console.log('Saved /tmp/MyFirstMap.xmind'));
