@@ -13,7 +13,7 @@ In order to use conveniently, an essential concept you should know is that every
 
 ## Getting started
 
-#### Usage in Node.js
+### Usage in Node.js
 
 ```shell
 $ npm i --save xmind-sdk
@@ -23,7 +23,7 @@ $ npm i --save xmind-sdk
 const {Workbook, Topic, Marker} = require('xmind-sdk');
 ```
 
-#### Usage in Browser
+### Usage in Browser
 
 ```jsx harmony
 // JSX
@@ -40,6 +40,7 @@ import {Workbook, Topic, Marker} from 'xmind-sdk';
 ```
 
 ## Simple example
+
 
 ```js
 const { Workbook, Topic, Marker, Zipper } = require('xmind-sdk');
@@ -79,62 +80,79 @@ zipper.save().then(status => status && console.log('Saved /tmp/MyFirstMap.xmind'
 
 ## Workbook
 
-The `Workbook` is a primary container that stores temporary data for all components
+The workbook is a temporary storage. this is where all the data is written.
 
 ### Methods
 
-###### .createSheet(sheetTitle, centralTopicTitle) => `Sheet`
+#### .createSheet(sheetTitle, topicTitle?) => `Sheet`
 
-* It will create an instance of the `Sheet`
+Once you have create a workbook, so there's a way to create your sheet that contains a `root topic`, also, you can custom their titles by the parameters. 
+
 
 | Name | Type | Default | Required | Description | 
 |:---- |:----:|:-------:|:--------:|:------------|
-| sheetTitle | String | null | true | The title of `Sheet` |
-| centralTopicTitle | String | 'Central Topic' | false | The title of `Central Topic` |
+| sheetTitle | String | `-` | Y | the sheet's custom title |
+| topicTitle | String | `Central Topic` | N | the topic's custom title |
 
 
-###### .theme(sheetTitle, themeName) => Boolean
+#### .theme(sheetTitle, themeName) => Boolean
 
-* Set the background theme
+There are many theme styles in the `UI client` and we also offer several theme styles.
+
+Only supports `robust / snowbrush / business` for now.
 
 | Name | Type | Default | Required | Description | 
 |:---- |:----:|:-------:|:--------:|:------------|
-| sheetTitle | String | null | true | The title of `Sheet` |
-| themeName | String | null | true | Only supports `robust, snowbrush, business` for now |
+| sheetTitle | String | null | true | which `sheet` is going to set in that style |
+| themeName | String | null | true | the name of theme style  |
 
-###### .toJSON() => JSON
+#### .toJSON() => JSON
 
-* Return component's data in the form `JSON`
+Getting the component's data from the workbook in the form `JSON`
 
-###### .toString() => String
+#### .toString() => String
 
-* Return component's data in the form `STRING`
+Getting the component's data from the workbook in the form `STRING`
 
 ## Topic
 
+The `Topic` is an important constructor function that implements most of the methods, also, you will be depending on it for your most operations.
+
 ### Topic Options
 
-* `sheet` - The value returns from `Workbook.createSheet()`
+* options.sheet <= `workbook.createSheet(...)`
+
+You may ask why we need to offer the `options.sheet` manually? So, the reason is that `Topic` was implemented of independent, but most of the methods depend on the instance of sheet.
+
+In the UI client, you also need to draw the mind map on sheet.
+
+> usage:
+> 
+> ```js
+> const {Topic, Workbook} = require('xmind-sdk');
+> const wb = new Workbook();
+> 
+> new Topic({sheet: wb.createSheet('Sheet-1', 'topic-1')});
+> ```
 
 ### Methods
 
-###### .cid(title?) => String
+#### .cid(title?) => String
 
-* Use .cid to get component ID corresponding to the `title`
-
-> _!!! NOTE THAT_
+* Using .cid to get component ID of corresponding to the `title`.
+> 
+> _!!! NOTE THAT:_  You should avoid duplication of component `title` if use the `title` lookups
 >
-> _You should avoid duplication of component `title` if use the `title` lookups_
 
 * At least the ID of central topic will return if does not add any component
 
 * If there is no `title`, it will return the last component's ID you have added
 
-###### .cids() => {$cid: $title}
+#### .cids() => {$cid: $title}
 
 * It will return an object that contains `$componentId` and `$title`
 
-###### .on(componentId?) => Topic
+#### .on(componentId?) => Topic
 
 * Set the component of corresponding to `componentId` to be parent component
 
@@ -146,16 +164,16 @@ The `Workbook` is a primary container that stores temporary data for all compone
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
 | options.title | String | null | true | the title of topic |
-| options.index | Number | null | false | coming soon |
 
 
-###### .note(text) => Topic
+###### .note(text, del?) => Topic
 
 * To attach a text to the parent component
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
-| text | String | null | true | Text message |
+| text | String | null | true | text message |
+| del | Boolean | false | false | to detach the note from current parent component if the `del` set to true |
 
 
 ###### .marker(object) => Topic
