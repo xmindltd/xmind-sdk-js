@@ -7,9 +7,9 @@
 ![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/xmindltd/xmind-sdk-js/master.svg?color=red&label=version)
 ![GitHub](https://img.shields.io/github/license/xmindltd/xmind-sdk-js.svg)
 
-This [project](https://github.com/xmindltd/xmind-sdk-js) is an official library that implements a lot of functions as same as the UI client. If you use UI client, you could have already known how to use this library.
+This [project](https://github.com/xmindltd/xmind-sdk-js) is an official library that implements various functions which is similar to UI client. If you had access to UI client, you could have already known how to use this library.
 
-In order to use conveniently, an essential concept you should know is that everything is component and each one of those has a unique component ID. You can add child nodes under the component, but the `Marker` and `Note` only allows to be attached on the component.
+In order to use conveniently, an essential concept you should know is that everything is component and each one of them has a unique component ID. You can add child nodes under the component, however, the `Marker` and `Note` can only be attached to the component.
 
 ## Getting started
 
