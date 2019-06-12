@@ -16,13 +16,13 @@ This library is written by typescript and it could be run on node.js and browser
 [![npm (scoped)](https://img.shields.io/badge/XMind-ZEN-red.svg)](https://www.xmind.net)
 [![npm (scoped)](https://img.shields.io/badge/Lighten-Pro-purple.svg)](https://lighten.xmind.net)
 
-You can open the final `.xmind` file with the recommended software.
+You can open the final `.xmind` file by the recommended software.
 
 ## Docs
 
 [See documents](./docs/en.md)
 
-## Supports Platform
+## Support Platform
 
 * Linux
 
