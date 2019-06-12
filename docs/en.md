@@ -79,7 +79,7 @@ zipper.save().then(status => status && console.log('Saved /tmp/MyFirstMap.xmind'
 
 ## Workbook
 
-The `Workbook` is a primary container that stores temporary data for all components .
+The `Workbook` is a primary container that stores temporary data for all components
 
 ### Methods
 
@@ -104,44 +104,44 @@ The `Workbook` is a primary container that stores temporary data for all compone
 
 ###### .toJSON() => JSON
 
-* Return component's data in the form `JSON`.
+* Return component's data in the form `JSON`
 
 ###### .toString() => String
 
-* Return component's data in the form `STRING`.
+* Return component's data in the form `STRING`
 
 ## Topic
 
 ### Topic Options
 
-* `sheet` - The value returns from `Workbook.createSheet()`.
+* `sheet` - The value returns from `Workbook.createSheet()`
 
 ### Methods
 
 ###### .cid(title?) => String
 
-* Use .cid to get component ID corresponding to the `title`.
+* Use .cid to get component ID corresponding to the `title`
 
 > _!!! NOTE THAT_
 >
 > _You should avoid duplication of component `title` if use the `title` lookups_
 
-* At least the ID of central topic will return if does not add any component.
+* At least the ID of central topic will return if does not add any component
 
-* If there is no `title`, it will return the last component's ID you have added. 
+* If there is no `title`, it will return the last component's ID you have added
 
 ###### .cids() => {$cid: $title}
 
-* It will return an object that contains `$componentId` and `$title`.
+* It will return an object that contains `$componentId` and `$title`
 
 ###### .on(componentId?) => Topic
 
-* Set the component of corresponding to `componentId` to be parent component.
+* Set the component of corresponding to `componentId` to be parent component
 
 
 ###### .add(options) => Topic
 
-* Add a topic component under the parent component.
+* Add a topic component under the parent component
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
@@ -151,7 +151,7 @@ The `Workbook` is a primary container that stores temporary data for all compone
 
 ###### .note(text) => Topic
 
-* To attach a text to the parent component.
+* To attach a text to the parent component
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
@@ -160,7 +160,7 @@ The `Workbook` is a primary container that stores temporary data for all compone
 
 ###### .marker(object) => Topic
 
-* To attach a marker flag to the parent component.
+* To attach a marker flag to the parent component
 
 * Also, you can detach a marker flag from the parent component by setting the `object.del` to `true`. default: `false`
 
@@ -180,7 +180,7 @@ topic.marker(Object.assign({}, marker.smiley('cry'), {del: true}));
 
 ###### .summary(options) => Topic
 
-* Add a component of summary under the parent component that allows using `edge` for a scope, but not allows to add summary under the `Central Topic`.
+* Add a component of summary under the parent component that allows using `edge` for a scope, but not allows to add summary under the `Central Topic`
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
@@ -193,7 +193,7 @@ topic.marker(Object.assign({}, marker.smiley('cry'), {del: true}));
 
 ###### .destroy(componentId) => Topic
 
-* Destroy a component from the map tree.
+* Destroy a component from the map tree
 
 > _!!! IMPORTANT_
 >
@@ -237,16 +237,16 @@ We provides an instance of `Marker` that includes all the markers. such as below
 
 ###### Marker.groups() => Array\<groupName\>
 
-* List available group names.
+* List available group names
 
 ###### Marker.names(groupName) => Array\<name\>
 
-* Get the flag names by `groupName`.
+* Get the flag names by `groupName`
 
 
 ## Zipper
 
-The module of `Zipper` only works under backend.
+The module of `Zipper` only works under backend
 
 > [!See `Dumper` in browser environment](#dumper)
 
@@ -261,18 +261,18 @@ The module of `Zipper` only works under backend.
 
 ###### .save() => Promise\<boolean\>
 
-* To save components to the logic disk in form zip.
+* To save components to the logic disk in form zip
 
 ## Dumper
 
-* The module of `Dumper` only works under browser.
+* The module of `Dumper` only works under browser
 
 ###### .dumping() => Array<{filename: string, value: string}>
 
-* Return an array of the object that is composed of file content.
+* Return an array of the object that is composed of file content
 
 * In order to open it in the official software, You need to compress file in form zip and ending with `.xmind`
 
 > **Important**
 > 
-> Do not include the top level folder, otherwise the software won't extra the files from top level folder.
+> Do not include the top level folder, otherwise the software won't extra the files from top level folder
