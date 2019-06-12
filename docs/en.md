@@ -88,7 +88,7 @@ The `Workbook` is a primary container that stores temporary data for all compone
 * It will create an instance of the `Sheet`
 
 | Name | Type | Default | Required | Description | 
-|:----:|:----:|:-------:|:--------:|:------------|
+|:---- |:----:|:-------:|:--------:|:------------|
 | sheetTitle | String | null | true | The title of `Sheet` |
 | centralTopicTitle | String | 'Central Topic' | false | The title of `Central Topic` |
 
@@ -98,7 +98,7 @@ The `Workbook` is a primary container that stores temporary data for all compone
 * Set the background theme
 
 | Name | Type | Default | Required | Description | 
-|:----:|:----:|:-------:|:--------:|:------------|
+|:---- |:----:|:-------:|:--------:|:------------|
 | sheetTitle | String | null | true | The title of `Sheet` |
 | themeName | String | null | true | Only supports `robust, snowbrush, business` for now |
 
@@ -183,7 +183,7 @@ topic.marker(Object.assign({}, marker.smiley('cry'), {del: true}));
 * Add a component of summary under the parent component that allows using `edge` for a scope, but not allows to add summary under the `Central Topic`
 
 | Name | Type | Default | Required | Description |
-|:----:|:----:|:-------:|:--------:|:------------|
+|:---- |:----:|:-------:|:--------:|:------------|
 | options.title | String | null | true | The title of summary |
 | options.edge | String | null | false | The component ID that must parallel with your parent component |
 
@@ -253,7 +253,7 @@ The module of `Zipper` only works under backend
 ### Zipper Options
 
 | Name | Type | Default | Required | Description | 
-|:----:|:----:|:-------:|:--------:|:------------|
+|:---- |:----:|:-------:|:--------:|:------------|
 | options.path | String | null | true | The path where the .xmind file to save |
 | options.workbook | Workbook | null | true | The instance of Workbook |
 | options.filename | String | 'default' | false | `default.xmind` |
