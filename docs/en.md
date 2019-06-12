@@ -86,7 +86,7 @@ The workbook is a temporary storage. this is where all the data is written.
 
 #### .createSheet(sheetTitle, topicTitle?) => `Sheet`
 
-Once you have create a workbook, so there's a way to create your sheet that contains a `root topic`, also, you can custom their titles by the parameters. 
+Once you have created a workbook and so, there's a way to create your sheet that contains a `root topic`, also, you can custom their titles by the parameters. 
 
 
 | Name | Type | Default | Required | Description | 
