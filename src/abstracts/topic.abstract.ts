@@ -39,6 +39,15 @@ export interface AbstractTopic {
    */
   find(componentId: string): Core.Topic;
 
+
+  /**
+   * @description attach a text note to topic
+   * @param {String} text - note body
+   * @param {Boolean} del - a boolean flag for text note deletion
+   * @return {Topic}
+   */
+  note(text: string, del?: boolean): Topic;
+
   /**
    * @description Destroy a component from map tree
    * @param {String} componentId

@@ -178,7 +178,41 @@ describe('# Functional Test', () => {
 
   });
 
-  describe('# Note', () => {});
+  describe('# Note', () => {
+
+    it('attach a text note to main topic 1', done => {
+      const { topic, workbook} = getComponents();
+      const title = 'main topic 1';
+      const text = 'this is a text note';
+
+      topic
+        .add({title})
+        .on(topic.cid(title))
+        .note(text);
+
+      const obj = workbook.toJSON()[0].rootTopic.children.attached[0];
+      expect(obj).to.have.property('notes');
+      expect(obj.notes.plain.content).to.eq(text);
+      done();
+    });
+
+    it('detach a text note from main topic 1', done => {
+      const { topic, workbook} = getComponents();
+      const title = 'main topic 1';
+      const text = 'this is a text note';
+
+      topic
+        .add({title})
+        .on(topic.cid(title))
+        .note(text);
+
+      topic.note(null, true);
+      const obj = workbook.toJSON()[0].rootTopic.children.attached[0];
+      expect(obj).to.have.not.property('notes');
+      done();
+    });
+
+  });
 
   describe('# Marker', () => {
 

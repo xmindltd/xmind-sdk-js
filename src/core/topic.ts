@@ -56,11 +56,16 @@ export class Topic extends Base implements AbstractTopic {
     return this;
   }
 
-  public note(text: string) {
+  public note(text: string, del?: boolean) {
+    const cur = this.current();
+    if (del === true) {
+      cur.removeNotes();
+      return this;
+    }
     if (!text) return this;
     const n = new Note();
     n.text = text;
-    this.current().addNotes(n.toJSON());
+    cur.addNotes(n.toJSON());
     return this;
   }
 
