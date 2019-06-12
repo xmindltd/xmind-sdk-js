@@ -86,7 +86,7 @@ The workbook is a temporary storage where all the data are written.
 
 #### .createSheet(sheetTitle, topicTitle?) => `Sheet`
 
-Once the workbook is created, then there's a way to build a sheet containing a `root topic`. In addition, you can custom their titles by parameters. 
+Once the workbook is created, then there's a way to build a sheet containing a `root topic`. In addition, you can custom their titles by parameters.
 
 
 | Name | Type | Default | Required |
@@ -163,7 +163,7 @@ Add a topic component under parent node.
 
 #### .note(text, del?) => Topic
 
-Attach a text to parent node
+Attach a text to parent node.
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
@@ -253,11 +253,11 @@ We provide an instance of `Marker` that includes all the markers. Such as:
 
 #### Marker.groups() => Array\<groupName\>
 
-List available group names
+List available group names.
 
 #### Marker.names(groupName) => Array\<name\>
 
-* Get the flag names by `groupName`
+* Get the flag names by `groupName`.
 
 
 ## Zipper
@@ -277,18 +277,16 @@ The module of `Zipper` only works under backend.
 
 #### .save() => Promise\<boolean\>
 
-* To save components to the logic disk in form zip
+Save components to the logic disk in the form of zip.
 
 ## Dumper
 
-* The module of `Dumper` only works under browser
+The module of `Dumper` only works under browser.
 
 #### .dumping() => Array<{filename: string, value: string}>
 
-* Return an array of the object that is composed of file content
-
-* In order to open it in the official software, You need to compress file in form zip and ending with `.xmind`
+Return an array of the object composed of file content. In order to open it in the official software, you need to compress these files in the form of zip with end of `.xmind`.
 
 > **Important**
 > 
-> Do not include the top level folder, otherwise the software won't extra the files from top level folder
+> Do not include top level folders, otherwise the software can't extract files
