@@ -23,6 +23,8 @@ const subtopic1 = topic.on(mainTopic3).add({title: 'subtopic 1'}).cid();
 topic.on(subtopic1)
   .note('this is a note text')
   .marker(marker.smiley('cry'))
+  // destroy marker from current component
+  .marker(Object.assign({}, marker.smiley('cry'), {del: true}));
   
 const summaryId = topic.summary({title: 'Summary'}).cid();
 

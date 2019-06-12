@@ -195,7 +195,7 @@ describe('# Functional Test', () => {
       done();
     });
 
-    it('should be one of smiley marker flag added', done => {
+    it('should add the one of smiley marker flag', done => {
       const {topic, zip} = getComponents();
       const marker = new Marker();
       const title = 'main topic 1';
@@ -218,6 +218,37 @@ describe('# Functional Test', () => {
           done();
         });
       });
+    });
+
+    it('should be marker removed', done => {
+      const {topic, workbook} = getComponents();
+      const marker = new Marker();
+      const title = 'main topic 1';
+      const cry = 'smiley-cry';
+
+      topic
+        .on()
+        .add({title})
+        .on(topic.cid())
+        .marker(marker.smiley('cry'))
+        .marker(marker.week('fri'));
+
+      // before destroy
+      let ctx = workbook.toJSON();
+      let main = ctx[0].rootTopic.children.attached[0];
+      expect(main).to.have.property('markers').that.to.be.an('array');
+      expect(main.markers.length).to.eq(2);
+
+      // delete
+      topic.marker(Object.assign({}, marker.smiley('cry'), {del: true}));
+
+      // after destroy
+      ctx = workbook.toJSON();
+      main = ctx[0].rootTopic.children.attached[0];
+      expect(main).to.have.property('markers');
+      expect(main.markers.length).to.eq(1);
+      expect(main.markers[0].markerId).to.not.eq(cry);
+      done();
     });
   });
 
