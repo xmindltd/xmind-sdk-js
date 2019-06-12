@@ -95,7 +95,7 @@ The `Workbook` is a primary container that stores temporary data for all compone
 
 ###### .theme(sheetTitle, themeName) => Boolean
 
-* Setting the background theme
+* Set the background theme
 
 | Name | Type | Default | Required | Description | 
 |:----:|:----:|:-------:|:--------:|:------------|
@@ -136,7 +136,7 @@ The `Workbook` is a primary container that stores temporary data for all compone
 
 ###### .on(componentId?) => Topic
 
-* Setting the component of corresponding to `componentId` to be parent component.
+* Set the component of corresponding to `componentId` to be parent component.
 
 
 ###### .add(options) => Topic
