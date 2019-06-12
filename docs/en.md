@@ -80,49 +80,47 @@ zipper.save().then(status => status && console.log('Saved /tmp/MyFirstMap.xmind'
 
 ## Workbook
 
-The workbook is a temporary storage. this is where all the data is written.
+The workbook is a temporary storage where all the data are written.
 
 ### Methods
 
 #### .createSheet(sheetTitle, topicTitle?) => `Sheet`
 
-Once you have created a workbook and so, there's a way to create your sheet that contains a `root topic`, also, you can custom their titles by the parameters. 
+Once the workbook is created, then there's a way to build a sheet containing a `root topic`. In addition, you can custom their titles by parameters. 
 
 
-| Name | Type | Default | Required | Description | 
-|:---- |:----:|:-------:|:--------:|:------------|
-| sheetTitle | String | `-` | Y | the sheet's custom title |
-| topicTitle | String | `Central Topic` | N | the topic's custom title |
+| Name | Type | Default | Required |
+|:---- |:----:|:-------:|:--------:|
+| sheetTitle | String | `-` | Y |
+| topicTitle | String | `Central Topic` | N |
 
 
 #### .theme(sheetTitle, themeName) => Boolean
 
-There are many theme styles in the `UI client` and we also offer several theme styles.
+The `UI client` has many theme styles and this library also offers some of them, such as `robust / snowbrush / business`.
 
-Only supports `robust / snowbrush / business` for now.
+| Name | Type | Default | Required |
+|:---- |:----:|:-------:|:--------:|
+| sheetTitle | String | null | Y |
+| themeName | String | null | Y |
 
-| Name | Type | Default | Required | Description | 
-|:---- |:----:|:-------:|:--------:|:------------|
-| sheetTitle | String | null | true | which `sheet` is going to set in that style |
-| themeName | String | null | true | the name of theme style  |
+#### .toJSON()
 
-#### .toJSON() => JSON
+Get component's data from the workbook in the form of `JSON`.
 
-Getting the component's data from the workbook in the form `JSON`
+#### .toString()
 
-#### .toString() => String
-
-Getting the component's data from the workbook in the form `STRING`
+Get component's data from the workbook in the form of `STRING`.
 
 ## Topic
 
-The `Topic` is an important constructor function that implements most of the methods, also, you will be depending on it for your most operations.
+The `Topic` is an important constructor function that implements most of the methods. And you are going to depend on it during most operations.
 
 ### Topic Options
 
 * options.sheet <= `workbook.createSheet(...)`
 
-You may ask why we need to offer the `options.sheet` manually? So, the reason is that `Topic` was implemented of independent, but most of the methods depend on the instance of sheet.
+You may wonder why we need to offer the `options.sheet` manually? The reason is that `Topic` is implemented independently and most of the methods depend on the instance of the sheet.
 
 In the UI client, you also need to draw the mind map on sheet.
 
@@ -137,50 +135,45 @@ In the UI client, you also need to draw the mind map on sheet.
 
 ### Methods
 
+#### .on(componentId?) => Topic
+
+Set the component to be parent node. If there isn't component ID, the `Central Topic` will become as parent node.
+
 #### .cid(title?) => String
 
-* Using .cid to get component ID of corresponding to the `title`.
-> 
-> _!!! NOTE THAT:_  You should avoid duplication of component `title` if use the `title` lookups
->
+Use .cid to get component ID corresponding to the `title`.
+> _!!! NOTE THAT:_  You should avoid duplicating the component `title` if use `title` to search the component ID.
 
-* At least the ID of central topic will return if does not add any component
+If none of the components has been added, at least `Central Topic`'ID could be returned.
 
-* If there is no `title`, it will return the last component's ID you have added
+If you don't specify title in the period of calling .cid, the last added component ID would be returned.
 
 #### .cids() => {$cid: $title}
 
-* It will return an object that contains `$componentId` and `$title`
+That will return all added components.
 
-#### .on(componentId?) => Topic
+#### .add(options) => Topic
 
-* Set the component of corresponding to `componentId` to be parent component
+Add a topic component under parent node.
 
-
-###### .add(options) => Topic
-
-* Add a topic component under the parent component
-
-| Name | Type | Default | Required | Description |
-|:----:|:----:|:-------:|:--------:|:------------|
-| options.title | String | null | true | the title of topic |
+| Name | Type | Default | Required |
+|:----:|:----:|:-------:|:--------:|
+| options.title | String | null | Y |
 
 
-###### .note(text, del?) => Topic
+#### .note(text, del?) => Topic
 
-* To attach a text to the parent component
+Attach a text to parent node
 
 | Name | Type | Default | Required | Description |
 |:----:|:----:|:-------:|:--------:|:------------|
-| text | String | null | true | text message |
-| del | Boolean | false | false | to detach the note from current parent component if the `del` set to true |
+| text | String | null | Y | text message |
+| del | Boolean | false | N | detach the note from current parent node if the `del` is true |
 
 
-###### .marker(object) => Topic
+#### .marker(object) => Topic
 
-* To attach a marker flag to the parent component
-
-* Also, you can detach a marker flag from the parent component by setting the `object.del` to `true`. default: `false`
+Attach a marker flag to the parent node. Moreover, you can detach a marker flag from the parent node by setting `object.del` as `true`. default: `false`
 
 Example:
 
@@ -196,31 +189,36 @@ topic.marker(Object.assign({}, marker.smiley('cry'), {del: true}));
 > [Use `Marker Object` to generate the object](#marker-flags)
 
 
-###### .summary(options) => Topic
+#### .summary(options) => Topic
 
-* Add a component of summary under the parent component that allows using `edge` for a scope, but not allows to add summary under the `Central Topic`
+Attach a summary component to parent node including all children. In the meantime, the `edge` can be used to set the scope of summary component.
+> _!!! NOTE THAT_
+> 
+> The summary does not allow to be added under `Central Topic`
+> 
+> The `edge` must parallel to parent node
 
-| Name | Type | Default | Required | Description |
-|:---- |:----:|:-------:|:--------:|:------------|
-| options.title | String | null | true | The title of summary |
-| options.edge | String | null | false | The component ID that must parallel with your parent component |
+| Name | Type | Default | Required |
+|:---- |:----:|:-------:|:--------:|
+| options.title | String | null | Y |
+| options.edge | String | null | N | 
 
 
 > [!`edge` graphic](edge.graphic.txt)
 
 
-###### .destroy(componentId) => Topic
+#### .destroy(componentId) => Topic
 
-* Destroy a component from the map tree
+Destroy a component from the map tree.
 
-> _!!! IMPORTANT_
+> _!!! NOTE THAT_
 >
-> The nodes under the parent component are going to destroy with it.
+> All children would be destroyed along with it 
 
 
 ## Marker flags
 
-We provides an instance of `Marker` that includes all the markers. such as below:
+We provide an instance of `Marker` that includes all the markers. Such as:
 
 ###### .priority(name: `string`)
 
@@ -248,23 +246,23 @@ We provides an instance of `Marker` that includes all the markers. such as below
 
 > **The `name` of marker is available [!here](icons.md)**
 > 
-> You can also use the `static method` Marker.groups and Marker.names to find out available name
+> You also can use **Marker.groups** and **Marker.names** to find out available names
 
 
-#### Static methods
+### Static methods
 
-###### Marker.groups() => Array\<groupName\>
+#### Marker.groups() => Array\<groupName\>
 
-* List available group names
+List available group names
 
-###### Marker.names(groupName) => Array\<name\>
+#### Marker.names(groupName) => Array\<name\>
 
 * Get the flag names by `groupName`
 
 
 ## Zipper
 
-The module of `Zipper` only works under backend
+The module of `Zipper` only works under backend.
 
 > [!See `Dumper` in browser environment](#dumper)
 
@@ -277,7 +275,7 @@ The module of `Zipper` only works under backend
 | options.filename | String | 'default' | false | `default.xmind` |
 
 
-###### .save() => Promise\<boolean\>
+#### .save() => Promise\<boolean\>
 
 * To save components to the logic disk in form zip
 
@@ -285,7 +283,7 @@ The module of `Zipper` only works under backend
 
 * The module of `Dumper` only works under browser
 
-###### .dumping() => Array<{filename: string, value: string}>
+#### .dumping() => Array<{filename: string, value: string}>
 
 * Return an array of the object that is composed of file content
 
