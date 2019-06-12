@@ -5,7 +5,7 @@
  */
 
 
-const { Workbook, Topic, Zipper, Marker } = require('../dist');
+const { Workbook, Topic, Zipper, Marker } = require('xmind-sdk');
 
 const wb = new Workbook();
 const topic = new Topic({sheet: wb.createSheet('sheet-1', 'central topic')});
