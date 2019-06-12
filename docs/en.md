@@ -270,9 +270,9 @@ The module of `Zipper` only works under backend.
 
 | Name | Type | Default | Required | Description | 
 |:---- |:----:|:-------:|:--------:|:------------|
-| options.path | String | null | true | The path where the .xmind file to save |
-| options.workbook | Workbook | null | true | The instance of Workbook |
-| options.filename | String | 'default' | false | `default.xmind` |
+| options.path | String | `-` | Y | The path is where to save the `.xmind` file |
+| options.workbook | Workbook | `-` | Y | The instance of Workbook |
+| options.filename | String | default | N | `default.xmind` |
 
 
 #### .save() => Promise\<boolean\>
