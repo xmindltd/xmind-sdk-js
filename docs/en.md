@@ -32,7 +32,11 @@ import {Workbook, Topic, Marker} from 'xmind-sdk';
 
 ```html
 // HTML
-<script src="https://cdn.jsdelivr.net/npm/xmind-sdk@latest/dist/xmind-sdk-js.bundle.js"></script>
+// Latest version
+<script src="https://cdn.jsdelivr.net/npm/xmind-sdk/dist/xmind-sdk.bundle.js"></script>
+// Specify version
+<!-- script src="https://cdn.jsdelivr.net/npm/xmind-sdk@1.1.0/dist/xmind-sdk.bundle.js"></script -->
+
 <script>
   const { Workbook, Topic, Marker } = window;
 </script>
