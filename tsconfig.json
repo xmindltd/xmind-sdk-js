@@ -4,6 +4,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "experimentalDecorators": true,
+    "resolveJsonModule": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
     "stripInternal": true,
