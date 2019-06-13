@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "description": "The SDK of XMind Ltd.",
   "main": "dist/index.js",
-  "browser": "dist/bundle.js",
+  "browser": "dist/xmind-sdk.bundle.js",
   "scripts": {
     "test": "npm run lint && nyc mocha",
     "build": "npm run test && rm -rf ./dist && node_modules/.bin/tsc && npm run cp && npm run browserify",
