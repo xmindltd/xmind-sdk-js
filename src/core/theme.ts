@@ -1,16 +1,23 @@
-import { join } from 'path';
-import { readFileSync } from 'fs';
 import * as Debug from 'debug';
 import * as v4 from 'uuid/v4';
 import * as Model from '../common/model';
 
+import Robust = require('../common/themes/robust.json');
+import Snowbrush = require('../common/themes/snowbrush.json');
+import Business = require('../common/themes/snowbrush.json');
+
 const debug = Debug('xmind-sdk:theme');
-const THEME_PATH = join(__dirname, '../common/themes/');
 const ALLOWED_THEMES = ['robust', 'snowbrush', 'business'];
 
 interface ThemeOptions {
   themeName: string;
 }
+
+const THEMES = {
+  robust: Robust,
+  snowbrush: Snowbrush,
+  business: Business,
+};
 
 /**
  * @description Invisible external
@@ -34,8 +41,7 @@ export class Theme {
   }
 
   private loader(name: string) {
-    const contents = readFileSync(join(THEME_PATH, `${name}.json`), {encoding: 'utf8'});
-    const theme = JSON.parse(contents);
+    const theme = THEMES[name];
     theme.id = v4();
     theme.title = name;
     return theme;
