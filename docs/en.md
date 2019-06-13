@@ -39,7 +39,7 @@ import {Workbook, Topic, Marker} from 'xmind-sdk';
 
 ```
 
-## Simple example
+## Simple Usage
 
 
 ```js
@@ -56,19 +56,19 @@ topic.add({title: 'main topic 1'});
 topic
   .on(topic.cid(/*In default, the componentId is last element*/))
   
-  // add a subtopic on `main topic 1`
+  // add subtopics under `main topic 1`
   .add({title: 'subtopic 1'})
   .add({title: 'subtopic 2'})
    
-   // add a text note on `main topic 1`
+   // attach text note to `main topic 1`
   .note('This is a note attached on main topic 1')
   
-  // add a marker flag on `subtopic 1`
+  // attach a marker flag to `subtopic 1`
   .on(topic.cid('subtopic 1'))
   .marker(marker.week('fri'))
    
    // add a component of the summary that contains two sub topics
-  .summary({title: 'subtopic summary', include: topic.cid('subtopic 2')})
+  .summary({title: 'subtopic summary', edge: topic.cid('subtopic 2')})
   
 zipper.save().then(status => status && console.log('Saved /tmp/MyFirstMap.xmind'));
 ```
