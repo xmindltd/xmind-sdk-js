@@ -1,6 +1,6 @@
 {
   "name": "xmind-sdk-js",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "The SDK of XMind Ltd.",
   "main": "dist/index.js",
   "browser": "dist/bundle.js",
@@ -29,7 +29,9 @@
     "xmind-sdk-js",
     "xmind-sdk-ts"
   ],
-  "files": [ "dist" ],
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "debug": "^4.1.1",
     "jszip": "^3.2.1",
