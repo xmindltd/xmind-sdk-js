@@ -14,7 +14,6 @@ This library is written by typescript and it could be run on node.js and browser
 ## Recommendation
 
 [![npm (scoped)](https://img.shields.io/badge/XMind-ZEN-red.svg)](https://www.xmind.net)
-[![npm (scoped)](https://img.shields.io/badge/Lighten-Pro-purple.svg)](https://lighten.xmind.net)
 
 You can open the final `.xmind` file by the recommended software.
 
