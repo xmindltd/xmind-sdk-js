@@ -116,7 +116,7 @@ Get component's data from the workbook in the form of `JSON`.
 
 Get component's data from the workbook in the form of `STRING`.
 
-#### .validate() => {status: Boolean, errors: Array<object> \| null}
+#### .validate() => `{status: Boolean, errors: Array<object> | null}`
 
 This is proof that all data are available and complete.
 
