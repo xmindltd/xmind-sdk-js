@@ -116,6 +116,12 @@ Get component's data from the workbook in the form of `JSON`.
 
 Get component's data from the workbook in the form of `STRING`.
 
+#### .validate() => {status: Boolean, errors: Array<object> | null}
+
+This is proof that all data are available and complete.
+
+The `status` indicates the result of validation which is `true` if it's correct, othewise `false` returns.
+
 ## Topic
 
 The `Topic` is an important constructor function that implements most of the methods. And you are going to depend on it during most operations.

@@ -411,7 +411,7 @@ describe('# Functional Test', () => {
     });
 
     it('only contains start position if the index position (start > end)', done => {
-      const {topic, zip} = getComponents();
+      const {topic, zip, workbook} = getComponents();
       topic
         .add({title: 'main topic 1'})
         .add({title: 'main topic 2'})
@@ -424,6 +424,11 @@ describe('# Functional Test', () => {
 
         .on(topic.cid('main topic 3')) /* position topic title */
         .summary({title: 'Test Summary', edge: topic.cid('main topic 1')});
+
+      const {status, errors} = workbook.validate();
+      if (!status) {
+        throw errors;
+      }
 
       zip.save().then(status => {
         expect(status).to.be.true;
