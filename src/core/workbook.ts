@@ -35,22 +35,18 @@ export class Workbook extends Base implements AbstractWorkbook {
     return true;
   }
 
-  /**
-   * @description Formatting Mind-map data as String
-   * @return {String}
-   */
+
   public toString() {
     return this.workbook.toString();
   }
 
-  /**
-   * @description Formatting Mind-map data as JSON
-   * @return {Object}
-   */
   public toJSON() {
     return this.workbook.toJSON();
   }
 
+  public validate() {
+    return Core.validator(this.workbook.toJSON());
+  }
 
   public createSheet(sheetTitle: string, centralTopicTitle = 'Central Topic') {
     if (!sheetTitle) {

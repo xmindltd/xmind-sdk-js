@@ -27,4 +27,11 @@ export interface AbstractWorkbook {
    * @return {Object}
    */
   toJSON(): object;
+
+
+  /**
+   * @description Validate Mind-map data
+   * @return {status: boolean, errors: Array<object>} The `status` indicates result and you also can get errors
+   */
+  validate(): {status: boolean, errors: Array<object>};
 }
