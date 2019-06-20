@@ -1,6 +1,3 @@
-/**
- * expose interfaces
- */
 export * from './core/workbook';
 export * from './core/topic';
 export * from './core/marker';
