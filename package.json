@@ -39,7 +39,7 @@
     "debug": "^4.1.1",
     "jszip": "^3.2.1",
     "lodash": "^4.17.11",
-    "xmind-model": "^1.1.6"
+    "xmind-model": "^1.1.8"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^0.1.3",
