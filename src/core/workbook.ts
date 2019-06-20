@@ -2,7 +2,7 @@ import { AbstractWorkbook } from '../abstracts/workbook.abstract';
 import { Theme } from './theme';
 import Base from './base';
 import * as Core from 'xmind-model';
-
+import { ErrorObject } from 'ajv';
 
 /**
  * @description The implementation of Workbook
@@ -45,7 +45,10 @@ export class Workbook extends Base implements AbstractWorkbook {
   }
 
   public validate() {
-    return Core.validator(this.workbook.toJSON());
+    return Core.validator(this.workbook.toJSON()) as {
+      status: boolean,
+      errors: ErrorObject[]
+    };
   }
 
   public createSheet(sheetTitle: string, centralTopicTitle = 'Central Topic') {
@@ -60,7 +63,7 @@ export class Workbook extends Base implements AbstractWorkbook {
     const sheetId = this.id;
     this.resources[sheetTitle] = sheetId;
 
-    const options = [{id: sheetId, sheetTitle, rootTopic: {id: this.id, title: centralTopicTitle}}];
+    const options = [{id: sheetId, title: sheetTitle, rootTopic: {id: this.id, title: centralTopicTitle}}];
     this.workbook = new Core.Workbook(options);
     this.sheet = this.workbook.getSheetById(sheetId);
     return this.sheet;
