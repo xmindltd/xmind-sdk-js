@@ -312,10 +312,11 @@ Return an array of the object composed of file content. In order to open it in t
 > Do not include top level folders, otherwise the software can't extract files
 
 ## Contributing
+Thank you for be interesting in the SDK.
 
-If you run into any problems please feel free to reach out to us 🙂
+If you have any problems or suggestions please feel free to let us know 🙂
 
-You also can PRs immediately.
+We also welcome you to submit a pull request for any big or small issues.
 
 ## License
 
