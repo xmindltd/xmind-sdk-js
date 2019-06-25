@@ -6,20 +6,22 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/36420399770547e4825f0657eb29118b)](https://www.codacy.com/app/danielsss/xmind-sdk-js?utm_source=github.com&utm_medium=referral&utm_content=xmindltd/xmind-sdk-js&utm_campaign=Badge_Coverage)
 ![GitHub package.json version (branch)](https://img.shields.io/github/package-json/v/xmindltd/xmind-sdk-js/master.svg?color=red&label=version)
 ![GitHub](https://img.shields.io/github/license/xmindltd/xmind-sdk-js.svg)
-
-This library is written by typescript and it could be run on node.js and browser.
-
-This project is an official library that implements various functions which is similar to UI client. If you had access to UI client, you could have already known how to use this library.
-
-In order to use conveniently, an essential concept you should know is that everything is component and each one of them has a unique component ID. You can add child nodes under the component, however, the Marker and Note can only be attached to the component.
-
 [![npm (scoped)](https://img.shields.io/badge/XMind-ZEN-red.svg)](https://www.xmind.net)
 
-You can open the final `.xmind` file by the XMind ZEN (Destop client).
+The official XMind SDK for JavaScript (written by typescript), available for browsers and Node.js backends.
 
-Support Linux, Win32 and Browers.
+This library implements various functions which is similar to our client. If you have used our client before, you will know how to use this library.
 
-## Getting started
+In order to use the SDK conveniently, an essential concept you should know is that everything is component and each one of them has a unique component ID. You can add child nodes under the components, however, the Markers and Notes can only be attached to the components.
+
+You can open the final `.xmind` files by XMind ZEN.
+
+Supported Platforms
+* Linux  
+* Win32  
+* Browers
+
+## Usage and Getting Started
 
 ### Usage in Node.js
 
@@ -51,7 +53,7 @@ import {Workbook, Topic, Marker} from 'xmind-sdk';
 
 ```
 
-## Simple Usage
+### Simple Usage
 
 
 ```js
@@ -85,12 +87,12 @@ topic
 zipper.save().then(status => status && console.log('Saved /tmp/MyFirstMap.xmind'));
 ```
 
-## More Examples
+### More Examples
 
-[Go to example directory](../example)
+See [example directory](../example).
 
 
-## Workbook
+### Workbook
 
 The workbook is a temporary storage where all the data are written.
 
@@ -130,7 +132,7 @@ This is proof that all data are available and complete.
 
 The `status` indicates the result of validation which is `true` if it's correct, othewise `false` returns.
 
-## Topic
+### Topic
 
 The `Topic` is an important constructor function that implements most of the methods. And you are going to depend on it during most operations.
 
@@ -234,7 +236,7 @@ Destroy a component from the map tree.
 > All children would be destroyed along with it 
 
 
-## Marker flags
+### Marker flags
 
 We provide an instance of `Marker` that includes all the markers. Such as:
 
@@ -278,7 +280,7 @@ List available group names.
 * Get the flag names by `groupName`.
 
 
-## Zipper
+### Zipper
 
 The module of `Zipper` only works under backend.
 
@@ -297,7 +299,7 @@ The module of `Zipper` only works under backend.
 
 Save components to the logic disk in the form of zip.
 
-## Dumper
+### Dumper
 
 The module of `Dumper` only works under browser.
 
@@ -317,4 +319,4 @@ You also can PRs immediately.
 
 ## License
 
-See [MIT License](LICENSE)
+See the [MIT License](LICENSE).
