@@ -16,7 +16,7 @@ In order to use the SDK conveniently, an essential concept you should know is th
 
 You can open the final `.xmind` files by XMind ZEN.
 
-Supported Platforms
+Supported Platforms:
 * Linux  
 * Win32  
 * Browers
@@ -314,7 +314,7 @@ Return an array of the object composed of file content. In order to open it in t
 ## Contributing
 Thank you for be interesting in the SDK.
 
-If you have any problems or suggestions please feel free to let us know 🙂
+If you have any problems or suggestions please let us know 🙂
 
 We also welcome you to submit a pull request for any big or small issues.
 
