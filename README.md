@@ -36,7 +36,6 @@ const {Workbook, Topic, Marker} = require('xmind-sdk');
 ### Usage in Browser
 
 ```jsx harmony
-// JSX
 import {Workbook, Topic, Marker} from 'xmind-sdk';
 ```
 
