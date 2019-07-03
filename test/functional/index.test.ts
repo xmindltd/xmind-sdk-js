@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as JSZip from 'jszip';
 import { getBuildTemporaryPath } from '../fixtures/utils';
 import Core = require('xmind-model');
+import { join } from 'path';
 
 
 const expect = chai.expect;
@@ -447,4 +448,53 @@ describe('# Functional Test', () => {
 
   });
 
+  describe('# Theme Test', () => {
+    it('authenticating theme data 100 times', done => {
+      for (let i = 0; i < 100; i++) {
+        const workbook = new Workbook();
+        const sheet = workbook.createSheet('sheet1');
+        const topic = new Topic({sheet});
+        topic
+          .on()
+          .add({title: 'main topic 1'})
+          .add({title: 'main topic 2'});
+
+        workbook.theme('sheet1', 'snowbrush');
+        const data = workbook.toJSON()[0];
+        expect(data).to.have.property('theme');
+        expect(data.theme.title).to.eq('snowbrush');
+      }
+      done();
+    });
+
+    it('authenticating theme 100 times after zip', async () => {
+      for (let i = 0; i < 100; i++) {
+        const workbook = new Workbook();
+        const sheet = workbook.createSheet('sheet1');
+        const topic = new Topic({sheet});
+        const zip = new Zipper({workbook, path: getBuildTemporaryPath(), filename: `test_${i}`});
+        topic
+          .on()
+          .add({title: 'main topic 1'})
+          .add({title: 'main topic 2'});
+
+        workbook.theme('sheet1', 'snowbrush');
+        await zip.save()
+        const file = join(getBuildTemporaryPath(), `test_${i}.xmind`);
+        await JSZip.loadAsync(fs.readFileSync(file))
+          .then(zip => {
+            return zip.file(`content.json`).async('text')
+          })
+          .then(content => {
+            const data = JSON.parse(content)[0]
+            expect(data).to.have.property('theme');
+            expect(data.theme.title).to.eq('snowbrush');
+            fs.unlinkSync(file)
+          })
+          .catch(err => { throw err });
+      }
+
+      return null
+    });
+  });
 });
