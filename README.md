@@ -19,7 +19,7 @@ You can open the final `.xmind` files by XMind ZEN.
 Supported Platforms:
 * Linux  
 * Win32  
-* Browers
+* Browser
 
 ## Usage and Getting Started
 
