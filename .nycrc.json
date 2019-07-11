@@ -16,5 +16,6 @@
     "coverage"
   ],
   "extension": [".ts"],
-  "reporter": ["html", "text", "lcov"]
+  "reporter": ["html", "text", "lcov"],
+  "require": ["ts-node/register"]
 }
