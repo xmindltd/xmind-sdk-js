@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { promisify } from 'util';
 import { Workbook } from '..';
-import { isObject } from 'lodash';
+import { isObject } from './common';
 import * as fs from 'fs';
 import Base from '../core/base';
 import { PACKAGE_MAP } from '../common/constants';

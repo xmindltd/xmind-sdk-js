@@ -2,7 +2,7 @@ import { AbstractTopic, TopicOptions, MarkerOptions } from '../abstracts/topic.a
 import { SummaryOptions } from '../abstracts/summary.abstract';
 import { Summary } from './summary';
 import { Note } from './note';
-import { isEmpty, isObject } from 'lodash';
+import { isEmpty, isObject } from '../utils/common';
 import Base from './base';
 import * as Model from '../common/model';
 import * as Core from 'xmind-model';
