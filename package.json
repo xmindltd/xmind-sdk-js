@@ -30,7 +30,8 @@
     "xmindsdk",
     "xmind",
     "xmind-sdk-js",
-    "xmind-sdk-ts"
+    "xmind-sdk-ts",
+    "xmind-package"
   ],
   "files": [
     "dist"
