@@ -13,6 +13,11 @@ export interface MarkerOptions {
   del?: boolean;
 }
 
+export interface ImageOptions {
+  width?: string;
+  height?: string;
+}
+
 export interface AbstractTopic {
 
   /**
@@ -32,6 +37,17 @@ export interface AbstractTopic {
    */
   add(topic: Model.Topic, options?: {index: number}): Topic;
 
+
+  /**
+   * @description Add an image on the current topic
+   * @param {Object} options
+   * @param {String} [options.width] - Image width
+   * @param {String} [options.height] - image height
+   * @return {String} a file key that can be used for Zipper.updateManifestMetadata
+   * @supported For now, only Node.js runtime environment is allowed
+   */
+  image(options?: ImageOptions): string;
+
   /**
    * @description Get topic by topicId
    * @param {String} componentId
@@ -41,7 +57,7 @@ export interface AbstractTopic {
 
 
   /**
-   * @description attach a text note to topic
+   * @description Attach a text note to topic
    * @param {String} text - note body
    * @param {Boolean} del - a boolean flag for text note deletion
    * @return {Topic}

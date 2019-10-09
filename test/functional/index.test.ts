@@ -12,10 +12,11 @@ const expect = chai.expect;
 
 const getComponents = function() {
   const workbook = new Workbook();
-  const topic = new Topic({sheet: workbook.createSheet('sheet1', 'centralTopic')});
+  const sheet = workbook.createSheet('sheet1', 'centralTopic');
+  const topic = new Topic({sheet});
   const zip = new Zipper({path: getBuildTemporaryPath(), workbook});
-  return {topic, workbook, zip};
-}
+  return {topic, workbook, sheet, zip};
+};
 
 
 describe('# Functional Test', () => {
@@ -171,6 +172,35 @@ describe('# Functional Test', () => {
           const {attached} = map.rootTopic.children;
           expect(attached.length).to.be.eq(2);
           expect(attached.find(child => child.title === topic.cid('main topic 2'))).to.be.undefined;
+          fs.unlinkSync(p);
+          done();
+        });
+      });
+    });
+
+
+    it('should add image on topic', done => {
+      const {topic, zip} = getComponents();
+      topic
+        .add({title: 'main topic 1'})
+        .add({title: 'main topic 2'});
+
+      const key1 = topic.on(topic.cid('main topic 1')).image();
+      zip.updateManifestMetadata(key1, fs.readFileSync(join(__dirname, '../fixtures/19442.png')));
+      const key2 = topic.on(topic.cid('main topic 2')).image();
+      zip.updateManifestMetadata(key2, fs.readFileSync(join(__dirname, '../fixtures/logo.png')));
+      zip.save().then(async status => {
+        expect(status).to.be.true;
+        const p = getBuildTemporaryPath('default.xmind');
+        const content = fs.readFileSync(p);
+        JSZip.loadAsync(content).then(async zip => {
+          const text = await zip.file('content.json').async('text');
+          const map = JSON.parse(text)[0];
+          expect(map).to.be.an('object');
+          const {attached} = map.rootTopic.children;
+          expect(attached.length).to.gt(0);
+          expect(attached[0].image.src).to.eq(`xap:${key2}`);
+          expect(attached[1].image.src).to.eq(`xap:${key1}`);
           fs.unlinkSync(p);
           done();
         });
@@ -445,7 +475,6 @@ describe('# Functional Test', () => {
         });
       });
     });
-
   });
 
   describe('# Theme Test', () => {
@@ -479,7 +508,7 @@ describe('# Functional Test', () => {
           .add({title: 'main topic 2'});
 
         workbook.theme('sheet1', 'snowbrush');
-        await zip.save()
+        await zip.save();
         const file = join(getBuildTemporaryPath(), `test_${i}.xmind`);
         await JSZip.loadAsync(fs.readFileSync(file))
           .then(zip => {
