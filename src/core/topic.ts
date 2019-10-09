@@ -1,8 +1,13 @@
-import { AbstractTopic, TopicOptions, MarkerOptions } from '../abstracts/topic.abstract';
+import {
+  AbstractTopic,
+  TopicOptions,
+  MarkerOptions,
+  ImageOptions
+} from '../abstracts/topic.abstract';
 import { SummaryOptions } from '../abstracts/summary.abstract';
 import { Summary } from './summary';
 import { Note } from './note';
-import { isEmpty, isObject } from '../utils/common';
+import {isEmpty, isObject, isRuntime} from '../utils/common';
 import Base from './base';
 import * as Model from '../common/model';
 import * as Core from 'xmind-model';
@@ -54,6 +59,19 @@ export class Topic extends Base implements AbstractTopic {
     cur.addChildTopic(topic, options);
     this.lastId = topic.id;
     return this;
+  }
+
+  public image(options?: ImageOptions) {
+    /* istanbul ignore if */
+    if (!isRuntime()) {
+      throw new Error('Cannot run .image() in browser environment');
+    }
+
+    const cur = this.current();
+    const dir = `resources/${this.id}`;
+    const params = Object.assign({}, {src: `xap:${dir}`}, options || {});
+    cur.addImage(params);
+    return dir;
   }
 
   public note(text: string, del?: boolean) {

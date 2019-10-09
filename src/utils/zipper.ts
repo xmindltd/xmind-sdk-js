@@ -13,7 +13,6 @@ const join = (process.platform === 'win32' ? path.win32.join : path.join);
 
 const SUFFIX = '.xmind';
 const DEFAULT_FILENAME = `default${SUFFIX}`;
-const manifest = '{"file-entries":{"content.json":{},"metadata.json":{}}}';
 
 interface ZipperOptions {
   path: string;
@@ -25,7 +24,8 @@ interface ZipperOptions {
  * @description Zipper for .xmind file
  */
 export class Zipper extends Base {
-  protected zip: JSZip;
+  public zip: JSZip;
+  public manifest: any;
 
   public filename: string;
   public path: string;
@@ -42,6 +42,9 @@ export class Zipper extends Base {
     this.path = options.path;
     this.zip = new JSZip();
     this.workbook = options.workbook || null;
+    this.manifest = {
+      'file-entries': {'content.json': {}, 'metadata.json':{}}
+    };
   }
 
   /**
@@ -73,6 +76,35 @@ export class Zipper extends Base {
   }
 
   /**
+   * @description Update manifest metadata
+   * @param {String} key - a string key
+   * @param {Buffer} content - file contents
+   * @return {Zipper}
+   */
+  public updateManifestMetadata(key: string, content: Buffer) {
+    if (!key) return this;
+    if (!content || !Buffer.isBuffer(content)) {
+      return this;
+    }
+    const arr = key.split('/');
+    this.manifest['file-entries'][key] = {};
+    this.zip.folder(arr[0]).file(arr[1], content, {binary: true});
+    return this;
+  }
+
+  /**
+   * @description Remove metadata from manifest
+   * @param {String} key - the file key that was already stored in metadata of manifest
+   * @return {Zipper}
+   */
+  public removeManifestMetadata(key: string) {
+    if (!key) return this;
+    this.zip.remove(key);
+    delete this.manifest['file-entries'][key];
+    return this;
+  }
+
+  /**
    * @description add contents to metadata.json file
    *
    */
@@ -85,7 +117,7 @@ export class Zipper extends Base {
    * @description add contents to manifest.json
    */
   private addManifestContents() {
-    this.zip.file(PACKAGE_MAP.MANIFEST.NAME, manifest);
+    this.zip.file(PACKAGE_MAP.MANIFEST.NAME, JSON.stringify(this.manifest));
     return this;
   }
 
