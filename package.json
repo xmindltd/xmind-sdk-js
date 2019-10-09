@@ -1,6 +1,6 @@
 {
   "name": "xmind-sdk",
-  "version": "1.2.6-0",
+  "version": "1.2.70",
   "description": "The SDK of XMind Ltd.",
   "main": "dist/index.js",
   "browser": "dist/xmind-sdk.bundle.js",

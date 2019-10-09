@@ -223,7 +223,7 @@ Attach a summary component to parent node including all children. In the meantim
 | options.edge | String | null | N | 
 
 
-> [!`edge` graphic](edge.graphic.txt)
+> [!`edge` graphic](./edge.graphic.txt)
 
 
 #### .destroy(componentId) => Topic
@@ -293,6 +293,18 @@ The module of `Zipper` only works under backend.
 | options.workbook | Workbook | `-` | Y | The instance of Workbook |
 | options.filename | String | default | N | `default.xmind` |
 
+#### .updateManifestMetadata(key, content) => Zipper
+
+Update manifest for image insertion.
+
+| Name | Type | Default | Required | Description | 
+|:---- |:----:|:-------:|:--------:|:------------|
+| key | String | null | Y | The key only can be get by topic.image() |
+| content | Buffer | null | Y | The buffer data of image |
+
+#### .removeManifestMetadata(key) => Zipper
+
+Remove a pair of key/value from manifest.
 
 #### .save() => Promise\<boolean\>
 
