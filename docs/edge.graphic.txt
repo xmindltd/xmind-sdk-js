@@ -1,16 +1,21 @@
-`edge` Graphic explanation:
+`edge` Graphic Example:
 
 |--------------------------------------------------------------------------------------|
 |                                                                                      |
-|      /* set main topic 1 as the parent node.*/                                       |
-|      /* topic.on(topic.cid('main topic 1')) */                                   |
-|      main topic 1 - ... subtopics                                                    |
 |                                                                                      |
-|      main topic 2 - ... subtopics                                                    |
+|      main topic 1 - ... subtopics   \                                                |
+|                                       \                                              |
+|      main topic 2 - ... subtopics       \                                            |
+|                                    Summary Description                               |
+|                     `subtopic 1`        /                                            |
+|                   /                   /                                              |
+|      main topic 3 - `subtopic 2`    /                                                |
 |                                                                                      |
-|                     `subtopic 1` belows `main topic 1`                               |
-|                   /                                                                  |
-|      main topic 3 - `subtopic 2` belows `main topic 1`                               |
-|      /* so now, you can call summary with the edge = topic.cid('main topic 3') */|
-|      /* Only `main topic 1` is left if you set edge = topic.cid('subtopic 1') */ |
+|                                                                                      |
 |--------------------------------------------------------------------------------------|
+
+
+Implementation code:
+
+topic.on('main topic 1');
+topic.summary({edge: 'main topic 3'});

@@ -223,7 +223,7 @@ Attach a summary component to parent node including all children. In the meantim
 | options.edge | String | null | N | 
 
 
-> [!`edge` graphic](./docs/edge.graphic.txt)
+> [About `edge`](./docs/edge.graphic.txt)
 
 
 #### .destroy(componentId) => Topic
