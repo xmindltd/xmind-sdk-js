@@ -88,7 +88,7 @@ zipper.save().then(status => status && console.log('Saved /tmp/MyFirstMap.xmind'
 
 ### More Examples
 
-See [example directory](../example).
+See [example directory](./example).
 
 
 ### Workbook
@@ -223,7 +223,7 @@ Attach a summary component to parent node including all children. In the meantim
 | options.edge | String | null | N | 
 
 
-> [!`edge` graphic](./edge.graphic.txt)
+> [!`edge` graphic](./docs/edge.graphic.txt)
 
 
 #### .destroy(componentId) => Topic
@@ -263,7 +263,7 @@ We provide an instance of `Marker` that includes all the markers. Such as:
 
 ###### .other(name: `string`)
 
-> **The `name` of marker is available [!here](icons.md)**
+> **The `name` of marker is available [!here](./docs/icons.md)**
 > 
 > You also can use **Marker.groups** and **Marker.names** to find out available names
 
