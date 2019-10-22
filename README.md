@@ -208,6 +208,14 @@ topic.marker(Object.assign({}, marker.smiley('cry'), {del: true}));
 > [Use `Marker Object` to generate the object](#marker-flags)
 
 
+#### .image() => key
+
+You can use `.image()` to get `image key` back.
+
+Also you need to write image into menifest by `zip.updateManifestMetadata()`.
+
+> [See image example](./example/example.image.js)
+
 #### .summary(options) => Topic
 
 Attach a summary component to parent node including all children. In the meantime, the `edge` can be used to set the scope of summary component.
@@ -299,7 +307,7 @@ Update manifest for image insertion.
 
 | Name | Type | Default | Required | Description | 
 |:---- |:----:|:-------:|:--------:|:------------|
-| key | String | null | Y | The key only can be get by topic.image() |
+| key | String | null | Y | The key only can get by topic.image() |
 | content | Buffer | null | Y | The buffer data of image |
 
 #### .removeManifestMetadata(key) => Zipper
