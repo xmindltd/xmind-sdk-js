@@ -212,7 +212,7 @@ topic.marker(Object.assign({}, marker.smiley('cry'), {del: true}));
 
 You can use `.image()` to get `image key` back.
 
-Also you need to write image into menifest by `zip.updateManifestMetadata()`.
+Also you need to write image into manifest by `zip.updateManifestMetadata()`.
 
 > [See image example](./example/example.image.js)
 
