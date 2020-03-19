@@ -6,7 +6,7 @@
  */
 
 
-const {Topic, Workbook, Zipper} = require('xmind-sdk');
+const {Topic, Workbook, Zipper} = require('xmind');
 const fs = require('fs');
 
 const workbook = new Workbook();

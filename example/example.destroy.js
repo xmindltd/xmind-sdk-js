@@ -1,6 +1,6 @@
 'use strict';
 
-const { Workbook, Topic, Zipper, Marker } = require('xmind-sdk');
+const { Workbook, Topic, Zipper, Marker } = require('xmind');
 
 const workbook = new Workbook();
 const topic = new Topic({sheet: workbook.createSheet('sheet-1', 'central topic')});

@@ -1,4 +1,4 @@
-import { Workbook, Topic, Marker, Zipper } from 'xmind-sdk';
+import { Workbook, Topic, Marker, Zipper } from 'xmind';
 
 const wb = new Workbook();
 wb.createSheet('sheet-1','Root Topic');
