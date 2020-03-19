@@ -47,9 +47,9 @@ import {Workbook, Topic, Marker} from 'xmind';
 ```html
 // HTML
 // Latest version
-<script src="https://cdn.jsdelivr.net/npm/xmind-sdk/dist/xmind-sdk.bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xmind/dist/xmind-sdk.bundle.js"></script>
 // Specify version
-<!-- script src="https://cdn.jsdelivr.net/npm/xmind-sdk@1.1.0/dist/xmind-sdk.bundle.js"></script -->
+<!-- script src="https://cdn.jsdelivr.net/npm/xmind@2.0.2/dist/xmind-sdk.bundle.js"></script -->
 
 <script>
   const { Workbook, Topic, Marker } = window;
