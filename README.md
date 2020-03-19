@@ -30,13 +30,13 @@ $ npm i --save xmind-sdk
 ```
 
 ```js
-const {Workbook, Topic, Marker} = require('xmind-sdk');
+const {Workbook, Topic, Marker} = require('xmind');
 ```
 
 ### Usage in Browser
 
 ```jsx harmony
-import {Workbook, Topic, Marker} from 'xmind-sdk';
+import {Workbook, Topic, Marker} from 'xmind';
 ```
 
 ```html
@@ -56,7 +56,7 @@ import {Workbook, Topic, Marker} from 'xmind-sdk';
 
 
 ```js
-const { Workbook, Topic, Marker, Zipper } = require('xmind-sdk');
+const { Workbook, Topic, Marker, Zipper } = require('xmind');
 
 const [workbook, marker] = [new Workbook(), new Marker()];
 
@@ -146,7 +146,7 @@ In the UI client, you also need to draw the mind map on sheet.
 > usage:
 > 
 > ```js
-> const {Topic, Workbook} = require('xmind-sdk');
+> const {Topic, Workbook} = require('xmind');
 > const wb = new Workbook();
 > 
 > new Topic({sheet: wb.createSheet('Sheet-1', 'topic-1')});
@@ -197,7 +197,7 @@ Attach a marker flag to the parent node. Moreover, you can detach a marker flag 
 Example:
 
 ```js
-const {Marker} = require('xmind-sdk');
+const {Marker} = require('xmind');
 const marker = new Marker();
 // add
 topic.marker(marker.smiley('cry'));
