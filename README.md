@@ -26,8 +26,13 @@ Supported Platforms:
 ### Usage in Node.js
 
 ```shell
-$ npm i --save xmind-sdk
+$ npm i --save xmind
 ```
+
+> NOTICE: The `xmind-sdk` is renamed to `xmind` from version: 2.0.0
+>
+> If you were installed `xmind-sdk`. Please, use `npm i --save xmind` to instead of it. 
+
 
 ```js
 const {Workbook, Topic, Marker} = require('xmind');
