@@ -7,6 +7,7 @@ npm run lint
 
 if [[ $? != 0 ]]; then
   echo "lint error."
+
   exit 1;
 fi
 
