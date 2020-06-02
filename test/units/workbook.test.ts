@@ -43,4 +43,22 @@ describe('# Workbook Unit Test', () => {
     }
   });
 
+  it('should call .loadSheets() error', done => {
+    const workbook = new Workbook();
+    try {
+      // @ts-ignore
+      workbook.loadSheets();
+    } catch (e) {
+      expect(e).to.be.an('error');
+    }
+
+    try {
+      workbook.loadSheets([]);
+    } catch (e) {
+      expect(e).to.be.an('error');
+    }
+
+    done();
+  });
+
 });
