@@ -15,7 +15,7 @@ const from = require('../snowbrush').fromXMind;
  * @param {LoaderTypedOptions} options
  *  {JSZip} options.ctx - The .xmind file that should be unzipped by JSZip
  */
-class Loader implements AbstractLoader {
+export class Loader implements AbstractLoader {
   protected data;
   protected loaded = false;
   protected workbook: Workbook;
@@ -53,5 +53,3 @@ class Loader implements AbstractLoader {
     this.loaded = true;
   }
 }
-
-export default Loader;

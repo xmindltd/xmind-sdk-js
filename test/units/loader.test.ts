@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import Loader from '../../src/core/loader';
+import { Loader } from '../../src';
 import * as _path from 'path';
 import * as JSZip from 'jszip';
 import * as fs from 'fs';

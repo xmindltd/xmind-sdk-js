@@ -7,7 +7,7 @@ import * as JSZip from 'jszip';
 import { getBuildTemporaryPath } from '../fixtures/utils';
 import Core = require('xmind-model');
 import { join } from 'path';
-import Loader from '../../src/core/loader';
+import { Loader } from '../../src';
 
 
 const expect = chai.expect;
