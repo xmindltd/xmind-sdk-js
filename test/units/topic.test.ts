@@ -2,6 +2,7 @@ import {Topic, Workbook, Zipper, Marker} from '../../src';
 import {expect} from 'chai';
 import * as fs from "fs";
 import * as JSZip from 'jszip';
+// @ts-ignore
 import { getBuildTemporaryPath } from '../fixtures/utils';
 import {extend} from 'lodash';
 
@@ -11,7 +12,7 @@ const getComponents = function() {
   const topic = new Topic({sheet: workbook.createSheet('sheet1', 'centralTopic')});
   const zip = new Zipper({path: getBuildTemporaryPath(), workbook});
   return {topic, workbook, zip};
-}
+};
 
 describe('# Topic Unit Test', () => {
   it('should be failed to create instance of Topic with empty options', done => {
@@ -108,7 +109,7 @@ describe('# Topic Unit Test', () => {
     const topics = topic.cids();
     expect(topics).to.have.property(topic.cid('1'));
     expect(topics).to.have.property(topic.cid('2'));
-    expect(topics).to.have.property(topic.cid('Central Topic'));
+    expect(topics).to.have.property(topic.cid('centralTopic'));
     expect(topics).to.have.property(topic.rootTopicId);
     done();
   });
