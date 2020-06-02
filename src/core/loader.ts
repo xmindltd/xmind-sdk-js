@@ -1,4 +1,7 @@
-import { LoaderTypedOptions } from '../abstracts/loader.abstract';
+import {
+  AbstractLoader,
+  LoaderTypedOptions
+} from '../abstracts/loader.abstract';
 import { Workbook } from './workbook';
 
 import * as Core from 'xmind-model';
@@ -6,11 +9,16 @@ import * as JSZip from 'jszip';
 
 const from = require('../snowbrush').fromXMind;
 
-
-class Loader {
+/**
+ * @implements AbstractLoader
+ * @constructor
+ * @param {LoaderTypedOptions} options
+ *  {JSZip} options.ctx - The .xmind file that should be unzipped by JSZip
+ */
+class Loader implements AbstractLoader {
   protected data;
   protected loaded = false;
-  public workbook;
+  protected workbook: Workbook;
 
   constructor(protected options: LoaderTypedOptions) {
     if (!options.ctx || !(options.ctx instanceof JSZip)) {
@@ -20,25 +28,27 @@ class Loader {
     this.options = options;
   }
 
-  /**
-   * @public
-   * @description Loading sheets
-   * @return {Promise<[]>}
-   */
   public async loadSheets(): Promise<Core.Sheet[]> {
     if (!this.loaded) {
-      await this.loadUp();
+      await this.normalize();
     }
     this.workbook = new Workbook();
     const { sheets } = this.data;
     return this.workbook.loadSheets(sheets);
   }
 
+  public getWorkbook(): Workbook {
+    if (!this.loaded) {
+      throw new Error('should call .loadSheets first');
+    }
+    return this.workbook;
+  }
+
   /**
    * @private
-   * @description Loading zip file
+   * @description Normalizing zip file
    */
-  private async loadUp() {
+  private async normalize() {
     this.data = await from(this.options.ctx);
     this.loaded = true;
   }
