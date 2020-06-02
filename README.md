@@ -123,7 +123,7 @@ It returns an array of object which is used to get topic instance as parameter.
 
 #### .getWorkbook() => Workbook
 
-The Loader will create a workbook instance automatically. In the meantime, It is useful if you want to save the map via `Zipper`. 
+The Loader will create a workbook instance automatically. It is useful if you want to save the map via `Zipper`. 
 
 ## Workbook
 
