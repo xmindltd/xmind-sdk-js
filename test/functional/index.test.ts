@@ -532,16 +532,6 @@ describe('# Functional Test', () => {
 
   describe('# Loader Test', () => {
 
-    it('loading failed if given an invalid zip file', done => {
-      try {
-        // @ts-ignore
-        new Loader({ctx: 'Here, must be type of JSZip'})
-      } catch (e) {
-        expect(e.message).to.eq('ctx must be a valid type of JSZip');
-        done();
-      }
-    });
-
     it('loading zip file and also, return sheets object', done => {
       const zip = _path.resolve(__dirname, '../fixtures/default.xmind');
       JSZip.loadAsync(fs.readFileSync(zip)).then(async unzipped => {
