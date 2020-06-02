@@ -105,7 +105,7 @@ The loader helps you loading an exists .xmind file into `sdk`.
 > const { Loader, Topic } = require('xmind');
 > const JSZip = require('jszip');
 > 
-> async main() => {
+> const main = async () => {
 >   const loader = new Loader({ctx: await JSZip.loadAsync('/absolute/path/file.xmind')});
 >   const sheets = await loader.loadSheets();
 >   /* {[id: string]: Sheet} */
