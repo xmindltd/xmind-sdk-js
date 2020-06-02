@@ -28,7 +28,7 @@ export class Loader implements AbstractLoader {
     this.options = options;
   }
 
-  public async loadSheets(): Promise<Core.Sheet[]> {
+  public async loadSheets(): Promise<{[id: string]: Core.Sheet}> {
     if (!this.loaded) {
       await this.normalize();
     }

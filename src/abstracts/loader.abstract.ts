@@ -12,7 +12,7 @@ export interface AbstractLoader {
    * @description Loading sheets into workbook
    * @return {Promise<[]>}
    */
-  loadSheets(): Promise<Core.Sheet[]>;
+  loadSheets(): Promise<{[id: string]: Core.Sheet}>;
 
   /**
    * @description Getting workbook that is already created in step `loadSheets()`
