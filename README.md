@@ -52,7 +52,7 @@ import { Workbook, Topic, Marker, Loader, Dumper } from 'xmind';
 <!-- script src="https://cdn.jsdelivr.net/npm/xmind@2.0.2/dist/xmind-sdk.bundle.js"></script -->
 
 <script>
-  const { Workbook, Topic, Marker } = window;
+  const { Workbook, Topic, Marker, Loader, Dumper } = window;
 </script>
 
 ```
