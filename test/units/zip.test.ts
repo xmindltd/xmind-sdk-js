@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { join } from 'path';
 import * as fs from 'fs';
+// @ts-ignore
 import {getBuildTemporaryPath} from '../fixtures/utils';
 
 const {Zipper} = require('../../src');
