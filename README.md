@@ -212,7 +212,7 @@ If you don't specify title in the period of calling .cid, the last added compone
 
 #### .cids() => {$cid: $title}
 
-That will return all added components.
+That will return all added components which is not included `note` or `marker`.
 
 #### .add(options) => Topic
 
