@@ -4,7 +4,7 @@
  * Loader fully example
  */
 
-const { Loader, Topic, Zipper } = require('../dist');
+const { Loader, Topic, Zipper } = require('xmind');
 const JSZip = require('jszip');
 const fs = require('fs');
 const path = require('path');
