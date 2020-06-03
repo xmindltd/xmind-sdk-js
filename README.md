@@ -99,6 +99,10 @@ See [example directory](./example).
 
 The loader helps you loading an exists .xmind file into `sdk`.
 
+### Options
+
+* options.ctx: `JSZip`
+
 > Usage:
 >
 > ```js
