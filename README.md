@@ -123,7 +123,7 @@ The loader helps you loading an exists .xmind file into `sdk`.
 
 #### .loadSheets() => Promise<{[id: string]: Sheet}>
  
-It returns an array of object which is used to get topic instance as parameter.
+It returns an object which is used to get the sheet instance as `Topic` parameter.
 
 #### .getWorkbook() => Workbook
 
