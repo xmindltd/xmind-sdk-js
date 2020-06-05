@@ -41,7 +41,7 @@ const {Workbook, Topic, Marker} = require('xmind');
 ### Usage in Browser
 
 ```jsx harmony
-import { Workbook, Topic, Marker, Loader, Dumper } from 'xmind';
+import {Workbook, Topic, Marker} from 'xmind';
 ```
 
 ```html
@@ -52,7 +52,7 @@ import { Workbook, Topic, Marker, Loader, Dumper } from 'xmind';
 <!-- script src="https://cdn.jsdelivr.net/npm/xmind@2.0.2/dist/xmind-sdk.bundle.js"></script -->
 
 <script>
-  const { Workbook, Topic, Marker, Loader, Dumper } = window;
+  const { Workbook, Topic, Marker } = window;
 </script>
 
 ```
@@ -95,40 +95,6 @@ zipper.save().then(status => status && console.log('Saved /tmp/MyFirstMap.xmind'
 
 See [example directory](./example).
 
-## Loader
-
-The loader helps you loading an exists .xmind file into `sdk`.
-
-### Options
-
-* options.ctx: `JSZip`
-
-> Usage:
->
-> ```js
-> const { Loader, Topic } = require('xmind');
-> const JSZip = require('jszip');
-> 
-> const main = async () => {
->   const loader = new Loader({ctx: await JSZip.loadAsync('/absolute/path/file.xmind')});
->   const sheets = await loader.loadSheets();
->   /* {[id: string]: Sheet} */
->   const topic = new Topic({sheet: sheets[0], isLoaded: true});
-> }
-> ```
->
-> [See fully example](./example/example.loader.js)
-
-### Methods
-
-#### .loadSheets() => Promise<{[id: string]: Sheet}>
- 
-It returns an object which is used to get the sheet instance as `Topic` parameter.
-
-#### .getWorkbook() => Workbook
-
-The Loader will create a workbook instance automatically. It is useful if you want to save the map via `Zipper`. 
-
 ## Workbook
 
 The workbook is a temporary storage where all the data are written.
@@ -145,10 +111,6 @@ Once the workbook is created, then there's a way to build a sheet containing a `
 | sheetTitle | String | `-` | Y |
 | topicTitle | String | `Central Topic` | N |
 
-
-#### .loadSheets(sheets: SheetData[]) => Promise<{[id: string]: Sheet}>
-
-This method can help you to load sheets from an exists `.xmind` file easily, But we encourage you to load sheets starting with `Loader`.
 
 #### .theme(sheetTitle, themeName) => Boolean
 
@@ -179,8 +141,7 @@ The `Topic` is an important constructor function that implements most of the met
 
 ### Topic Options
 
-* options.sheet: `workbook.createSheet(...)`
-* options.isLoaded: Set true if you starts with `Loader`
+* options.sheet <= `workbook.createSheet(...)`
 
 You may wonder why we need to offer the `options.sheet` manually? The reason is that `Topic` is implemented independently and most of the methods depend on the instance of the sheet.
 
@@ -212,7 +173,7 @@ If you don't specify title in the period of calling .cid, the last added compone
 
 #### .cids() => {$cid: $title}
 
-That will return all added components which is not included `note` or `marker`.
+That will return all added components.
 
 #### .add(options) => Topic
 
@@ -271,7 +232,7 @@ Attach a summary component to parent node including all children. In the meantim
 | Name | Type | Default | Required |
 |:---- |:----:|:-------:|:--------:|
 | options.title | String | null | Y |
-| options.edge | String | null | N |
+| options.edge | String | null | N | 
 
 
 > [About `edge`](./docs/edge.graphic.txt)
@@ -327,7 +288,7 @@ List available group names.
 
 #### Marker.names(groupName) => Array\<name\>
 
-Get the flag names by `groupName`.
+* Get the flag names by `groupName`.
 
 
 ## Zipper
@@ -338,7 +299,7 @@ The module of `Zipper` only works under backend.
 
 ### Zipper Options
 
-| Name | Type | Default | Required | Description |
+| Name | Type | Default | Required | Description | 
 |:---- |:----:|:-------:|:--------:|:------------|
 | options.path | String | `-` | Y | The path is where to save the `.xmind` file |
 | options.workbook | Workbook | `-` | Y | The instance of Workbook |
@@ -348,7 +309,7 @@ The module of `Zipper` only works under backend.
 
 Update manifest for image insertion.
 
-| Name | Type | Default | Required | Description |
+| Name | Type | Default | Required | Description | 
 |:---- |:----:|:-------:|:--------:|:------------|
 | key | String | null | Y | The key only can get by topic.image() |
 | content | Buffer | null | Y | The buffer data of image |
@@ -361,7 +322,7 @@ Remove a pair of key/value from manifest.
 
 Save components to the logic disk in the form of zip.
 
-### Dumper
+## Dumper
 
 The module of `Dumper` only works under browser.
 

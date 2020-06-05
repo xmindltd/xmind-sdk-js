@@ -7,8 +7,6 @@
     "src/common",
     "src/index.ts",
     "src/browser.ts",
-    "src/snowbrush.js",
-    "src/snowbrush.js.map",
     "test/",
     "example/",
     "dist/",

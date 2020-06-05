@@ -11,7 +11,6 @@ import {isEmpty, isObject, isRuntime} from '../utils/common';
 import Base from './base';
 import * as Model from '../common/model';
 import * as Core from 'xmind-model';
-import {TopicData} from 'xmind-model/types/models/topic';
 
 /**
  * @description Topic common methods
@@ -33,15 +32,7 @@ export class Topic extends Base implements AbstractTopic {
     this.sheet = options.sheet;
     this.root = this.sheet.getRootTopic();
     this.componentId = this.lastId = this.root.getId();
-    this.resources[this.componentId] = this.root.getTitle() || 'Central Topic';
-
-    if (options.isLoaded) {
-      this.load(this.root.getChildren());
-    }
-    this.debug('D - %s and length = %d',
-      JSON.stringify(this.resources, null, 2),
-      Object.keys(this.resources).length
-    );
+    this.resources[this.componentId] = 'Central Topic';
   }
 
   public on(componentId?: string) {
@@ -209,8 +200,7 @@ export class Topic extends Base implements AbstractTopic {
    * @private
    */
   private current() {
-    return (this.componentId === this.root.getId()) ?
-      this.root : this.find(this.componentId);
+    return (this.componentId === this.root.getId()) ? this.root : this.find(this.componentId);
   }
 
   /**
@@ -223,31 +213,6 @@ export class Topic extends Base implements AbstractTopic {
     if (!componentId) {
       return false;
     }
-
     return this.resources.hasOwnProperty(componentId);
-  }
-
-  /**
-   * @private
-   * @description Auto load resources
-   */
-  private load(child?: TopicData) {
-    this.resources[child.id] = child.title;
-    if (child.hasOwnProperty('children')) {
-      const { attached } = child['children'];
-      for (let i = 0; i < attached.length; i++) {
-        this.load(attached[i]);
-        this.resources[attached[i]['id']] = attached[i]['title'];
-      }
-
-      if (child['children'].hasOwnProperty('summary')) {
-        const { summary } = child['children'];
-        for (let i = 0; i < summary.length; i++) {
-          this.resources[summary[i]['id']] = summary[i]['title'];
-        }
-      }
-    }
-
-    return this;
   }
 }

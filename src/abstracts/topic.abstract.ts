@@ -5,7 +5,6 @@ import * as Core from 'xmind-model';
 
 export interface TopicOptions {
   sheet: Core.Sheet;
-  isLoaded?: boolean;
 }
 
 export interface MarkerOptions {
