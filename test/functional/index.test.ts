@@ -2,6 +2,7 @@ import { Workbook, Topic, Marker, Zipper } from '../../src';
 import * as chai from 'chai';
 import * as fs from 'fs';
 import * as JSZip from 'jszip';
+// @ts-ignore
 import { getBuildTemporaryPath } from '../fixtures/utils';
 import Core = require('xmind-model');
 import { join } from 'path';
@@ -199,8 +200,8 @@ describe('# Functional Test', () => {
           expect(map).to.be.an('object');
           const {attached} = map.rootTopic.children;
           expect(attached.length).to.gt(0);
-          expect(attached[0].image.src).to.eq(`xap:${key2}`);
-          expect(attached[1].image.src).to.eq(`xap:${key1}`);
+          expect(attached[0].image.src).to.eq(`xap:${key1}`);
+          expect(attached[1].image.src).to.eq(`xap:${key2}`);
           fs.unlinkSync(p);
           done();
         });
