@@ -63,8 +63,8 @@ export class Zipper extends Base {
 
     const options: JSZip.JSZipGeneratorOptions = {
       type: 'nodebuffer',
-      compression: 'DEFLATE',
-      compressionOptions: {level: 9},
+      compression: 'STORE',
+      //compressionOptions: {level: 9},
       platform: 'UNIX'
     };
 
