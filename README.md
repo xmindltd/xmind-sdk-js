@@ -193,6 +193,24 @@ Attach a text to parent node.
 | text | String | null | Y | text message |
 | del | Boolean | false | N | detach the note from current parent node if the `del` is true |
 
+#### .addLabel(text) => Topic
+
+Add label text to the component, also you can add label to the same component many times.
+
+| Name | Type | Default | Required | Description |
+|:----:|:----:|:-------:|:--------:|:------------|
+| text | String | null | Y | label text string |
+
+
+#### .removeLabels(componentId?) => Topic
+
+Remove all the labels from the component.
+
+> If you don't give the componentId, then remove labels from the currently component.
+
+| Name | Type | Default | Required | Description |
+|:----:|:----:|:-------:|:--------:|:------------|
+| componentId | String | null | N | - |
 
 #### .marker(object) => Topic
 
