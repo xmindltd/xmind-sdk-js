@@ -1,5 +1,5 @@
 {
-  "name": "@xmind/xmind-sdk",
+  "name": "xmind",
   "version": "2.2.24",
   "description": "The SDK of XMind Ltd.",
   "main": "dist/index.js",
