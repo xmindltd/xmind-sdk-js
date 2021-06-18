@@ -14,9 +14,9 @@
     "cov": "cat ./coverage/lcov.info | codacy-coverage --language typescript",
     "clean": "rm -rf ./coverage ./.nyc_output",
     "cp": "cp -r ./src/common/templates ./src/common/themes ./dist/common/",
-    "patch": "npm run build && npm version patch && npm publish",
-    "minor": "npm run build && npm version minor && npm publish",
-    "major": "npm run build && npm version major && npm publish"
+    "patch": "npm run build && npm version patch && npm publish --access public",
+    "minor": "npm run build && npm version minor && npm publish --access public",
+    "major": "npm run build && npm version major && npm publish --access public"
   },
   "repository": {
     "type": "git",
