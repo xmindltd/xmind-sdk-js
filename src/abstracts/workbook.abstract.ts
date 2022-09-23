@@ -1,5 +1,16 @@
 import Core = require('xmind-model');
 
+export interface CreateSheetsOptions {
+  s: string;
+  t: string;
+}
+
+export interface ResponseOfSheets {
+  id: string;
+  title: string;
+}
+
+
 export interface AbstractWorkbook {
 
   /**
@@ -8,6 +19,27 @@ export interface AbstractWorkbook {
    * @param {String} [centralTopicTitle]
    */
   createSheet(sheetTitle: string, centralTopicTitle: string): Core.Sheet;
+
+
+  /**
+   * To create sheet in batch mode
+   * @param {Object[{
+   *   s: string,
+   *   t: string
+   * }]} options
+   */
+  createSheets(options: CreateSheetsOptions[]): ResponseOfSheets[];
+
+  /**
+   * Get sheet back
+   * @param {String} id
+   */
+  getSheet(id: string): Core.Sheet;
+
+  /**
+   * Get all sheet information that you created
+   */
+  getSheets(): ResponseOfSheets[];
 
   /**
    * @description Set theme color

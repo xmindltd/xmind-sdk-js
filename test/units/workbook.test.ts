@@ -38,7 +38,7 @@ describe('# Workbook Unit Test', () => {
       workbook.createSheet('sheet-1');
       workbook.createSheet('sheet-1');
     } catch (e) {
-      expect(e.message).to.be.eq('The title of sheet is duplication');
+      expect(e.message).to.be.eq('You are trying to create the sheet repeatedly that is not allowed');
       done();
     }
   });

@@ -110,6 +110,17 @@ Once the workbook is created, then there's a way to build a sheet containing a `
 | sheetTitle | String | `-` | Y |
 | topicTitle | String | `Central Topic` | N |
 
+#### .createSheets([{s: 'SheetTitle', t: 'topicTitle'}]) => [{ id: string, title: string }]
+
+You can use this method to create sheet in batch mode.
+
+#### .getSheets() => `same as .createSheets`
+
+It allows you to get back the identifier of sheet anytime and anywhere.
+
+#### .getSheet(id: string) => `Sheet`
+
+You can get an instance of sheet with an existed sheet ID.
 
 #### .theme(sheetTitle, themeName) => Boolean
 
