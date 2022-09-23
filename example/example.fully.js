@@ -6,10 +6,27 @@
  */
 
 
-const {Topic, Workbook, Zipper, Marker} = require('xmind');
+const { Topic, Workbook, Zipper, Marker } = require('../dist');
 
 const workbook = new Workbook();
-const topic = new Topic({sheet: workbook.createSheet('sheet-1', 'Computer science')});
+const topicOnSheet1 = workbook.createSheet('sheet-1', 'Computer science - 1');
+const topic = new Topic({ sheet: topicOnSheet1 });
+
+
+const workbook2 = new Workbook();
+const createdSheetList = workbook2.createSheets([
+  {s: 'sheetName1', t: 'rootTopicName1'},
+  {s: 'sheetName2', t: 'rootTopicName2'},
+  {s: 'sheetName3', t: 'rootTopicName3'}
+]);
+
+console.info(createdSheetList);
+console.info('sheetList:', workbook2.getSheets());
+console.info('sheet1', workbook2.getSheet(createdSheetList[0].id));
+
+console.info(workbook2.toJSON());
+
+const zip2 = new Zipper({path: '/tmp', workbook: workbook2});
 
 // Set theme
 workbook.theme('sheet-1', 'robust');
@@ -62,4 +79,5 @@ topic
   .marker(marker.smiley('cry'))
   .add({title: 'vs code'});
 
-zip.save().then(status => status && console.log('Saved.'));
+zip.save().then(status => status && console.log('zip saved'));
+zip2.save().then(status => status && console.log('zip2 saved'));
