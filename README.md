@@ -15,7 +15,8 @@ In order to use the SDK conveniently, an essential concept you should know is th
 
 You can open the final `.xmind` files by XMind ZEN.
 
-Supported Platforms:
+## Supported Platforms
+
 * Linux  
 * Win32  
 * Browser
@@ -34,13 +35,13 @@ $ npm i --save xmind
 
 
 ```js
-const {Workbook, Topic, Marker} = require('xmind');
+const { Workbook, Topic, Marker } = require('xmind');
 ```
 
 ### Usage in Browser
 
 ```jsx harmony
-import {Workbook, Topic, Marker} from 'xmind';
+import { Workbook, Topic, Marker } from 'xmind';
 ```
 
 ```html
@@ -48,7 +49,7 @@ import {Workbook, Topic, Marker} from 'xmind';
 // Latest version
 <script src="https://cdn.jsdelivr.net/npm/xmind/dist/xmind-sdk.bundle.js"></script>
 // Specify version
-<!-- script src="https://cdn.jsdelivr.net/npm/xmind@2.0.2/dist/xmind-sdk.bundle.js"></script -->
+<!-- script src="https://cdn.jsdelivr.net/npm/xmind@2.2.26/dist/xmind-sdk.bundle.js"></script -->
 
 <script>
   const { Workbook, Topic, Marker } = window;
@@ -62,7 +63,7 @@ import {Workbook, Topic, Marker} from 'xmind';
 ```js
 const { Workbook, Topic, Marker, Zipper } = require('xmind');
 
-const [workbook, marker] = [new Workbook(), new Marker()];
+const [ workbook, marker ] = [new Workbook(), new Marker()];
 
 const topic = new Topic({sheet: workbook.createSheet('sheet title', 'Central Topic')});
 const zipper = new Zipper({path: '/tmp', workbook, filename: 'MyFirstMap'});
@@ -110,11 +111,31 @@ Once the workbook is created, then there's a way to build a sheet containing a `
 | sheetTitle | String | `-` | Y |
 | topicTitle | String | `Central Topic` | N |
 
-#### .createSheets([{s: 'SheetTitle', t: 'topicTitle'}]) => [{ id: string, title: string }]
+#### .createSheets(options: Object[]) => `Object[]`
 
 You can use this method to create sheet in batch mode.
 
-#### .getSheets() => `same as .createSheets`
+| Name | Type | Default | Required |
+|:---- |:----:|:-------:|:--------:|
+| sheetTitle | String | `-` | Y |
+| topicTitle | String | `Central Topic` | N |
+
+It returns an object of sheet identifier.
+
+```typescript
+const sheets = workbook.createSheets([
+  {s: 'SheetTitle1', t: 'RootTopicTitle1'},
+  {s: 'SheetTitle2', t: 'RootTopicTitle2'}
+]);
+console.info(sheets);
+// [
+//   { id: string, title: string },
+//   { id: string, title: string }
+//   ...
+// ]
+```
+
+#### .getSheets() => `Object[]`
 
 It allows you to get back the identifier of sheet anytime and anywhere.
 
