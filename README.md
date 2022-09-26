@@ -121,7 +121,7 @@ You can use this method to create sheet in batch.
 | sheetTitle | String | `-` | Y |
 | topicTitle | String | `Central Topic` | N |
 
-It returns an object of sheet identifier.
+It returns an object of sheet identifier([Click here to check how it uses](./example/example.fully.js)).
 
 ```typescript
 const sheets = workbook.createSheets([
