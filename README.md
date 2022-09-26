@@ -113,7 +113,8 @@ Once the workbook is created, then there's a way to build a sheet containing a `
 
 #### .createSheets(options: Object[]) => `Object[]`
 
-You can use this method to create sheet in batch mode.
+You can use this method to create sheet in batch.
+
 
 | Name | Type | Default | Required |
 |:---- |:----:|:-------:|:--------:|
