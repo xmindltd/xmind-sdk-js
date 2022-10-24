@@ -1,7 +1,7 @@
 import { AbstractMarker } from '../abstracts/marker.abstract';
-import icons = require('../common/constants/marker');
 import Debug from 'debug';
 
+const icons = require('../common/constants/marker');
 const debug = Debug('xmind-sdk:marker');
 
 export class Marker extends AbstractMarker {

@@ -5,8 +5,7 @@ import { isObject } from './common';
 import * as fs from 'fs';
 import Base from '../core/base';
 import { PACKAGE_MAP } from '../common/constants';
-
-import JSZip = require('jszip');
+import * as JSZip from 'jszip';
 
 /* istanbul ignore next */
 const join = (process.platform === 'win32' ? path.win32.join : path.join);
