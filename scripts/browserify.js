@@ -13,12 +13,11 @@ if (fs.existsSync(PATH)) fs.unlinkSync(PATH);
 
 browserify()
   .add(path.join(__dirname, '../src/browser.ts'))
-  .transform('unassertify', { global: true })
-  .transform('envify', { global: true })
-  // .transform('uglifyify', { global: true })
-  .plugin(tsify, { noImplicitAny: false })
-  .plugin('common-shakeify')
-  .plugin('browser-pack-flat/plugin')
+  .plugin(tsify, { noImplicitAny: false, target: 'es6' })
+  .transform('babelify', {
+    presets: ['@babel/preset-env', '@babel/preset-react'],
+    extensions: ['.ts', '.js']
+  })
   .bundle()
   .on('error', function (error) { console.error(error.toString()); })
   .pipe(require('minify-stream')({ sourceMap: false }))
