@@ -1,9 +1,14 @@
 {
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  },
   "compilerOptions": {
     "baseUrl": ".",
     "paths": { "*": ["types/*"] },
-    "target": "es2016",
-    "module": "commonjs",
+    "target": "es2020",
+    "module": "ESNext",
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "resolveJsonModule": true,
@@ -14,7 +19,7 @@
     "declaration": true,
     "outDir": "dist/",
     "rootDir": "src/",
-    "lib": ["es2016", "dom"],
+    "lib": ["es2020", "dom"],
     "sourceMap": true,
     "allowJs": false
   },
