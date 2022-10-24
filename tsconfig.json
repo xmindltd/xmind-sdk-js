@@ -7,8 +7,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": { "*": ["types/*"] },
-    "target": "es2020",
-    "module": "ESNext",
+    "target": "es2016",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "resolveJsonModule": true,
@@ -19,7 +19,7 @@
     "declaration": true,
     "outDir": "dist/",
     "rootDir": "src/",
-    "lib": ["es2020", "dom"],
+    "lib": ["es2016", "dom"],
     "sourceMap": true,
     "allowJs": false
   },
