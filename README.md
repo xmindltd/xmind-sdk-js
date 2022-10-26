@@ -38,7 +38,7 @@ $ npm i --save xmind
 const { Workbook, Topic, Marker } = require('xmind');
 ```
 
-### Usage in Browser
+### Usage in Browser or Vue.js
 
 ```jsx harmony
 import { Workbook, Topic, Marker } from 'xmind';
@@ -47,15 +47,15 @@ import { Workbook, Topic, Marker } from 'xmind';
 ```html
 // HTML
 // Latest version
-<script src="https://cdn.jsdelivr.net/npm/xmind/dist/xmind-sdk.bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xmind/dist/xmind.min.js"></script>
 // Specify version
-<!-- script src="https://cdn.jsdelivr.net/npm/xmind@2.2.26/dist/xmind-sdk.bundle.js"></script -->
+<!-- script src="https://cdn.jsdelivr.net/npm/xmind@2.2.26/dist/xmind.min.js"></script -->
 
 <script>
   const { Workbook, Topic, Marker } = window;
 </script>
-
 ```
+
 
 ### Simple Usage
 

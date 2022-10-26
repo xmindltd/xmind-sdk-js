@@ -1,8 +1,11 @@
 {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
     "ecmaFeatures": {
-      "jsx": false
+      "jsx": false,
+      "modules": true
     },
     "useJSXTextNode": true,
     "project": "./tsconfig.json",

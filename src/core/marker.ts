@@ -1,8 +1,15 @@
 import { AbstractMarker } from '../abstracts/marker.abstract';
-import icons = require('../common/constants/marker');
-import Debug from 'debug';
+import { icons, iterable } from '../common/constants/marker';
 
-const debug = Debug('xmind-sdk:marker');
+const debug = require('debug')('xmind-sdk:marker');
+
+Object.defineProperty(icons, 'iterable', {
+  value: iterable,
+  enumerable: false,
+  configurable: false,
+  writable: false
+});
+
 
 export class Marker extends AbstractMarker {
   constructor() {
