@@ -1,12 +1,11 @@
-import * as Debug from 'debug';
-import * as v4 from 'uuid/v4';
 import * as Model from '../common/model';
 
 const Robust = require('../common/themes/robust.json');
 const Snowbrush = require('../common/themes/snowbrush.json');
-const Business = require('../common/themes/snowbrush.json');
+const Business = require('../common/themes/business.json');
 
-const debug = Debug('xmind-sdk:theme');
+const v4 = require('uuid/v4');
+const debug = require('debug')('xmind-sdk:theme');
 const ALLOWED_THEMES = ['robust', 'snowbrush', 'business'];
 
 interface ThemeOptions {
