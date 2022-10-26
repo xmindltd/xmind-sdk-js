@@ -1162,7 +1162,7 @@ const marker = {
   }
 };
 
-export const icons = {};
+const icons = {};
 const iterable = {};
 
 for(const key in marker) {
@@ -1189,11 +1189,4 @@ for(const key in marker) {
   }
 }
 
-Object.defineProperty(icons, 'iterable', {
-  value: iterable,
-  enumerable: false,
-  configurable: false,
-  writable: false
-});
-
-module.exports = exports = icons;
+export { icons, iterable };

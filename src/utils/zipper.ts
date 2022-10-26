@@ -1,11 +1,13 @@
-import * as path from 'path';
-import { promisify } from 'util';
-import { Workbook } from '..';
-import { isObject } from './common';
-import * as fs from 'fs';
+import { Workbook } from '../core/workbook';
 import Base from '../core/base';
+
+import { isObject } from './common';
 import { PACKAGE_MAP } from '../common/constants';
 import * as JSZip from 'jszip';
+
+const path = require('path');
+const fs = require('fs');
+const { promisify } = require('util');
 
 /* istanbul ignore next */
 const join = (process.platform === 'win32' ? path.win32.join : path.join);

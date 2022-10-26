@@ -1,5 +1,5 @@
-import * as v4 from 'uuid/v4';
-import * as Debug from 'debug';
+const v4 = require('uuid/v4');
+const Debug = require('debug');
 
 export interface BaseOptions {
   debug?: string;
