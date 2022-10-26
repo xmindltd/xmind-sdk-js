@@ -7,7 +7,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": { "*": ["types/*"] },
-    "target": "es2016",
+    "target": "es5",
     "module": "CommonJS",
     "moduleResolution": "node",
     "experimentalDecorators": true,
@@ -19,7 +19,7 @@
     "declaration": true,
     "outDir": "dist/",
     "rootDir": "src/",
-    "lib": ["es2016", "dom"],
+    "lib": ["es5", "es6", "dom"],
     "sourceMap": true,
     "allowJs": false
   },
@@ -29,6 +29,7 @@
     "test",
     "scripts",
     "docs",
-    "example"
+    "example",
+    "rollup.config.ts"
   ]
 }
