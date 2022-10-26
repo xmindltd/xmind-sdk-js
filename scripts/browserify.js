@@ -8,6 +8,7 @@ const path = require('path');
 const fs = require('fs');
 
 const PATH = path.join(__dirname, '../dist/xmind-sdk.bundle.js');
+const PATH_WITHOUT_SDK = path.join(__dirname, '../dist/xmind.min.js');
 
 if (fs.existsSync(PATH)) fs.unlinkSync(PATH);
 
@@ -21,4 +22,11 @@ browserify()
   .bundle()
   .on('error', function (error) { console.error(error.toString()); })
   .pipe(require('minify-stream')({ sourceMap: false }))
-  .pipe(fs.createWriteStream(PATH));
+  .pipe(fs.createWriteStream(PATH).on('finish', () => {
+    console.info(PATH);
+    fs.createReadStream(PATH)
+      .pipe(fs.createWriteStream(PATH_WITHOUT_SDK))
+      .on('finish', () => {
+        console.info(PATH_WITHOUT_SDK);
+      })
+  }));
