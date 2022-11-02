@@ -61,6 +61,8 @@ import { Workbook, Topic, Marker } from 'xmind';
 ### More Examples 
 
 
+See [example directory](./example).
+
 ```js
 const { Workbook, Topic, Marker, Zipper } = require('xmind');
 
@@ -92,9 +94,6 @@ topic
 zipper.save().then(status => status && console.log('Saved /tmp/MyFirstMap.xmind'));
 ```
 
-### More Examples
-
-See [example directory](./example).
 
 ## Workbook
 
