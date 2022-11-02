@@ -1,4 +1,4 @@
-# XMind SDK for JavaScript
+# xmind-sdk-js 
 
 [![CodeQL](https://github.com/xmindltd/xmind-sdk-js/actions/workflows/codeql.yml/badge.svg?branch=master)](https://github.com/xmindltd/xmind-sdk-js/actions/workflows/codeql.yml)
 [![Build Status](https://travis-ci.org/xmindltd/xmind-sdk-js.svg?branch=master)](https://travis-ci.org/xmindltd/xmind-sdk-js)
