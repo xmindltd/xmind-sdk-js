@@ -10,7 +10,7 @@
 
 This project is a lightweight official software development kit for JavaScript/Typescript which is available for browsers and Node.js.
 
-This library implements various functions which are similar to our UI Applications and You might know the basic concepts of this library if you've used the application before.
+This library implements various functions which are similar to our UI applications and You might know the basic concepts of this library if you've used the application before.
 
 In order to use it conveniently, an essential concept you should know is that everything is a component and each one of them has a unique component ID. You can add a child node under the components, however, the Markers and Notes can only be attached to the components.
 
