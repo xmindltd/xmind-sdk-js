@@ -8,7 +8,7 @@
 ![GitHub](https://img.shields.io/github/license/xmindltd/xmind-sdk-js.svg)
 [![npm (scoped)](https://img.shields.io/badge/XMind-ZEN-red.svg)](https://xmind.app)
 
-This is a lightly official software development kit for JavaScript/Typescript which is available for either way of web browsers and Node.js.
+This is a lightly official software development kit for JavaScript/Typescript which is available for either way of web browsers or Node.js.
 
 This library implements various functions which are similar to our UI Applications and You might know the basic concepts of this library if you've used the application before.
 
