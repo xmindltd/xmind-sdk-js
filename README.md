@@ -22,7 +22,7 @@ Last but not least, we also provided the [Online 🌐 Mind-Mapping](https://xmin
 
 * Linux  
 * Win32  
-* Browser
+* Browser (Not Fully Supported)
 
 ## Usage and Getting Started
 
