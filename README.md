@@ -32,7 +32,7 @@ Last but not least, we also provided the [Online 🌐 Mind-Mapping](https://xmin
 $ npm i --save xmind
 ```
 
-> NOTICE: The `xmind-sdk` is renamed to `xmind` from version: 2.0.0
+> NOTICE: The `xmind-sdk` is renamed to `xmind` from the version: 2.0.0
 >
 > Please, use `npm i --save xmind` to replace with it if you were using the `xmind-sdk`. 
 
@@ -105,7 +105,8 @@ The workbook is a temporary storage where all the data are written.
 
 #### .createSheet(sheetTitle, topicTitle?) => `Sheet`
 
-Once the workbook is created, then there's a way to build a sheet containing a `root topic`. In addition, you can custom their titles by parameters.
+Once the workbook is created, then there's a way to build a sheet containing a `root topic`.
+In addition, you can customize their titles by parameters.
 
 
 | Name | Type | Default | Required |
@@ -115,7 +116,7 @@ Once the workbook is created, then there's a way to build a sheet containing a `
 
 #### .createSheets(options: Object[]) => `Object[]`
 
-You can use this method to create sheet in batch.
+You can use this method to create sheets in bulk.
 
 
 | Name | Type | Default | Required |
@@ -140,11 +141,11 @@ console.info(sheets);
 
 #### .getSheets() => `Object[]`
 
-It allows you to get back the identifier of sheet anytime and anywhere.
+It allows you to get back the identifier of the sheet anytime and anywhere.
 
 #### .getSheet(id: string) => `Sheet`
 
-You can get an instance of sheet with an existed sheet ID.
+You can get an instance of the sheet with an existed sheet ID.
 
 #### .theme(sheetTitle, themeName) => Boolean
 
@@ -165,13 +166,14 @@ Get component's data from the workbook in the form of `STRING`.
 
 #### .validate() => `{status: Boolean, errors: Array<object> | null}`
 
-This is proof that all data are available and complete.
+This is the way to prove that all data are available and complete.
 
-The `status` indicates the result of validation which is `true` if it's correct, othewise `false` returns.
+The `status` indicates the result of validation which is `true` if it's correct, otherwise `false` returns.
 
 ## Topic
 
-The `Topic` is an important constructor function that implements most of the methods. And you are going to depend on it during most operations.
+The `Topic` is an important constructor function that implements most of the methods.
+And you're going to depend on it during most operations.
 
 ### Topic Options
 
@@ -179,7 +181,7 @@ The `Topic` is an important constructor function that implements most of the met
 
 You may wonder why we need to offer the `options.sheet` manually? The reason is that `Topic` is implemented independently and most of the methods depend on the instance of the sheet.
 
-In the UI client, you also need to draw the mind map on sheet.
+In the UI client, you also need to draw the mind map on the sheet.
 
 > usage:
 > 
@@ -199,11 +201,11 @@ Set the component to be parent node. If there isn't component ID, the `Central T
 #### .cid(title?) => String
 
 Use .cid to get component ID corresponding to the `title`.
-> _!!! NOTE THAT:_  You should avoid duplicating the component `title` if use `title` to search the component ID.
+> _!!! NOTE THAT:_  You should avoid duplicating the component `title` if you use `title` to search the component ID.
 
 If none of the components has been added, at least `Central Topic`'ID could be returned.
 
-If you don't specify title in the period of calling .cid, the last added component ID would be returned.
+If you don't specify the title in the period of calling .cid, the last added component ID would be returned.
 
 #### .cids() => {$cid: $title}
 
@@ -248,7 +250,9 @@ Remove all the labels from the component.
 
 #### .marker(object) => Topic
 
-Attach a marker flag to the parent node. Moreover, you can detach a marker flag from the parent node by setting `object.del` as `true`. default: `false`
+Attach a marker flag to the parent node.
+Moreover, you can detach a marker flag from the parent node by setting `object.del` as `true`.
+Default: `false`
 
 Example:
 
@@ -268,7 +272,7 @@ topic.marker(Object.assign({}, marker.smiley('cry'), {del: true}));
 
 You can use `.image()` to get `image key` back.
 
-Also you need to write image into manifest by `zip.updateManifestMetadata()`.
+However, you need to write image into manifest by `zip.updateManifestMetadata()`.
 
 > [See image example](./example/example.image.js)
 
@@ -277,7 +281,7 @@ Also you need to write image into manifest by `zip.updateManifestMetadata()`.
 Attach a summary component to parent node including all children. In the meantime, the `edge` can be used to set the scope of summary component.
 > _!!! NOTE THAT_
 > 
-> The summary does not allow to be added under `Central Topic`
+> The summary doesn't allow to be added under `Central Topic`
 > 
 > The `edge` must parallel to parent node
 
@@ -329,7 +333,7 @@ We provide an instance of `Marker` that includes all the markers. Such as:
 
 > **The `name` of marker is available [!here](./docs/icons.md)**
 > 
-> You also can use **Marker.groups** and **Marker.names** to find out available names
+> You can also use the **Marker.groups** and **Marker.names** to find out available names of Marker.
 
 
 ### Static methods
@@ -368,7 +372,7 @@ Update manifest for image insertion.
 
 #### .removeManifestMetadata(key) => Zipper
 
-Remove a pair of key/value from manifest.
+Remove a pair of key / value from manifest.
 
 #### .save() => Promise\<boolean\>
 
@@ -380,16 +384,18 @@ The module of `Dumper` only works under browser.
 
 #### .dumping() => Array<{filename: string, value: string}>
 
-Return an array of the object composed of file content. In order to open it in the official software, you need to compress these files in the form of zip with end of `.xmind`.
+Return an array of objects composed of file content.
+In order to open it in the official software,
+you need to compress these files in the form of zip with the suffix `.xmind`.
 
 > **Important**
 > 
-> Do not include top level folders, otherwise the software can't extract files
+> Don't include top level folders, otherwise the software can't extract files
 
 ## Contributing
-Thank you for be interesting in the SDK.
+Thank you for being interested in the SDK.
 
-If you have any problems or suggestions please let us know 🙂
+If you have any problems or suggestions, please let's know. 🙂
 
 We also welcome you to submit a pull request for any big or small issues.
 
