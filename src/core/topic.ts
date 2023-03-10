@@ -37,6 +37,7 @@ export class Topic extends Base implements AbstractTopic {
     this.root = this.sheet.getRootTopic();
     this.componentId = this.lastId = this.root.getId();
     this.resources[this.componentId] = 'Central Topic';
+    this.setRoot({ id: this.componentId, title: this.resources[this.componentId] });
   }
 
   /**
@@ -90,14 +91,19 @@ export class Topic extends Base implements AbstractTopic {
     return this;
   }
 
-  public add(topic: Model.Topic = <Model.Topic>{}, options?: {index: number}): Topic {
+  public add(topic: Model.Topic & { customId?: string | number } = {} as any, options?: { index: number }): Topic {
     if (!topic.title || typeof topic.title !== 'string') {
       throw new Error('topic.title should be a valid string');
     }
     topic.id = topic.id || this.id;
     this.resources[topic.id] = topic.title;
     const cur = this.current();
-    cur.addChildTopic(topic, options);
+    cur.addChildTopic(topic as any, options as any);
+    this.addChildNode({
+      id: topic.id, title: topic.title,
+      customId: topic.customId || null,
+      parentId: this.parentId()
+    });
     this.lastId = topic.id;
     return this;
   }
@@ -137,6 +143,7 @@ export class Topic extends Base implements AbstractTopic {
       const topic = this.find(componentId);
       topic.parent().removeChildTopic(topic);
       delete this.resources[componentId];
+      this.destroyNode({ id: componentId });
     } catch (e) {
       /* istanbul ignore next */
       this.debug('D - %s', e.message);
@@ -193,7 +200,22 @@ export class Topic extends Base implements AbstractTopic {
   }
 
 
-  public cid(title?: string): string | null {
+  public cid(title?: string, dependencies: {
+    parentId?: number | string, customId?: number | string
+  } = {}): string | null {
+    if (title && dependencies) {
+      if (dependencies.parentId) {
+        return this.getConflictedComponentId({
+          title, parentId: dependencies.parentId
+        });
+      }
+      if (dependencies.customId) {
+        return this.getConflictedComponentId({
+          title, customId: dependencies.customId
+        });
+      }
+    }
+
     if (title && typeof title === 'string') {
       for (const topicId in this.resources) {
         if (this.resources[topicId] === title) {
@@ -220,7 +242,7 @@ export class Topic extends Base implements AbstractTopic {
   }
 
   /**
-   * @description Get root topic
+   * @description Get a root topic
    * @return {Topic}
    */
   get rootTopic() {
@@ -244,8 +266,12 @@ export class Topic extends Base implements AbstractTopic {
     return (this.componentId === this.root.getId()) ? this.root : this.find(this.componentId);
   }
 
+  private parentId() {
+    return this.componentId === this.root.getId() ? this.root.getId() : this.componentId;
+  }
+
   /**
-   * @description Check topic id
+   * @description Check a topic id
    * @param {String} componentId
    * @return {Boolean}
    * @private

@@ -2,8 +2,9 @@ import {Topic, Workbook, Zipper, Marker} from '../../src';
 import {expect} from 'chai';
 import * as fs from "fs";
 import * as JSZip from 'jszip';
-import { getBuildTemporaryPath } from '../fixtures/utils';
 import {extend} from 'lodash';
+
+const { getBuildTemporaryPath } = require('../fixtures/utils');
 
 // @ts-ignore
 const getComponents = function() {
@@ -46,7 +47,7 @@ describe('# Topic Unit Test', () => {
   });
 
   it('should be failed to add a topic with an invalid componentId', done => {
-    const doesNotExists = 'does not exists componentId';
+    const doesNotExists = 'componentId does not exist';
     try {
       const {topic} = getComponents();
       topic
@@ -161,4 +162,30 @@ describe('# Topic Unit Test', () => {
     done();
   });
 
+  it('should return the componentId accurately, if the titles are duplicated', done => {
+    const { topic } = getComponents();
+    topic.add({ title: 'main topic - 1', customId: 1 });
+    const a1 = topic.cid();
+    topic.add({ title: 'main topic - 1', customId: 2 })
+    const a2 = topic.cid();
+    expect(topic.cid('main topic - 1', { customId: 1 })).to.eq(a1);
+    expect(topic.cid('main topic - 1', { customId: 2 })).to.eq(a2);
+
+    topic.on(a2).add({title: 'abc'});
+    const abc1 = topic.cid();
+    topic.add({ title: 'bca' });
+    topic.on(a1).add({title: 'abc' });
+    const abc2 = topic.cid();
+
+
+    expect(topic.cid('abc', { parentId: a2})).to.eq(abc1);
+    expect(topic.cid('abc', { parentId: a1})).to.eq(abc2);
+
+    topic.destroy(topic.cid('abc', { parentId: a1}));
+    topic.destroy(topic.cid('abc', { parentId: a2}));
+
+    expect(topic.cid('abc', { parentId: a1})).to.eq(null);
+    expect(topic.cid('abc', { parentId: a2})).to.eq(null);
+    done();
+  });
 });
