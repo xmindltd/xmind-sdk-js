@@ -61,15 +61,15 @@ export class Topic extends Base implements AbstractTopic {
    * @returns Topic - The instance of class Topic
    */
   public addLabel(text: string): Topic {
-    const cur = this.parent();
-    const labels = cur.getLabels();
+    const p = this.parent();
+    const labels = p.getLabels();
     const options = { index: 0 };
     if (!labels || labels.length === 0) {
       options.index = 0;
     } else {
       options.index = labels.length;
     }
-    cur.addLabel(text, options);
+    p.addLabel(text, options);
     return this;
   }
 
@@ -79,11 +79,11 @@ export class Topic extends Base implements AbstractTopic {
    * @returns Topic - The instance of class Topic
    */
   public removeLabel(componentId?: string): Topic {
-    const cur = componentId ? this.find(componentId) : this.parent();
-    if (!cur) {
+    const p = componentId ? this.find(componentId) : this.parent();
+    if (!p) {
       throw new Error(`does not found component: ${componentId}`);
     }
-    cur.removeLabels();
+    p.removeLabels();
     return this;
   }
 
@@ -110,23 +110,22 @@ export class Topic extends Base implements AbstractTopic {
       throw new Error('Cannot run .image() in browser environment');
     }
 
-    const cur = this.parent();
     const dir = `resources/${this.id}`;
     const params = Object.assign({}, {src: `xap:${dir}`}, options || {});
-    cur.addImage(params);
+    this.parent().addImage(params);
     return dir;
   }
 
   public note(text: string, del?: boolean): Topic {
-    const cur = this.parent();
+    const p = this.parent();
     if (del === true) {
-      cur.removeNotes();
+      p.removeNotes();
       return this;
     }
     if (!text) return this;
     const n = new Note();
     n.text = text;
-    cur.addNotes(n.toJSON());
+    p.addNotes(n.toJSON());
     return this;
   }
 
