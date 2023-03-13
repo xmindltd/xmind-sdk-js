@@ -11,10 +11,8 @@ import { isEmpty, isObject, isRuntime } from '../utils/common';
 
 import * as Model from '../common/model';
 import * as Core from 'xmind-model';
-
 import Base from './base';
 
-type TypedResource = { [componentId: string]: string };
 
 /**
  * @description Topic common methods
@@ -22,7 +20,6 @@ type TypedResource = { [componentId: string]: string };
 export class Topic extends Base implements AbstractTopic {
   private readonly sheet: Core.Sheet;
   private readonly root: Core.Topic;
-  private readonly resources: TypedResource = {};
 
   private parentId: string;
   private lastId: string;
@@ -36,8 +33,7 @@ export class Topic extends Base implements AbstractTopic {
     this.sheet = options.sheet;
     this.root = this.sheet.getRootTopic();
     this.parentId = this.lastId = this.root.getId();
-    this.resources[this.parentId] = 'Central Topic';
-    this.setRoot({ id: this.parentId, title: this.resources[this.parentId] });
+    this.setRoot({ id: this.parentId, title: 'Central Topic' });
   }
 
   /**
@@ -51,7 +47,7 @@ export class Topic extends Base implements AbstractTopic {
       return this;
     }
 
-    if (!this.isValidTopicId(String(componentId))) {
+    if (!this.isValidComponentId(String(componentId))) {
       throw new Error(`Invalid componentId ${String(componentId)}`);
     }
 
@@ -91,17 +87,18 @@ export class Topic extends Base implements AbstractTopic {
     return this;
   }
 
-  public add(topic: Model.Topic & { customId?: string | number } = {} as any, options?: { index: number }): Topic {
+  public add(topic: Model.Topic & {
+    customId?: string | number, parentId?: string
+  } = {} as any, options?: { index: number }): Topic {
     if (!topic.title || typeof topic.title !== 'string') {
       throw new Error('topic.title should be a valid string');
     }
     topic.id = topic.id || this.id;
-    this.resources[topic.id] = topic.title;
     this.parent().addChildTopic(topic, options);
     this.addChildNode({
       id: topic.id, title: topic.title,
       customId: topic.customId || null,
-      parentId: this.parentId
+      parentId: topic.parentId || this.parentId
     });
     this.lastId = topic.id;
     return this;
@@ -134,14 +131,13 @@ export class Topic extends Base implements AbstractTopic {
   }
 
   public destroy(componentId: string): Topic {
-    if (!this.isValidTopicId(componentId)) {
+    if (!this.isValidComponentId(componentId)) {
       this.debug('E - target: "%s" does not exist', componentId);
       return this;
     }
     try {
       const topic = this.find(componentId);
       topic.parent().removeChildTopic(topic);
-      delete this.resources[componentId];
       this.destroyNode({ id: componentId });
     } catch (e) {
       /* istanbul ignore next */
@@ -158,7 +154,7 @@ export class Topic extends Base implements AbstractTopic {
 
     let edge = null;
     if (options.edge) {
-      if (this.resources[options.edge]) {
+      if (this.exist(options.edge)) {
         edge = options.edge;
       } else {
         this.debug('W - Topic "%s" does not exist', options.edge);
@@ -174,7 +170,10 @@ export class Topic extends Base implements AbstractTopic {
     const summaryOptions = {title: options.title || 'Summary', id: this.id};
     summary.topicId = summaryOptions.id;
     grandfather.addSummary(summary.toJSON(), summaryOptions);
-    this.resources[summaryOptions.id] = summaryOptions.title;
+    this.addChildNode({
+      id: summaryOptions.id, title: summaryOptions.title,
+      parentId: this.parentId
+    });
     this.lastId = summaryOptions.id;
     return this;
   }
@@ -216,20 +215,24 @@ export class Topic extends Base implements AbstractTopic {
     }
 
     if (title && typeof title === 'string') {
-      for (const topicId in this.resources) {
-        if (this.resources[topicId] === title) {
-          return topicId;
-        }
-      }
-      return null;
+      return this.findComponentIdBy(title);
     }
     return this.lastId;
   }
 
-  public cids(): TypedResource {
-    return this.resources;
+  /**
+   * Get an object that contains pairs of $topicId and $title
+   * @return { Record<$topicId, $title> }
+   */
+  public cids(): Record<string, string> {
+    return this.all();
   }
 
+  /**
+   * Find a topic by componentId
+   * @param componentId
+   * @return { Core.Topic }
+   */
   public find(componentId: string = null) {
     const rootId = this.root.getId();
 
@@ -238,6 +241,16 @@ export class Topic extends Base implements AbstractTopic {
     }
 
     return this.sheet.findComponentById(componentId);
+  }
+
+  private grandfather() {
+    return this.parent().parent();
+  }
+
+  private parent() {
+    return this.parentId === this.root.getId() ?
+      this.root :
+      this.sheet.findComponentById(this.parentId);
   }
 
   /**
@@ -254,33 +267,5 @@ export class Topic extends Base implements AbstractTopic {
    */
   get rootTopicId() {
     return this.root.getId();
-  }
-
-  private grandfather() {
-    return this.parent().parent();
-  }
-
-  /**
-   * @description Get parent topic instance
-   * @return {Core.Topic}
-   * @private
-   */
-  private parent() {
-    return this.parentId === this.root.getId() ?
-      this.root :
-      this.sheet.findComponentById(this.parentId);
-  }
-
-  /**
-   * @description Check a topic id
-   * @param {String} componentId
-   * @return {Boolean}
-   * @private
-   */
-  private isValidTopicId(componentId: string): boolean {
-    if (!componentId) {
-      return false;
-    }
-    return this.resources.hasOwnProperty(componentId);
   }
 }

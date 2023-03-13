@@ -34,6 +34,14 @@ export default class Base {
     this._debug = Debug(this.options.debug || DEFAULT_DEBUG_SCOPE);
   }
 
+  protected isValidComponentId(componentId: string): boolean {
+    if (!componentId || typeof componentId !== 'string') {
+      return false;
+    }
+    const node = this.rootNode.first((node: Node<TreeNodeOptions>) => node.model.id === componentId);
+    return !!node;
+  }
+
   protected setRoot(options: TreeNodeOptions) {
     this.rootNode = this.tree.parse(Object.assign(options, { children: [] }));
     return this;
@@ -52,6 +60,31 @@ export default class Base {
       return node.model.id === options.parentId;
     });
     node.addChild(this.tree.parse(options));
+  }
+
+  protected exist(componentId: string): boolean {
+    const n = this.rootNode.first((node: Node<TreeNodeOptions>) => {
+      return node.model.id === componentId;
+    });
+    return !!n;
+
+  }
+
+  protected findComponentIdBy(title: string): string | null {
+    const n = this.rootNode.first((node: Node<TreeNodeOptions>) => {
+      return node.model.title === title;
+    });
+    if (!n) return null;
+    return n.model.id;
+  }
+
+  protected all() {
+    const nodes = this.rootNode.all(() => true);
+    const map = {};
+    nodes.forEach(node => {
+      map[String(node.model.id)] = node.model.title;
+    });
+    return map;
   }
 
   /**

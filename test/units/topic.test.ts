@@ -99,7 +99,7 @@ describe('# Topic Unit Test', () => {
     done();
   });
 
-  it('should return components if cids called', done => {
+  it('should return all the topics that has been stored on the data set', done => {
     const {topic} = getComponents();
 
     topic
