@@ -203,7 +203,6 @@ describe('# Functional Test', () => {
           const map = JSON.parse(text)[0];
           expect(map).to.be.an('object');
           const {attached} = map.rootTopic.children;
-          console.info(attached);
           expect(attached.length).to.gt(0);
           // expect(attached[0].labels).to.be.an('array');
           // expect(attached[0].labels.length).to.gt(0);
