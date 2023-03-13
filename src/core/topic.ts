@@ -1,8 +1,6 @@
 import {
-  AbstractTopic,
-  TopicOptions,
-  MarkerOptions,
-  ImageOptions
+  AbstractTopic, TopicOptions,
+  MarkerOptions, ImageOptions
 } from '../abstracts/topic.abstract';
 import { SummaryOptions } from '../abstracts/summary.abstract';
 import { Summary } from './summary';
@@ -233,9 +231,6 @@ export class Topic extends Base implements AbstractTopic {
     return this.root;
   }
 
-  /**
-   * @description Get root topicId
-   */
   get rootTopicId() {
     return this.root.getId();
   }

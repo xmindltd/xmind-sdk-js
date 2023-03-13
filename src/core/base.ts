@@ -1,5 +1,6 @@
+import * as TreeModel from 'tree-model';
 import { Node } from 'tree-model';
-const TreeModel = require('tree-model');
+
 const v4 = require('uuid/v4');
 const Debug = require('debug');
 
