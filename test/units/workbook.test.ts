@@ -43,4 +43,43 @@ describe('# Workbook Unit Test', () => {
     }
   });
 
+
+  it('should be an error throwing out if getSheet with a wrong sheetId', done => {
+    const workbook = new Workbook();
+    try {
+      // @ts-ignore
+      workbook.createSheets();
+    } catch (err) {
+      expect(err instanceof Error).to.be.true;
+    }
+
+    workbook.createSheets([
+      {s: 'sheetTitle_1', t: 'topicTitle_1'},
+      {s: 'sheetTitle_2', t: 'topicTitle_2'}
+    ]);
+
+    try {
+      // @ts-ignore Trust me Typescript
+      workbook.getSheet();
+    } catch (err) {
+      expect(err instanceof Error).to.be.true;
+    }
+
+    const sheets = workbook.getSheets();
+    const sheet = workbook.getSheet(sheets[0].id);
+    expect(sheet).to.be.an('object');
+    done();
+  });
+
+  it('should be success to create multiple sheets', done => {
+    const workbook = new Workbook();
+    workbook.createSheets([
+      {s: 'sheetTitle_1', t: 'topicTitle_1'},
+      {s: 'sheetTitle_2', t: 'topicTitle_2'}
+    ]);
+    const sheets = workbook.getSheets();
+    expect(sheets.length).to.eq(2);
+    done();
+  });
+
 });

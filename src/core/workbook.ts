@@ -67,7 +67,7 @@ export class Workbook extends Base implements AbstractWorkbook {
     return this.workbook.getSheetById(id);
   }
 
-  public createSheets(options: CreateSheetsOptions[]): ResponseOfSheets[] {
+  public createSheets(options: CreateSheetsOptions[] = []): ResponseOfSheets[] {
     if (options.length <= 0) {
       throw new Error('Options are empty');
     }
