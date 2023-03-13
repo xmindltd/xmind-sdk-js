@@ -198,26 +198,28 @@ In the UI client, you also need to draw the mind map on the sheet.
 
 Set the component to be parent node. If there isn't component ID, the `Central Topic` will become as parent node.
 
-#### .cid(title?) => String
+#### .cid(title?, options?: { customId?: string, parentId?: string }) => String
 
-Use .cid to get component ID corresponding to the `title`.
-> _!!! NOTE THAT:_  You should avoid duplicating the component `title` if you use `title` to search the component ID.
+Use this method to get componentId.
 
-If none of the components has been added, at least `Central Topic`'ID could be returned.
+> You should use `customId` or `parentId` for getting the `componentId` if there are some duplicated topic titles.
 
-If you don't specify the title in the period of calling .cid, the last added component ID would be returned.
+If you don't specify the title in the period of calling `.cid()`,
+the last `componentId` that you've added would be returned.
 
 #### .cids() => {$cid: $title}
 
-That will return all added components.
+It will return all the `key/value`s in once.
 
 #### .add(options) => Topic
 
 Add a topic component under parent node.
 
-| Name | Type | Default | Required |
-|:----:|:----:|:-------:|:--------:|
-| options.title | String | null | Y |
+| Name | Type |                       Default                       | Required |
+|:----:|:----:|:---------------------------------------------------:|:--------:|
+| options.title | String |                        null                         | Y |
+| options.parentId | String |     The previous topic that you've operated on      | N |
+| options.customId | String | It would be useful if you have the same topic title | N |
 
 
 #### .note(text, del?) => Topic
