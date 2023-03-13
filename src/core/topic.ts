@@ -24,7 +24,7 @@ export class Topic extends Base implements AbstractTopic {
   private readonly root: Core.Topic;
   private readonly resources: TypedResource = {};
 
-  private componentId: string;
+  private parentId: string;
   private lastId: string;
 
   constructor(options: TopicOptions = <TopicOptions>{}) {
@@ -35,9 +35,9 @@ export class Topic extends Base implements AbstractTopic {
 
     this.sheet = options.sheet;
     this.root = this.sheet.getRootTopic();
-    this.componentId = this.lastId = this.root.getId();
-    this.resources[this.componentId] = 'Central Topic';
-    this.setRoot({ id: this.componentId, title: this.resources[this.componentId] });
+    this.parentId = this.lastId = this.root.getId();
+    this.resources[this.parentId] = 'Central Topic';
+    this.setRoot({ id: this.parentId, title: this.resources[this.parentId] });
   }
 
   /**
@@ -47,7 +47,7 @@ export class Topic extends Base implements AbstractTopic {
    */
   public on(componentId?: string): Topic {
     if (!componentId) {
-      this.componentId = this.root.getId();
+      this.parentId = this.root.getId();
       return this;
     }
 
@@ -55,7 +55,7 @@ export class Topic extends Base implements AbstractTopic {
       throw new Error(`Invalid componentId ${String(componentId)}`);
     }
 
-    this.componentId = componentId;
+    this.parentId = componentId;
     return this;
   }
 
@@ -65,7 +65,7 @@ export class Topic extends Base implements AbstractTopic {
    * @returns Topic - The instance of class Topic
    */
   public addLabel(text: string): Topic {
-    const cur = this.current();
+    const cur = this.parent();
     const labels = cur.getLabels();
     const options = { index: 0 };
     if (!labels || labels.length === 0) {
@@ -83,7 +83,7 @@ export class Topic extends Base implements AbstractTopic {
    * @returns Topic - The instance of class Topic
    */
   public removeLabel(componentId?: string): Topic {
-    const cur = componentId ? this.find(componentId) : this.current();
+    const cur = componentId ? this.find(componentId) : this.parent();
     if (!cur) {
       throw new Error(`does not found component: ${componentId}`);
     }
@@ -97,12 +97,11 @@ export class Topic extends Base implements AbstractTopic {
     }
     topic.id = topic.id || this.id;
     this.resources[topic.id] = topic.title;
-    const cur = this.current();
-    cur.addChildTopic(topic as any, options as any);
+    this.parent().addChildTopic(topic, options);
     this.addChildNode({
       id: topic.id, title: topic.title,
       customId: topic.customId || null,
-      parentId: this.parentId()
+      parentId: this.parentId
     });
     this.lastId = topic.id;
     return this;
@@ -114,7 +113,7 @@ export class Topic extends Base implements AbstractTopic {
       throw new Error('Cannot run .image() in browser environment');
     }
 
-    const cur = this.current();
+    const cur = this.parent();
     const dir = `resources/${this.id}`;
     const params = Object.assign({}, {src: `xap:${dir}`}, options || {});
     cur.addImage(params);
@@ -122,7 +121,7 @@ export class Topic extends Base implements AbstractTopic {
   }
 
   public note(text: string, del?: boolean): Topic {
-    const cur = this.current();
+    const cur = this.parent();
     if (del === true) {
       cur.removeNotes();
       return this;
@@ -136,7 +135,7 @@ export class Topic extends Base implements AbstractTopic {
 
   public destroy(componentId: string): Topic {
     if (!this.isValidTopicId(componentId)) {
-      this.debug('E - target: "%s" does not exists', componentId);
+      this.debug('E - target: "%s" does not exist', componentId);
       return this;
     }
     try {
@@ -152,7 +151,7 @@ export class Topic extends Base implements AbstractTopic {
   }
 
   public summary(options: SummaryOptions = <SummaryOptions>{}): Topic {
-    if (this.current().isRootTopic()) {
+    if (this.parent().isRootTopic()) {
       this.debug('I - Not allowed add summary on root topic.');
       return this;
     }
@@ -162,19 +161,19 @@ export class Topic extends Base implements AbstractTopic {
       if (this.resources[options.edge]) {
         edge = options.edge;
       } else {
-        this.debug('W - Topic "%s" does not exists', options.edge);
+        this.debug('W - Topic "%s" does not exist', options.edge);
       }
     }
 
     const summary = new Summary();
-    const type = <string>this.current().getType();
-    const parent = this.current().parent();
-    const children = parent.getChildrenByType(type);
-    const condition = [this.componentId, !edge ? this.componentId : edge];
+    const type = this.parent().getType();
+    const grandfather = this.grandfather();
+    const children = grandfather.getChildrenByType(type);
+    const condition = [this.parentId, !edge ? this.parentId : edge];
     summary.range({ children, condition });
     const summaryOptions = {title: options.title || 'Summary', id: this.id};
     summary.topicId = summaryOptions.id;
-    parent.addSummary(summary.toJSON(), summaryOptions);
+    grandfather.addSummary(summary.toJSON(), summaryOptions);
     this.resources[summaryOptions.id] = summaryOptions.title;
     this.lastId = summaryOptions.id;
     return this;
@@ -191,11 +190,11 @@ export class Topic extends Base implements AbstractTopic {
 
     if (options.del === true) {
       delete options.del;
-      this.current().removeMarker(options);
+      this.parent().removeMarker(options);
       return this;
     }
 
-    this.current().addMarker(options);
+    this.parent().addMarker(options);
     return this;
   }
 
@@ -257,17 +256,19 @@ export class Topic extends Base implements AbstractTopic {
     return this.root.getId();
   }
 
+  private grandfather() {
+    return this.parent().parent();
+  }
+
   /**
-   * @description Get current topic instance
+   * @description Get parent topic instance
    * @return {Core.Topic}
    * @private
    */
-  private current() {
-    return (this.componentId === this.root.getId()) ? this.root : this.find(this.componentId);
-  }
-
-  private parentId() {
-    return this.componentId === this.root.getId() ? this.root.getId() : this.componentId;
+  private parent() {
+    return this.parentId === this.root.getId() ?
+      this.root :
+      this.sheet.findComponentById(this.parentId);
   }
 
   /**
