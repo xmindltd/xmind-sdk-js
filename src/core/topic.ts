@@ -36,11 +36,6 @@ export class Topic extends Base implements AbstractTopic {
     this.setRoot({ id: this.parentId, title: 'Central Topic' });
   }
 
-  /**
-   * Change the internal topic point at
-   * @param componentId - The target componentId
-   * @returns Topic
-   */
   public on(componentId?: string): Topic {
     if (!componentId) {
       this.parentId = this.root.getId();
@@ -55,11 +50,6 @@ export class Topic extends Base implements AbstractTopic {
     return this;
   }
 
-  /**
-   * Add label to topic
-   * @param text - A label string
-   * @returns Topic - The instance of class Topic
-   */
   public addLabel(text: string): Topic {
     const p = this.parent();
     const labels = p.getLabels();
@@ -73,11 +63,6 @@ export class Topic extends Base implements AbstractTopic {
     return this;
   }
 
-  /**
-   * Remove labels from the component which is specified by parameter "componentId"
-   * @param componentId - The componentId
-   * @returns Topic - The instance of class Topic
-   */
   public removeLabel(componentId?: string): Topic {
     const p = componentId ? this.find(componentId) : this.parent();
     if (!p) {
@@ -219,19 +204,10 @@ export class Topic extends Base implements AbstractTopic {
     return this.lastId;
   }
 
-  /**
-   * Get an object that contains pairs of $topicId and $title
-   * @return { Record<$topicId, $title> }
-   */
   public cids(): Record<string, string> {
     return this.all();
   }
 
-  /**
-   * Find a topic by componentId
-   * @param componentId
-   * @return { Core.Topic }
-   */
   public find(componentId: string = null) {
     const rootId = this.root.getId();
 
@@ -252,10 +228,6 @@ export class Topic extends Base implements AbstractTopic {
       this.sheet.findComponentById(this.parentId);
   }
 
-  /**
-   * @description Get a root topic
-   * @return {Topic}
-   */
   get rootTopic() {
     /* istanbul ignore next */
     return this.root;
