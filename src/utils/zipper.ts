@@ -1,9 +1,8 @@
-import { Workbook } from '../core/workbook';
+import * as JSZip from 'jszip';
 import Base from '../core/base';
-
+import { Workbook } from '../core/workbook';
 import { isObject } from './common';
 import { PACKAGE_MAP } from '../common/constants';
-import * as JSZip from 'jszip';
 
 const path = require('path');
 const fs = require('fs');
@@ -50,13 +49,12 @@ export class Zipper extends Base {
 
   /**
    * @description Saving zip file
-   * @return {Promise}
-   * @public
-   * @async
+   * @return { Promise }
    */
   public async save() {
     if (this.workbook) {
-      this.addJSONContent(this.workbook.toString());
+      const contents = Buffer.from(this.workbook.toString(), 'utf-8').toString();
+      this.addJSONContent(contents);
       this.addMetadataContents();
       this.addXMLContent();
       this.addManifestContents();
@@ -78,9 +76,9 @@ export class Zipper extends Base {
 
   /**
    * @description Update manifest metadata
-   * @param {String} key - a string key
-   * @param {Buffer} content - file contents
-   * @return {Zipper}
+   * @param { String } key - a string key
+   * @param { Buffer } content - file contents
+   * @return { Zipper }
    */
   public updateManifestMetadata(key: string, content: Buffer) {
     if (!key) return this;

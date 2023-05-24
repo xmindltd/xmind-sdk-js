@@ -24,8 +24,6 @@ console.info(createdSheetList);
 console.info('sheetList:', workbook2.getSheets());
 console.info('sheet1', workbook2.getSheet(createdSheetList[0].id));
 
-console.info(workbook2.toJSON());
-
 const zip2 = new Zipper({path: '/tmp', workbook: workbook2});
 
 // Set theme
@@ -48,6 +46,8 @@ topic
   .on(topic.cid()/* Also the topic.cid('static') is working */)
   .add({title: 'C'})
   .add({title: 'C++'})
+  .add({title: '中文测试'})
+  .add({title: 'にほんご／にっぽんご'})
   .add({title: 'Java'})
   .on(topic.cid('C'))
   .summary({title: 'Low level that is hard to learning', edge: topic.cid('C++')})
@@ -78,6 +78,8 @@ topic
   .on(topic.cid('Microsoft'))
   .marker(marker.smiley('cry'))
   .add({title: 'vs code'});
+
+// console.info(workbook.toJSON());
 
 zip.save().then(status => status && console.log('zip saved'));
 zip2.save().then(status => status && console.log('zip2 saved'));
