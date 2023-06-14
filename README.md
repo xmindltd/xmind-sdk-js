@@ -1,7 +1,6 @@
 # 📦 📦 📦 ![](https://assets.xmind.net/www/assets/images/xmind-logo-dark-7a5ac2ec22.svg)
 
 [![CodeQL](https://github.com/xmindltd/xmind-sdk-js/actions/workflows/codeql.yml/badge.svg?branch=master)](https://github.com/xmindltd/xmind-sdk-js/actions/workflows/codeql.yml)
-[![Build Status](https://travis-ci.org/xmindltd/xmind-sdk-js.svg?branch=master)](https://travis-ci.org/xmindltd/xmind-sdk-js)
 [![Build status](https://ci.appveyor.com/api/projects/status/qll0sp4ny7bl7yo0/branch/master?svg=true)](https://ci.appveyor.com/project/danielsss/xmind-sdk-js/branch/master)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/a0cef4ab9b024a97b4ef2970fec29158)](https://www.codacy.com/gh/xmindltd/xmind-sdk-js/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=xmindltd/xmind-sdk-js&amp;utm_campaign=Badge_Grade)
 ![npm](https://img.shields.io/npm/v/xmind)
