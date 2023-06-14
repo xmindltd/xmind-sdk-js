@@ -20,11 +20,11 @@ const createdSheetList = workbook2.createSheets([
   {s: 'sheetName3', t: 'rootTopicName3'}
 ]);
 
-console.info(createdSheetList);
-console.info('sheetList:', workbook2.getSheets());
-console.info('sheet1', workbook2.getSheet(createdSheetList[0].id));
+// console.info(createdSheetList);
+// console.info('sheetList:', workbook2.getSheets());
+// console.info('sheet1', workbook2.getSheet(createdSheetList[0].id));
 
-const zip2 = new Zipper({path: '/tmp', workbook: workbook2});
+// const zip2 = new Zipper({path: '/tmp', workbook: workbook2});
 
 // Set theme
 workbook.theme('sheet-1', 'robust');
@@ -48,6 +48,7 @@ topic
   .add({title: 'C++'})
   .add({title: '中文测试'})
   .add({title: 'にほんご／にっぽんご'})
+  .add({title: 'mixed123中文ぽんご😋'})
   .add({title: 'Java'})
   .on(topic.cid('C'))
   .summary({title: 'Low level that is hard to learning', edge: topic.cid('C++')})
@@ -73,7 +74,7 @@ topic
   .add({title: 'CLion'})
   .add({title: 'IntelliJ Idea'})
   .add({title: 'etc.'})
-  .summary({title: 'all of the productions belongs to jetbrains'})
+  .summary({title: 'all of the productions are belonging to jetbrains'})
   
   .on(topic.cid('Microsoft'))
   .marker(marker.smiley('cry'))
@@ -81,5 +82,7 @@ topic
 
 // console.info(workbook.toJSON());
 
-zip.save().then(status => status && console.log('zip saved'));
-zip2.save().then(status => status && console.log('zip2 saved'));
+zip.save().then(status => {
+  status && console.log('%s saved', zip.target());
+});
+// zip2.save().then(status => status && console.log('zip2 saved'));

@@ -7,6 +7,7 @@ import { PACKAGE_MAP } from '../common/constants';
 const path = require('path');
 const fs = require('fs');
 const { promisify } = require('util');
+const iconv = require('iconv-lite');
 
 /* istanbul ignore next */
 const join = (process.platform === 'win32' ? path.win32.join : path.join);
@@ -47,14 +48,17 @@ export class Zipper extends Base {
     };
   }
 
+  public target() {
+    return join(this.path, this.filename);
+  }
+
   /**
    * @description Saving zip file
    * @return { Promise }
    */
   public async save() {
     if (this.workbook) {
-      const contents = Buffer.from(this.workbook.toString(), 'utf-8').toString();
-      this.addJSONContent(contents);
+      this.addJSONContent(this.workbook.toString());
       this.addMetadataContents();
       this.addXMLContent();
       this.addManifestContents();
@@ -63,8 +67,7 @@ export class Zipper extends Base {
     const options: JSZip.JSZipGeneratorOptions = {
       type: 'nodebuffer',
       compression: 'STORE',
-      //compressionOptions: {level: 9},
-      platform: 'UNIX'
+      compressionOptions: { level: 9 }
     };
 
     const metadata = await this.zip.generateAsync(options);
@@ -87,19 +90,7 @@ export class Zipper extends Base {
     }
     const arr = key.split('/');
     this.manifest['file-entries'][key] = {};
-    this.zip.folder(arr[0]).file(arr[1], content, {binary: true});
-    return this;
-  }
-
-  /**
-   * @description Remove metadata from manifest
-   * @param {String} key - the file key that was already stored in metadata of manifest
-   * @return {Zipper}
-   */
-  public removeManifestMetadata(key: string) {
-    if (!key) return this;
-    this.zip.remove(key);
-    delete this.manifest['file-entries'][key];
+    this.zip.folder(arr[0]).file(arr[1], content, { binary: false });
     return this;
   }
 
@@ -127,7 +118,7 @@ export class Zipper extends Base {
     if (isObject(contents)) {
       contents = JSON.stringify(contents);
     }
-    this.zip.file(PACKAGE_MAP.CONTENT_JSON.NAME, contents);
+    this.zip.file(PACKAGE_MAP.CONTENT_JSON.NAME, iconv.decode(Buffer.from(contents), 'utf8'));
     return this;
   }
 
@@ -136,7 +127,7 @@ export class Zipper extends Base {
    */
   private addXMLContent() {
     const p = join(__dirname, '../common/templates/content.xml');
-    this.zip.file(PACKAGE_MAP.CONTENT_XML.NAME, fs.readFileSync(p));
+    this.zip.file(PACKAGE_MAP.CONTENT_XML.NAME, iconv.decode(fs.readFileSync(p), 'utf8'));
     return this;
   }
 }
