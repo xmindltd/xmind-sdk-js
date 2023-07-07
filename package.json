@@ -3,10 +3,10 @@
   "version": "2.2.30",
   "description": "The SDK of XMind Ltd.",
   "main": "dist/index.js",
-  "browser": "dist/xmind.esm.js",
+  "browser": "dist/xmind.min.js",
   "scripts": {
     "test": "npm run lint && nyc mocha",
-    "build": "npm run test && shx rm -rf ./dist && cross-env node_modules/.bin/tsc && npm run cp && npm run browserify && npm run rollup",
+    "build": "npm run test && shx rm -rf ./dist && cross-env node_modules/.bin/tsc && npm run cp && npm run browserify",
     "lint": "cross-env node_modules/.bin/tslint --config tslint.json --project .",
     "fix": "cross-env node_modules/.bin/tslint --config tslint.json --project . --fix",
     "build-doc": "cross-env BUILD_DOCS=true node scripts/icons.js",
@@ -19,24 +19,6 @@
     "major": "npm run build && npm version major && npm publish --access public",
     "rollup": "rollup --config rollup.config.ts --configPlugin typescript --bundleConfigAsCjs"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/xmindltd/xmind-sdk-js.git"
-  },
-  "bugs": {
-    "url": "https://github.com/xmindltd/xmind-sdk-js/issues"
-  },
-  "keywords": [
-    "xmind-sdk",
-    "xmindsdk",
-    "xmind",
-    "xmind-sdk-js",
-    "xmind-sdk-ts",
-    "xmind-package"
-  ],
-  "files": [
-    "dist"
-  ],
   "dependencies": {
     "ajv": "^6.10.0",
     "debug": "^4.1.1",
@@ -78,6 +60,7 @@
     "nyc": "^14.1.1",
     "rollup": "^3.2.3",
     "rollup-plugin-minification": "^0.2.0",
+    "rollup-plugin-node-globals": "^1.4.0",
     "shx": "^0.3.4",
     "sinon": "^7.3.2",
     "source-map-support": "^0.5.12",
@@ -88,6 +71,24 @@
     "uglifyify": "^5.0.1",
     "unassertify": "^2.1.1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xmindltd/xmind-sdk-js.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xmindltd/xmind-sdk-js/issues"
+  },
+  "keywords": [
+    "xmind-sdk",
+    "xmindsdk",
+    "xmind",
+    "xmind-sdk-js",
+    "xmind-sdk-ts",
+    "xmind-package"
+  ],
+  "files": [
+    "dist"
+  ],
   "author": "daniels",
   "license": "MIT"
 }
