@@ -82,4 +82,16 @@ describe('# Workbook Unit Test', () => {
     done();
   });
 
+  it('should use a loader', done => {
+    const workbook = new Workbook();
+    // const loader = new Loader();
+    workbook.createSheets([
+      {s: 'sheetTitle_1', t: 'topicTitle_1'},
+      {s: 'sheetTitle_2', t: 'topicTitle_2'}
+    ]);
+    const sheets = workbook.getSheets();
+    expect(sheets.length).to.eq(2);
+    done();
+  });
+
 });

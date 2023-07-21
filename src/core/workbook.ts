@@ -7,6 +7,7 @@ import { Theme } from './theme';
 import Base from './base';
 import * as Core from 'xmind-model';
 import { ErrorObject } from 'ajv';
+import { SheetData } from 'xmind-model/types/models/sheet';
 
 /**
  * @description The implementation of Workbook
@@ -16,11 +17,12 @@ export class Workbook extends Base implements AbstractWorkbook {
   public sheet: Core.Sheet;
   private workbook: Core.Workbook;
   private readonly resources;
-
+  private sheets;
 
   constructor() {
     super();
     this.resources = {};
+    this.sheets ={};
   }
 
 
@@ -110,4 +112,28 @@ export class Workbook extends Base implements AbstractWorkbook {
     this.sheet = this.workbook.getSheetById(sheetId);
     return this.sheet;
   }
+
+  public loadSheets(sheets: SheetData[]) {
+    if (!sheets || !Array.isArray(sheets)) {
+      throw new Error('sheets must be a valid array');
+    }
+
+    if (sheets.length <= 0) {
+      throw new Error('Does not found any sheet');
+    }
+
+    this.workbook = new Core.Workbook(sheets);
+
+    for (const sheet of sheets) {
+      if (this.resources[sheet.title]) {
+        throw new Error(`Sheet: ${sheet.title} is already exists`);
+      }
+      this.resources[sheet.title] = sheet.id;
+      this.sheets[sheet.id] = this.workbook.getSheetById(sheet.id);
+    }
+
+    return this.sheets;
+  }
+
+  
 }

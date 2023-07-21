@@ -10,6 +10,7 @@ import { isEmpty, isObject, isRuntime } from '../utils/common';
 import * as Model from '../common/model';
 import * as Core from 'xmind-model';
 import Base from './base';
+import { TopicData } from 'xmind-model/types/models/topic';
 
 
 /**
@@ -73,17 +74,31 @@ export class Topic extends Base implements AbstractTopic {
   public add(topic: Model.Topic & {
     customId?: string | number, parentId?: string
   } = {} as any, options?: { index: number }): Topic {
+
     if (!topic.title || typeof topic.title !== 'string') {
       throw new Error('topic.title should be a valid string');
     }
     topic.id = topic.id || this.id;
     this.parent().addChildTopic(topic, options);
+    console.log('The parent ID was set to '+topic.parentId);
+    console.log('The child ID was set to '+topic.customId);
+
     this.addChildNode({
       id: topic.id, title: topic.title,
       customId: topic.customId || null,
       parentId: topic.parentId || this.parentId
     });
     this.lastId = topic.id;
+    return this;
+  }
+
+  //attach a node to the tree data structure without creating it. (used when loading from file)
+  public attachNode(treeNode):Topic{
+    this.addChildNode({
+      id: treeNode.id, title: treeNode.title,
+      customId: treeNode.customId || null,
+      parentId: treeNode.parentId || this.parentId
+    });
     return this;
   }
 
@@ -234,4 +249,28 @@ export class Topic extends Base implements AbstractTopic {
   get rootTopicId() {
     return this.root.getId();
   }
+
+
+  //should move this to the loader class and add error handling.
+public processAndAttachImportData(){
+  this.dfsIterative(this.sheet,node=>this.attachNode(node));
+}
+
+  //this does an iterative depth first search on the json data and attaches every child to a parent from the perspective of the sheet's tree data structure.
+private dfsIterative(rootSheet:Core.Sheet, action) {
+  const attachedToRoot:TopicData = rootSheet.getRootTopic().getChildren();
+  let stack:TopicData[] = [attachedToRoot];
+  while (stack.length) {
+      let node:TopicData = stack.pop();
+      // Perform the action on the node
+      action(node);
+      // If the node has children, add them to the stack
+      if (node.children && node.children.attached) {
+          for (let child of node.children.attached) {
+              stack.push(child);
+          }
+      }
+  }
+}
+
 }

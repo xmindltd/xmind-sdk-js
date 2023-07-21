@@ -1,4 +1,6 @@
 import * as Core from 'xmind-model';
+import { SheetData } from 'xmind-model/types/models/sheet';
+
 
 export interface CreateSheetsOptions {
   s: string;
@@ -41,12 +43,22 @@ export interface AbstractWorkbook {
    */
   getSheets(): ResponseOfSheets[];
 
+ /**
+   * @description Loading sheets from an exists .xmind file
+   * @param {Array<SheetData>} sheets - Extracted sheets
+   * @return AbstractWorkbook
+   */
+ loadSheets(sheets: SheetData[]): {
+  [propName: string]: Core.Sheet
+};
+
   /**
    * @description Set theme color
    * @param {String} sheetTitle
    * @param {String} themeName
    */
   theme(sheetTitle:string, themeName: string): boolean;
+
 
   /**
    * @description Formatting Mind-map data as String

@@ -56,7 +56,10 @@ export default class Base {
     return true;
   }
 
+  //The tree node options object is a simple object to help with attaching
+  //basically a virtual node.
   protected addChildNode(options: TreeNodeOptions) {
+    //finds the parent of the node we are passing in (we define the parent in the options)
     const node = this.rootNode.first((node: Node<TreeNodeOptions>) => {
       return node.model.id === options.parentId;
     });
