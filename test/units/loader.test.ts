@@ -35,13 +35,16 @@ describe('# Loader Unit Test', function() {
   });
 
   it('should get workbook instance and overwrite on top of workbook', done => {
+    console.log("38")
     JSZip.loadAsync(fs.readFileSync(zip)).then(async unzipped => {
       const loader = new Loader({ctx: unzipped});
       await loader.loadSheets();
+      console.log("42")
       const workbook = loader.getWorkbook();
       expect(workbook instanceof Workbook).to.be.true;
 
       await loader.loadSheets();
+      console.log("47")
       expect(loader.getWorkbook()).to.not.eql(workbook);
       done();
     });

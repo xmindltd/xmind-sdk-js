@@ -6,10 +6,25 @@
  */
 
 
-const {Topic, Workbook, Zipper, Marker} = require('xmind');
+const { Topic, Workbook, Zipper, Marker } = require('../dist');
 
 const workbook = new Workbook();
-const topic = new Topic({sheet: workbook.createSheet('sheet-1', 'Computer science')});
+const topicOnSheet1 = workbook.createSheet('sheet-1', 'Computer science - 1');
+const topic = new Topic({ sheet: topicOnSheet1 });
+
+
+const workbook2 = new Workbook();
+const createdSheetList = workbook2.createSheets([
+  {s: 'sheetName1', t: 'rootTopicName1'},
+  {s: 'sheetName2', t: 'rootTopicName2'},
+  {s: 'sheetName3', t: 'rootTopicName3'}
+]);
+
+// console.info(createdSheetList);
+// console.info('sheetList:', workbook2.getSheets());
+// console.info('sheet1', workbook2.getSheet(createdSheetList[0].id));
+
+// const zip2 = new Zipper({path: '/tmp', workbook: workbook2});
 
 // Set theme
 workbook.theme('sheet-1', 'robust');
@@ -31,6 +46,9 @@ topic
   .on(topic.cid()/* Also the topic.cid('static') is working */)
   .add({title: 'C'})
   .add({title: 'C++'})
+  .add({title: '中文测试'})
+  .add({title: 'にほんご／にっぽんご'})
+  .add({title: 'mixed123中文ぽんご😋'})
   .add({title: 'Java'})
   .on(topic.cid('C'))
   .summary({title: 'Low level that is hard to learning', edge: topic.cid('C++')})
@@ -56,10 +74,15 @@ topic
   .add({title: 'CLion'})
   .add({title: 'IntelliJ Idea'})
   .add({title: 'etc.'})
-  .summary({title: 'all of the productions belongs to jetbrains'})
+  .summary({title: 'all of the productions are belonging to jetbrains'})
   
   .on(topic.cid('Microsoft'))
   .marker(marker.smiley('cry'))
   .add({title: 'vs code'});
 
-zip.save().then(status => status && console.log('Saved.'));
+// console.info(workbook.toJSON());
+
+zip.save().then(status => {
+  status && console.log('%s saved', zip.target());
+});
+// zip2.save().then(status => status && console.log('zip2 saved'));

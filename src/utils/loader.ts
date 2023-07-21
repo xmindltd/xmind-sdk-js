@@ -2,7 +2,7 @@ import {
   AbstractLoader,
   LoaderTypedOptions
 } from '../abstracts/loader.abstract';
-import { Workbook } from './workbook';
+import { Workbook } from '../core/workbook';
 
 import * as Core from 'xmind-model';
 import * as JSZip from 'jszip';
@@ -29,6 +29,7 @@ export class Loader implements AbstractLoader {
   }
 
   public async loadSheets(): Promise<{[id: string]: Core.Sheet}> {
+    console.log('Start load sheets');
     if (!this.loaded) {
       await this.normalize();
     }
@@ -43,6 +44,7 @@ export class Loader implements AbstractLoader {
     }
     return this.workbook;
   }
+
 
   /**
    * @private

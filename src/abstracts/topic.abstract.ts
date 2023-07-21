@@ -5,7 +5,6 @@ import * as Core from 'xmind-model';
 
 export interface TopicOptions {
   sheet: Core.Sheet;
-  isLoaded?: boolean;
 }
 
 export interface MarkerOptions {
@@ -94,15 +93,15 @@ export interface AbstractTopic {
   /**
    * @description Get the topicId that you have added.
    * * In default, It's going to return the last topicId
-   * @param {String} title - Find out topicId by `Title`.
-   * @return {String}
+   * @param { String } title - Find out topicId by `Title`.
+   * @return { String | Null }
    */
-  cid(title?: string): string;
+  cid(title?: string): string | null;
 
 
   /**
    * @description Get an object that contains pairs of $topicId and $title
-   * @return {Object}
+   * @return { Record<string, string> }
    */
-  cids(): object;
+  cids(): Record<string, string>;
 }

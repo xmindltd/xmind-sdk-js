@@ -2,9 +2,8 @@ import { expect } from 'chai';
 import { join } from 'path';
 import * as fs from 'fs';
 // @ts-ignore
-import {getBuildTemporaryPath} from '../fixtures/utils';
-
-const {Zipper} = require('../../src');
+import { getBuildTemporaryPath } from '../fixtures/utils';
+const { Zipper } = require('../../src');
 
 describe('# Zip Unit Test', () => {
   it('should return error if path does not specified', done => {
@@ -17,7 +16,7 @@ describe('# Zip Unit Test', () => {
   });
 
   it('should test.xmind to be saved', async () => {
-    const options = {path: getBuildTemporaryPath(), filename: 'test'};
+    const options = { path: getBuildTemporaryPath(), filename: 'test' };
     const zipper = new Zipper(options);
     const content: { id: string; title: string } = { id: '1231231313', title: 'sheet1' };
     zipper.addJSONContent(content);

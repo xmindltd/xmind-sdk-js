@@ -7,15 +7,14 @@
     "src/common",
     "src/index.ts",
     "src/browser.ts",
-    "src/snowbrush.js",
-    "src/snowbrush.js.map",
     "test/",
     "example/",
     "dist/",
     "scripts/",
     "**/*.d.ts",
     "docs",
-    "coverage"
+    "coverage",
+    "rollup.config.ts"
   ],
   "extension": [".ts"],
   "reporter": ["html", "text", "lcov"],

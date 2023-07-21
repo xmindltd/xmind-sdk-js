@@ -2,17 +2,18 @@ import {Topic, Workbook, Zipper, Marker} from '../../src';
 import {expect} from 'chai';
 import * as fs from "fs";
 import * as JSZip from 'jszip';
-// @ts-ignore
-import { getBuildTemporaryPath } from '../fixtures/utils';
 import {extend} from 'lodash';
+
+const { getBuildTemporaryPath } = require('../fixtures/utils');
 
 // @ts-ignore
 const getComponents = function() {
   const workbook = new Workbook();
   const topic = new Topic({sheet: workbook.createSheet('sheet1', 'centralTopic')});
   const zip = new Zipper({path: getBuildTemporaryPath(), workbook});
-  return {topic, workbook, zip};
-};
+  const marker = new Marker();
+  return {topic, workbook, zip, marker };
+}
 
 describe('# Topic Unit Test', () => {
   it('should be failed to create instance of Topic with empty options', done => {
@@ -47,7 +48,7 @@ describe('# Topic Unit Test', () => {
   });
 
   it('should be failed to add a topic with an invalid componentId', done => {
-    const doesNotExists = 'does not exists componentId';
+    const doesNotExists = 'componentId does not exist';
     try {
       const {topic} = getComponents();
       topic
@@ -99,7 +100,7 @@ describe('# Topic Unit Test', () => {
     done();
   });
 
-  it('should return components if cids called', done => {
+  it('should return all the topics that has been stored on the data set', done => {
     const {topic} = getComponents();
 
     topic
@@ -109,7 +110,7 @@ describe('# Topic Unit Test', () => {
     const topics = topic.cids();
     expect(topics).to.have.property(topic.cid('1'));
     expect(topics).to.have.property(topic.cid('2'));
-    expect(topics).to.have.property(topic.cid('centralTopic'));
+    expect(topics).to.have.property(topic.cid('Central Topic'));
     expect(topics).to.have.property(topic.rootTopicId);
     done();
   });
@@ -129,15 +130,59 @@ describe('# Topic Unit Test', () => {
   });
 
   it('the component of summary should be created if does not given options', done => {
-    const {topic, zip} = getComponents();
-    topic
-      .on(topic.rootTopicId)
-      .add({title: 'main topic 1'})
-      .add({title: 'main topic 2'})
-      .on(topic.cid('main topic 1'))
-      .summary();
+    const {topic, zip, marker } = getComponents();
+    topic.add({title: 'Programming Language'})
+      .add({title: 'Software Name'})
+      .add({title: 'Network device'})
+      .add({title: 'Computer Brand'})
+      .marker(marker.smiley('smile'))
 
-    zip.save().then(status => status && done());
+
+      .on(topic.cid('Programming Language'))
+      .add({title: 'dynamic'})
+      .add({title: 'static'})
+
+      .on(topic.cid()/* Also the topic.cid('static') is working */)
+      .add({title: 'C'})
+      .add({title: 'C++'})
+      .add({title: '中文测试'})
+      .add({title: 'にほんご／にっぽんご'})
+      .add({title: 'mixed123中文ぽんご😋'})
+      .add({title: 'Java'})
+      .on(topic.cid('C'))
+      .summary({title: 'Low level that is hard to learning', edge: topic.cid('C++')})
+
+      .on(topic.cid('dynamic'))
+      .note('The static languages are fast more than dynamic language')
+      .add({title: 'Node.js'})
+      .add({title: 'Python'})
+      .add({title: 'Ruby'})
+      .on(topic.cid('dynamic'))
+      .summary({title: 'In popular'})
+
+
+      // on Software
+      .on(topic.cid('Software'))
+      .add({title: 'jetBrains'})
+      .add({title: 'Microsoft'})
+
+      .on(topic.cid('jetBrains'))
+      .marker(marker.smiley('smile'))
+      .add({title: 'WebStorm'})
+      .add({title: 'Pycharm'})
+      .add({title: 'CLion'})
+      .add({title: 'IntelliJ Idea'})
+      .add({title: 'etc.'})
+      .summary({title: 'all of the productions are belonging to jetbrains'})
+
+      .on(topic.cid('Microsoft'))
+      .marker(marker.smiley('cry'))
+      .add({title: 'vs code'});
+
+    zip.save().then(status => {
+      status && done()
+      console.info('==========', zip.target())
+    });
   });
 
   it('should return the central topic id if never to add component', done => {
@@ -162,4 +207,30 @@ describe('# Topic Unit Test', () => {
     done();
   });
 
+  it('should return the componentId accurately, if the titles are duplicated', done => {
+    const { topic } = getComponents();
+    topic.add({ title: 'main topic - 1', customId: 1 });
+    const a1 = topic.cid();
+    topic.add({ title: 'main topic - 1', customId: 2 })
+    const a2 = topic.cid();
+    expect(topic.cid('main topic - 1', { customId: 1 })).to.eq(a1);
+    expect(topic.cid('main topic - 1', { customId: 2 })).to.eq(a2);
+
+    topic.on(a2).add({title: 'abc'});
+    const abc1 = topic.cid();
+    topic.add({ title: 'bca' });
+    topic.on(a1).add({title: 'abc' });
+    const abc2 = topic.cid();
+
+
+    expect(topic.cid('abc', { parentId: a2})).to.eq(abc1);
+    expect(topic.cid('abc', { parentId: a1})).to.eq(abc2);
+
+    topic.destroy(topic.cid('abc', { parentId: a1}));
+    topic.destroy(topic.cid('abc', { parentId: a2}));
+
+    expect(topic.cid('abc', { parentId: a1})).to.eq(null);
+    expect(topic.cid('abc', { parentId: a2})).to.eq(null);
+    done();
+  });
 });

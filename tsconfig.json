@@ -1,9 +1,14 @@
 {
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  },
   "compilerOptions": {
     "baseUrl": ".",
     "paths": { "*": ["types/*"] },
-    "target": "es2016",
-    "module": "commonjs",
+    "target": "es6",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "resolveJsonModule": true,
@@ -14,7 +19,7 @@
     "declaration": true,
     "outDir": "dist/",
     "rootDir": "src/",
-    "lib": ["es2016", "dom"],
+    "lib": ["es5", "es6", "dom"],
     "sourceMap": true,
     "allowJs": false
   },
@@ -24,6 +29,7 @@
     "test",
     "scripts",
     "docs",
-    "example"
+    "example",
+    "rollup.config.ts"
   ]
 }

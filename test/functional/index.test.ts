@@ -1,13 +1,11 @@
 import { Workbook, Topic, Marker, Zipper } from '../../src';
 import * as chai from 'chai';
 import * as fs from 'fs';
-import * as _path from 'path';
 import * as JSZip from 'jszip';
 // @ts-ignore
 import { getBuildTemporaryPath } from '../fixtures/utils';
 import Core = require('xmind-model');
 import { join } from 'path';
-import { Loader } from '../../src';
 
 
 const expect = chai.expect;
@@ -188,7 +186,11 @@ describe('# Functional Test', () => {
         .add({title: 'main topic 1'})
         .add({title: 'main topic 2'});
 
-      const key1 = topic.on(topic.cid('main topic 1')).image();
+      const mt1 = topic.on(topic.cid('main topic 1'));
+      const key1 = mt1.image();
+
+      mt1.addLabel('attach label text on main topic 1').removeLabel();
+
       zip.updateManifestMetadata(key1, fs.readFileSync(join(__dirname, '../fixtures/19442.png')));
       const key2 = topic.on(topic.cid('main topic 2')).image();
       zip.updateManifestMetadata(key2, fs.readFileSync(join(__dirname, '../fixtures/logo.png')));
@@ -202,8 +204,10 @@ describe('# Functional Test', () => {
           expect(map).to.be.an('object');
           const {attached} = map.rootTopic.children;
           expect(attached.length).to.gt(0);
-          expect(attached[0].image.src).to.eq(`xap:${key2}`);
-          expect(attached[1].image.src).to.eq(`xap:${key1}`);
+          // expect(attached[0].labels).to.be.an('array');
+          // expect(attached[0].labels.length).to.gt(0);
+          expect(attached[0].image.src).to.eq(`xap:${key1}`);
+          expect(attached[1].image.src).to.eq(`xap:${key2}`);
           fs.unlinkSync(p);
           done();
         });
@@ -518,7 +522,7 @@ describe('# Functional Test', () => {
             return zip.file(`content.json`).async('text')
           })
           .then(content => {
-            const data = JSON.parse(content)[0];
+            const data = JSON.parse(content)[0]
             expect(data).to.have.property('theme');
             expect(data.theme.title).to.eq('snowbrush');
             fs.unlinkSync(file)
@@ -528,26 +532,5 @@ describe('# Functional Test', () => {
 
       return null
     });
-  });
-
-  describe('# Loader Test', () => {
-
-    it('loading zip file and also, return sheets object', done => {
-      const zip = _path.resolve(__dirname, '../fixtures/default.xmind');
-      JSZip.loadAsync(fs.readFileSync(zip)).then(async unzipped => {
-        const loader = new Loader({ctx: unzipped});
-        const sheets = await loader.loadSheets();
-
-        for (const key in sheets) {
-          if (!sheets.hasOwnProperty(key)) continue;
-          const topic = new Topic({sheet: sheets[key], isLoaded: true});
-          const ids = topic.cids();
-          expect(ids).to.be.an('object');
-          expect(Object.keys(ids).length).to.gt(0);
-        }
-        done();
-      }).catch(done);
-    });
-
   });
 });
