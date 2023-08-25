@@ -280,7 +280,7 @@ However, you need to write image into manifest by `zip.updateManifestMetadata()`
 #### .summary(options) => Topic
 
 Attach a summary component to parent node including all children. In the meantime, the `edge` can be used to set the scope of summary component.
-> _!!! NOTE THAT_
+> **Important**
 > 
 > The summary doesn't allow to be added under `Central Topic`
 > 
@@ -299,7 +299,7 @@ Attach a summary component to parent node including all children. In the meantim
 
 Destroy a component from the map tree.
 
-> _!!! NOTE THAT_
+> **Important**
 >
 > All children would be destroyed along with it 
 
