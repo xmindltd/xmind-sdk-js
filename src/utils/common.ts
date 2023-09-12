@@ -35,5 +35,9 @@ const isRuntime = function(): boolean {
   return typeof global === 'object' && typeof window === 'undefined';
 };
 
-export {isEmpty, isObject, isRuntime};
+const isString = function(v: any): v is string {
+  return typeof v === 'string';
+};
+
+export {isEmpty, isObject, isRuntime, isString};
 

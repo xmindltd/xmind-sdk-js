@@ -5,7 +5,7 @@ import {
 import { SummaryOptions } from '../abstracts/summary.abstract';
 import { Summary } from './summary';
 import { Note } from './note';
-import { isEmpty, isObject, isRuntime } from '../utils/common';
+import { isEmpty, isObject, isRuntime, isString } from '../utils/common';
 
 import * as Model from '../common/model';
 import * as Core from 'xmind-model';
@@ -73,7 +73,7 @@ export class Topic extends Base implements AbstractTopic {
   public add(topic: Model.Topic & {
     customId?: string | number, parentId?: string
   } = {} as any, options?: { index: number }): Topic {
-    if (!topic.title || typeof topic.title !== 'string') {
+    if (!isString(topic.title)) {
       throw new Error('topic.title should be a valid string');
     }
     topic.id = topic.id || this.id;
@@ -183,7 +183,8 @@ export class Topic extends Base implements AbstractTopic {
   public cid(title?: string, dependencies: {
     parentId?: number | string, customId?: number | string
   } = {}): string | null {
-    if (title && dependencies) {
+    const validTitle = isString(title);
+    if (validTitle && dependencies) {
       if (dependencies.parentId) {
         return this.getConflictedComponentId({
           title, parentId: dependencies.parentId
@@ -196,7 +197,7 @@ export class Topic extends Base implements AbstractTopic {
       }
     }
 
-    if (title && typeof title === 'string') {
+    if (validTitle) {
       return this.findComponentIdBy(title);
     }
     return this.lastId;

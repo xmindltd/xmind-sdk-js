@@ -44,12 +44,13 @@ describe('# Functional Test', () => {
 
   describe('# Topic', () => {
     it('should be a lots of main topic added to rootTopic', done => {
-      const topics = ['main topic 1', 'main topic 2', 'main topic 3', 'main topic 4'];
+      const topics = ['main topic 1', 'main topic 2', 'main topic 3', 'main topic 4', ''];
       const {workbook, topic} = getComponents();
       topic.add({title: 'main topic 1'})
         .add({title: 'main topic 2'})
         .add({title: 'main topic 3'})
-        .add({title: 'main topic 4'});
+        .add({title: 'main topic 4'})
+        .add({title: ''});
 
       const children = workbook.toJSON()[0].rootTopic.children.attached;
       for (let i = 0; i < children.length; i++) {
@@ -72,11 +73,12 @@ describe('# Functional Test', () => {
         .on(topic.cid())
         .add({title: 'subtopic 1'})
         .add({title: 'subtopic 2'})
-        .add({title: 'subtopic 3'});
+        .add({title: 'subtopic 3'})
+        .add({title: ''});
 
       const subtopics = workbook.toJSON()[0].rootTopic.children.attached[0].children.attached;
-      for(let i = 0; i < subtopics.length; i++) {
-        expect(subtopics[i].title.startsWith('subtopic')).to.be.true;
+      for(let i = 0; i < subtopics.length - 1; i++) {
+        expect(subtopics[i].title.startsWith('subtopic') || subtopics[i].title === '').to.be.true;
         expect(subtopics[i].id).to.not.be.empty;
       }
       done();
@@ -97,14 +99,15 @@ describe('# Functional Test', () => {
       const subTopic2Id = topic.cid();
 
       topic.add({title: 'subtopic 3'});
+      topic.add({title: ''});
       topic.destroy(subTopic2Id);
       // Do nothing if you have to remove topic twice
       topic.destroy(subTopic2Id);
 
       const subtopics = workbook.toJSON()[0].rootTopic.children.attached[0].children.attached;
-      expect(subtopics.length).to.be.eq(2);
+      expect(subtopics.length).to.be.eq(3);
       for(let i = 0; i < subtopics.length; i++) {
-        expect(subtopics[i].title.startsWith('subtopic')).to.be.true;
+        expect(subtopics[i].title.startsWith('subtopic') || subtopics[i].title === '').to.be.true;
         expect(subtopics[i].id).to.not.be.empty;
       }
       done();
@@ -159,9 +162,11 @@ describe('# Functional Test', () => {
       topic
         .add({title: 'main topic 1'})
         .add({title: 'main topic 2'})
-        .add({title: 'main topic 3'});
+        .add({title: 'main topic 3'})
+        .add({title: ''});
 
       topic.destroy(topic.cid('main topic 2'));
+      topic.destroy(topic.cid(''));
       zip.save().then(async status => {
         expect(status).to.be.true;
         const p = getBuildTemporaryPath('default.xmind');
@@ -173,6 +178,7 @@ describe('# Functional Test', () => {
           const {attached} = map.rootTopic.children;
           expect(attached.length).to.be.eq(2);
           expect(attached.find(child => child.title === topic.cid('main topic 2'))).to.be.undefined;
+          expect(attached.find(child => child.title === topic.cid(''))).to.be.undefined;
           fs.unlinkSync(p);
           done();
         });

@@ -1,4 +1,4 @@
-import { isEmpty, isObject } from '../../src/utils/common';
+import { isEmpty, isObject, isString } from '../../src/utils/common';
 import { expect } from 'chai';
 
 
@@ -54,4 +54,21 @@ describe('# Common Utils Test', function() {
     expect(isObject(() => {})).to.eq(true);
     done();
   });
+  
+  it('isString(), should return true if given any string', done => {
+    expect(isString('')).to.eq(true);
+    expect(isString('foo')).to.eq(true);
+    done();
+  })
+  
+  it('isString(), should return false if given any non string value', done => {
+    expect(isString(42)).to.eq(false);
+    expect(isString(null)).to.eq(false);
+    expect(isString(undefined)).to.eq(false);
+    expect(isString({})).to.eq(false);
+    expect(isString(() => {})).to.eq(false);
+    expect(isString([])).to.eq(false);
+    expect(isString(new String)).to.eq(false);
+    done();
+  })
 });
