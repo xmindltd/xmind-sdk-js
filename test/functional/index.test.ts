@@ -77,7 +77,7 @@ describe('# Functional Test', () => {
         .add({title: ''});
 
       const subtopics = workbook.toJSON()[0].rootTopic.children.attached[0].children.attached;
-      for(let i = 0; i < subtopics.length - 1; i++) {
+      for(let i = 0; i < subtopics.length; i++) {
         expect(subtopics[i].title.startsWith('subtopic') || subtopics[i].title === '').to.be.true;
         expect(subtopics[i].id).to.not.be.empty;
       }
