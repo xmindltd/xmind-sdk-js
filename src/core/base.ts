@@ -1,6 +1,8 @@
 import * as TreeModel from 'tree-model';
 import { Node } from 'tree-model';
 
+import { isString } from '../utils/common';
+
 const v4 = require('uuid/v4');
 const Debug = require('debug');
 
@@ -96,11 +98,12 @@ export default class Base {
   protected getConflictedComponentId(
     options: ConflictedOnDifferentBranchOptions & ConflictedOnSameBranchOptions
   ): string | null {
-    if (options.title && options.parentId) {
+    const validString = isString(options.title);
+    if (validString && options.parentId) {
       return this.different(options);
     }
 
-    if (options.title && options.customId) {
+    if (validString && options.customId) {
       return this.identical(options);
     }
 

@@ -26,7 +26,7 @@ describe('# Topic Unit Test', () => {
     }
   });
 
-  it('should be failed to add topic with empty title', done => {
+  it('should be failed to add topic with non string title', done => {
     const {topic} = getComponents();
     try {
       topic.on().add();
@@ -34,6 +34,18 @@ describe('# Topic Unit Test', () => {
       expect(e.message).to.be.eq('topic.title should be a valid string');
       done();
     }
+  });
+
+  it('should be able to add topic with empty title', done => {
+    const {topic} = getComponents();
+
+    topic.on().add({ title: '' });
+
+    const topics = topic.cids();
+    expect(topics).to.have.property(topic.cid(''));
+    expect(topics).to.have.property(topic.cid('Central Topic'));
+    expect(topics).to.have.property(topic.rootTopicId);
+    done();
   });
 
   it('should be failed if call .on() with an invalid componentId', done => {
@@ -226,11 +238,32 @@ describe('# Topic Unit Test', () => {
     expect(topic.cid('abc', { parentId: a2})).to.eq(abc1);
     expect(topic.cid('abc', { parentId: a1})).to.eq(abc2);
 
+    topic.add({ title: 'main topic - 1', customId: 3 });
+    const a3 = topic.cid();
+    topic.add({ title: 'main topic - 1', customId: 4 });
+    const a4 = topic.cid();
+    expect(topic.cid('main topic - 1', { customId: 3 })).to.eq(a3);
+    expect(topic.cid('main topic - 1', { customId: 4 })).to.eq(a4);
+
+    topic.on(a4).add({title: ''});
+    const emptyString1 = topic.cid();
+    topic.on(a3).add({title: ''});
+    const emptyString2 = topic.cid();
+
+    expect(topic.cid('', { parentId: a4 })).to.eq(emptyString1);
+    expect(topic.cid('', { parentId: a3 })).to.eq(emptyString2);
+
     topic.destroy(topic.cid('abc', { parentId: a1}));
     topic.destroy(topic.cid('abc', { parentId: a2}));
 
     expect(topic.cid('abc', { parentId: a1})).to.eq(null);
     expect(topic.cid('abc', { parentId: a2})).to.eq(null);
+
+    topic.destroy(topic.cid('', { parentId: a3}));
+    topic.destroy(topic.cid('', { parentId: a4}));
+
+    expect(topic.cid('', { parentId: a4})).to.eq(null);
+    expect(topic.cid('', { parentId: a3})).to.eq(null);
     done();
   });
 });
