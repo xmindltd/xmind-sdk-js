@@ -273,9 +273,10 @@ topic.marker(Object.assign({}, marker.smiley('cry'), {del: true}));
 
 You can use `.image()` to get `image key` back.
 
-However, you need to write image into manifest by `zip.updateManifestMetadata()`.
+However, you need to write image into manifest by `zip.updateManifestMetadata()` or `dumper.updateManifestMetadata()`.
 
 > [See image example](./example/example.image.js)
+> [See image in browser example](./example/example.image.browser.html)
 
 #### .summary(options) => Topic
 
@@ -383,6 +384,8 @@ Save components to the logic disk in the form of zip.
 
 The module of `Dumper` only works under browser.
 
+### Dumper methods
+
 #### .dumping() => Array<{filename: string, value: string}>
 
 Return an array of objects composed of file content.
@@ -392,6 +395,33 @@ you need to compress these files in the form of zip with the suffix `.xmind`.
 > **Important**
 > 
 > Don't include top level folders, otherwise the software can't extract files
+
+#### .updateManifestMetadata(key, content, creator) => Promise\<void\>
+
+Update manifest for image insertion.
+
+| Name | Type | Default | Required | Description |
+|:---- |:----:|:-------:|:--------:|:------------|
+| key | string | null | Y | The key only can get by topic.image() |
+| content | File \| Blob \| ArrayBuffer | null | Y | The data of image |
+| creator | FileCreator | | Y | specify how to save the file |
+
+where `FileCreator` is
+
+```typescript
+interface FileCreator {
+  /**
+   * hint that should create a folder-like structure, enter the folder if exists
+   * @param name Folder name
+   */
+  folder(name: string): Promise<void>
+  /**
+   * hint that should create a file-like object with `content`, update the file if exists
+   * @param name Filename
+   */
+  file(name: string, content: File | Blob | ArrayBuffer): Promise<void>
+}
+```
 
 ## Contributing
 Thank you for being interested in the SDK.

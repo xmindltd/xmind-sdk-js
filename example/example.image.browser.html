@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="../dist/xmind-sdk.bundle.js"></script>
+    <title>Example browser</title>
+  </head>
+
+  <body>
+    <label>
+      Insert Image:
+      <input type="file" accept="image/*" id="image-input" />
+    </label>
+
+    <script>
+      const input = document.getElementById("image-input");
+      input.addEventListener("change", (e) => {
+        if (!e.currentTarget.files || !e.currentTarget.files.length) {
+          return;
+        }
+
+        const [file] = e.currentTarget.files;
+
+        if (window.Workbook) {
+          const { Workbook, Topic, Dumper } = window;
+          const workbook = new Workbook();
+          const topic = new Topic({ sheet: workbook.createSheet("sheet-1") });
+          topic
+            .on()
+            .add({ title: "main topic 1" })
+            .add({ title: "main topic 2" });
+
+          const dumper = new Dumper({ workbook });
+
+          const imageKey = topic.image();
+          // work with the image, e.g. save the image to the storage
+          const storage = getStorage();
+          dumper
+            .updateManifestMetadata(imageKey, file, {
+              folder(name) {
+                return storage.folder(name);
+              },
+              file(name, content) {
+                return storage.file(name, content);
+              },
+            })
+            .then(() => {
+              const files = dumper.dumping();
+              console.log(files);
+
+              for (const file of files) {
+                console.log(file.filename, "\n", file.value);
+              }
+            });
+        }
+      });
+    </script>
+
+    <script>
+      // mock storage, not important
+      function getStorage() {
+        /** @type {Promise<IDBDatabase>} */
+        const dbReadyPromise = new Promise((resolve) => {
+          /** @type {IDBDatabase} */
+          let db;
+          const setupStore = () => {
+            return new Promise((resolve) => {
+              const resourcesStore = db
+                .transaction("resources", "readwrite")
+                .objectStore("resources");
+              resourcesStore.clear().addEventListener("success", () => {
+                console.log("[mock] store cleared");
+                resolve(db);
+              });
+            });
+          };
+
+          const openDbRequest = indexedDB.open("example", 1);
+          openDbRequest.addEventListener("error", () => {
+            console.error("[mock] error openning db");
+          });
+          openDbRequest.addEventListener("success", () => {
+            db = openDbRequest.result;
+            resolve(setupStore());
+          });
+          openDbRequest.addEventListener("upgradeneeded", (e) => {
+            db = e.target.result;
+            const resources = db.createObjectStore("resources", {
+              keyPath: "id",
+            });
+
+            resources.createIndex("id", "id", { unique: true });
+
+            resources.transaction.addEventListener("complete", () => {
+              resolve(setupStore());
+            });
+          });
+        });
+
+        const saveFile = (/** @type {IDBDatabase} */ db, { name, content }) => {
+          return Promise.resolve()
+            .then(() =>
+              content instanceof Blob ? content.arrayBuffer() : content
+            )
+            .then(
+              (resolvedContent) =>
+                new Promise((resolve) => {
+                  db.transaction("resources", "readwrite")
+                    .objectStore("resources")
+                    .put({ id: name, content: resolvedContent })
+                    .addEventListener("success", () => {
+                      console.log("[mock] file saved");
+                      resolve();
+                    });
+                })
+            );
+        };
+
+        const getDB = () => dbReadyPromise;
+
+        return {
+          file(name, content) {
+            return getDB().then((db) => saveFile(db, { name, content }));
+          },
+          folder(name) {
+            return getDB().then(() => {
+              console.log("[mock] move to resources");
+            });
+          },
+        };
+      }
+    </script>
+  </body>
+</html>
