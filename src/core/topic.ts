@@ -5,7 +5,7 @@ import {
 import { SummaryOptions } from '../abstracts/summary.abstract';
 import { Summary } from './summary';
 import { Note } from './note';
-import { isEmpty, isObject, isRuntime, isString } from '../utils/common';
+import { isEmpty, isObject, isString } from '../utils/common';
 
 import * as Model from '../common/model';
 import * as Core from 'xmind-model';
@@ -88,11 +88,6 @@ export class Topic extends Base implements AbstractTopic {
   }
 
   public image(options?: ImageOptions): string {
-    /* istanbul ignore if */
-    if (!isRuntime()) {
-      throw new Error('Cannot run .image() in browser environment');
-    }
-
     const dir = `resources/${this.id}`;
     const params = Object.assign({}, {src: `xap:${dir}`}, options || {});
     this.parent().addImage(params);
