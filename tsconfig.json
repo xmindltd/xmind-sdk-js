@@ -21,6 +21,7 @@
     "rootDir": "src/",
     "lib": ["es5", "es6", "dom"],
     "sourceMap": true,
+    "inlineSources": true,
     "allowJs": false
   },
   "exclude": [
