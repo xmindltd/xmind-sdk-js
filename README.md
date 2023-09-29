@@ -404,19 +404,20 @@ Update manifest for image insertion.
 |:---- |:----:|:-------:|:--------:|:------------|
 | key | string | null | Y | The key only can get by topic.image() |
 | content | File \| Blob \| ArrayBuffer | null | Y | The data of image |
-| creator | FileCreator | | Y | specify how to save the file |
+| creator | FileCreator | | Y | To specify how to save the file |
 
 where `FileCreator` is
 
 ```typescript
 interface FileCreator {
   /**
-   * hint that should create a folder-like structure, enter the folder if exists
-   * @param name Folder name
+   * Hint that should create a folder-like structure, enter the folder if exists
+   * @param name - Folder name
    */
   folder(name: string): Promise<void>
+  
   /**
-   * hint that should create a file-like object with `content`, update the file if exists
+   * Hint that should create a file-like object with `content`, update the file if exists
    * @param name Filename
    */
   file(name: string, content: File | Blob | ArrayBuffer): Promise<void>
