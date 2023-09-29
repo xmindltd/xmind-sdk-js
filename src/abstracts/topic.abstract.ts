@@ -43,8 +43,7 @@ export interface AbstractTopic {
    * @param {Object} options
    * @param {String} [options.width] - Image width
    * @param {String} [options.height] - image height
-   * @return {String} a file key that can be used for Zipper.updateManifestMetadata
-   * @supported For now, only Node.js runtime environment is allowed
+   * @return {String} a file key that can be used for `Zipper.updateManifestMetadata` and `Dumper.updateManifestMetadata`
    */
   image(options?: ImageOptions): string;
 
